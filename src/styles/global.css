@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn-primary {
+    @apply flex flex-row justify-center items-center text-white p-3 gap-2 absolute w-40 h-12 left-10 top-20 bg-brand-1 border-2 rounded-md;
+  }
+
+  .btn-secundary {
+    @apply box-border flex flex-row justify-center text-white items-center p-3 gap-2 bg-brand-1 absolute w-40 h-12 left-10 top-2 bg-gray-900 border-gray-900 border-2 rounded-md;
+  }
+
+  .btn-form {
+    @apply bg-white border-2 border-gray-300 hover:border-brand-1 hover:bg-brand-1 hover:text-white focus:bg-brand-1 focus:border-brand-1 text-black focus:text-white font-bold py-2 px-4 rounded;
+  }
+
+  .btn-error {
+    @apply w-36 h-12 rounded bg-red-100 hover:border-2 hover:border-red-200 hover:bg-red-200 text-red-500;
+  }
+
+  .btn-succes {
+    @apply w-36 h-12 rounded bg-green-100 hover:border-2 hover:border-green-200 hover:bg-green-200 text-green-500;
+  }
+
+  .btn-disabled {
+    @apply w-36 h-12 bg-brand-3 text-white font-bold rounded disabled:opacity-50;
+  }
+
+  .btn-big-text {
+    @apply w-32 font-normal font-semibold text-base;
+  }
+
+  .btn-medium-text {
+    @apply w-28 font-normal font-semibold text-sm;
+  }
+
+  .btn-header {
+    @apply w-36 h-12 rounded hover:border-2 hover:border-gray-400 text-black;
+  }
+
+  .input-style {
+    @apply border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500;
+  }
+
+  .heading-1-700 {
+    @apply w-80   font-bold text-4xl  text-gray-900;
+  }
+
+  .heading-2-600 {
+    @apply w-64  font-semibold text-3xl text-gray-900;
+  }
+
+  .heading-3-600 {
+    @apply w-60  font-semibold text-3xl text-gray-900;
+  }
+
+  .heading-3-500 {
+    @apply w-56  font-semibold text-2xl text-gray-900;
+  }
+
+  .heading-4-600 {
+    @apply w-52  font-semibold text-2xl text-gray-900;
+  }
+
+  .heading-4-500 {
+    @apply w-48  font-semibold text-2xl text-gray-900;
+  }
+
+  .heading-5-600 {
+    @apply w-44 font-semibold text-2xl text-gray-900;
+  }
+}
