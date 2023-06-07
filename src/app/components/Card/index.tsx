@@ -92,8 +92,6 @@ const Card = () => {
     },
   ];
 
-  const carro =
-    "https://i.pinimg.com/564x/d5/1c/07/d51c074264dc22c6b3b49fae2d2b8019.jpg";
   return (
     <ul className="w-3/4 flex flex-wrap gap-4">
       {carArray.map((item) => (
