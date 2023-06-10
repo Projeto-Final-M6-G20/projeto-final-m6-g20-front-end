@@ -89,6 +89,10 @@ export default function Home() {
       <Card />
       
         </section>
+
+        <div className="w-full flex justify-center items-center lg:hidden ">
+          <button className="flex btn-primary relative top-0 left-0 items-center">Filtros</button>
+        </div>
         <div className="flex w-full h-48 items-center justify-center gap-4">
           <div className="flex gap-2">
             <p className="text-xl text-gray-500">1 </p>
