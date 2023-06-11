@@ -1,6 +1,7 @@
 import "../styles/global.css";
 import { Inter, Lexend } from "next/font/google";
 import { IoIosArrowUp } from "react-icons/io";
+import {GiHamburgerMenu} from "react-icons/gi"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,11 +19,11 @@ export default function RootLayout({
     <html lang="en">
       <>
         <body className={inter.className}>
-          <header className="w-full h-16 p-9  items-center  flex justify-between">
+          <header className="w-full h-16 p-9 border-2 items-center border-b-gray-300 flex justify-between max-lg:p-5">
             <p className="heading-1-700  bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text text p-3  ">
               Motors <span className="text-lg font-bold">shop</span>
             </p>
-            <div className="flex items-center p-3">
+            <div className="flex items-center p-3 max-lg:hidden">
               <button className="btn-header text-lg text-black text-gray-600 hover:font-semibold">
                 Fazer login
               </button>
@@ -30,22 +31,26 @@ export default function RootLayout({
                 Cadastrar
               </button>
             </div>
+
+            <div className="flex items-center p-3  lg:hidden">
+              <button><GiHamburgerMenu className="text-4xl"/></button>
+            </div>
           </header>
           {children}
-          <footer className="w-full flex justify-around p-9 h-32 bg-black">
-            <div className="flex h-full w-1/4 items-center justify-between gap-2">
-              <p className="heading-2-600 text-white ">
+          <footer className="w-full flex justify-between h-32 bg-black max-lg:flex-col max-lg:items-center max-sm:min-h-80 max-sm:justify-normal max-sm:gap-3">
+            <div className="flex  text-center  justify-center items-center max-lg:w-5/6">
+              <p className="heading-2-600 text-white max-lg:text-center">
                 Motors <span className="text-lg">shop</span>
               </p>
             </div>
 
-            <div className="w-96 flex h-full w-1/4 items-center justify-center gap-2">
+            <div className="flex w-96 items-center justify-center gap-2">
               <p className="text-white text-sm">
                 © 2022 - Todos os direitos reservados.
               </p>
             </div>
 
-            <div className="flex h-full w-1/4 items-center justify-end gap-2">
+            <div className="flex w-48 items-center justify-center gap-2">
               <button className="w-12 flex justify-center rounded-md items-center  text-white font-bold bg-gray-900 h-12">
                 <IoIosArrowUp className=" text-xl" />
               </button>
