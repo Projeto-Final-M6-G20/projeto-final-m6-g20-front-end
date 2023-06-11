@@ -1,6 +1,8 @@
+import AdDetailView from "./adDetailView/page";
 import Banner from "./components/Banner";
 import Card from "./components/Card";
 import {MdOutlineKeyboardArrowRight} from "react-icons/md"
+
 
 export default function Home() {
   return (

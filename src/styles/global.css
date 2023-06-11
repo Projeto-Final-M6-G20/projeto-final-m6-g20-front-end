@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.backgroundImage {
+  background-image: url('../app/adDetailView/components/Images/background2.svg')
+  }
+
 @layer components {
   .btn-primary {
     @apply flex flex-row justify-center items-center text-white p-3 gap-2 absolute w-40 h-12 left-10 top-20 bg-brand-1 border-2 rounded-md;
@@ -70,4 +74,5 @@
   .heading-5-600 {
     @apply w-44 font-semibold text-2xl text-gray-900;
   }
+
 }
