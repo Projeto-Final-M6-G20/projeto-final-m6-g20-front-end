@@ -7,6 +7,7 @@ module.exports = {
   ],
   theme: {
     extend: {
+
       colors: {
         feedback: {
           "alert-1": "#CD2B31",

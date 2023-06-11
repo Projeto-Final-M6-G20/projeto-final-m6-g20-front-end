@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <>
         <body className={inter.className}>
-          <header className="w-full h-16 p-9 border-2 items-center border-b-gray-300 flex justify-between">
+          <header className="w-full h-16 p-9  items-center  flex justify-between">
             <p className="heading-1-700  bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text text p-3  ">
               Motors <span className="text-lg font-bold">shop</span>
             </p>
