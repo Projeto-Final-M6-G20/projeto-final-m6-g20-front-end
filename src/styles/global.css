@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 .backgroundImage {
-  background-image: url('../app/adDetailView/components/Images/background2.svg')
-  }
+  background-image: url('../app/adDetailView/components/Images/background2.svg');
+}
 
 @layer components {
   .btn-primary {
@@ -44,7 +44,7 @@
   }
 
   .input-style {
-    @apply border border-gray-300 rounded-md p-2 focus:outline-none focus:border-blue-500;
+    @apply rounded-md p-2 focus:outline-none focus:border-blue-500;
   }
 
   .heading-1-700 {
@@ -74,5 +74,4 @@
   .heading-5-600 {
     @apply w-44 font-semibold text-2xl text-gray-900;
   }
-
 }
