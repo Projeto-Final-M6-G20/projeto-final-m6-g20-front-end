@@ -44,7 +44,7 @@
   }
 
   .input-style {
-    @apply rounded-md p-2 focus:outline-none focus:border-blue-500;
+    @apply rounded-md p-2 focus:outline-none focus:border-blue-500 border;
   }
 
   .heading-1-700 {
