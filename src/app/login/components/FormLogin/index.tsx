@@ -4,9 +4,7 @@ import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { LoginData, LoginSchema } from './validator';
-import { useAuth } from '../hooks';
-import { useContext } from 'react';
-import { AuthContext } from 'context/AuthContext';
+import { useAuth } from 'hooks';
 
 const LoginForm = () => {
   const { register, handleSubmit } = useForm<LoginData>({
