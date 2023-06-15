@@ -22,7 +22,7 @@ const CustomModal = ({ isOpen, onClose, children }: ModalChildren) => {
         <ModalHeader className="w-1/2 bg-white flex justify-end p-2">
           <ModalCloseButton />
         </ModalHeader>
-        <ModalBody className="w-1/2 bg-white flex justify-center">
+        <ModalBody className="w-1/2 bg-white flex justify-start p-8">
           {children}
         </ModalBody>
       </ModalOverlay>

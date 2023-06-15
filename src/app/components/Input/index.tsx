@@ -13,7 +13,7 @@ const Input = forwardRef<HTMLInputElement, iInputProps>(
     return (
       <>
         <div className="mb-2">
-          <label className="block  font-semibold mb-2" htmlFor={label}>
+          <label className="block  font-semibold mb-2" htmlFor={id}>
             {label}
           </label>
           <input
