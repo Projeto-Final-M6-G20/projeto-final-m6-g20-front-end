@@ -11,12 +11,22 @@ interface AuthProviderProps {
 
 interface AuthValue {
   LoginFunction: (data: LoginData) => void;
+  RegisterFunction: (data: any) => void;
 }
 
 export const AuthContext = createContext<AuthValue>({} as AuthValue);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const router = useRouter();
+
+  const RegisterFunction = async (data: any) => {
+    try {
+      const response = await api.post('', data);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const LoginFunction = async (data: LoginData) => {
     try {
@@ -39,7 +49,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   return (
-    <AuthContext.Provider value={{ LoginFunction }}>
+    <AuthContext.Provider value={{ LoginFunction, RegisterFunction }}>
       {children}
     </AuthContext.Provider>
   );
