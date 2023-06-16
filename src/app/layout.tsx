@@ -1,10 +1,13 @@
+'use client';
 import '../styles/global.css';
 import { Inter } from 'next/font/google';
 import { IoIosArrowUp } from 'react-icons/io';
+import { usePathname } from 'next/navigation';
 
 import MenuMobile from './components/MenuMobile';
 
 import { AuthProvider } from 'context/AuthContext';
+import Link from 'next/link';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,6 +21,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
   return (
     <html lang="en">
       <AuthProvider>
@@ -26,14 +30,39 @@ export default function RootLayout({
             <p className="heading-1-700  bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text text p-3  ">
               Motors <span className="text-lg font-bold">shop</span>
             </p>
-            <div className="flex items-center p-3 max-sm:hidden">
-              <button className="btn-header text-lg text-black text-gray-600 hover:font-semibold">
-                Fazer login
-              </button>
-              <button className="btn-header text-lg text-black text-gray-600 hover:font-semibold">
-                Cadastrar
-              </button>
-            </div>
+            <nav className="flex items-center p-3 max-sm:hidden">
+              {pathname === '/login' ? (
+                <Link
+                  href={'/'}
+                  className="btn-header flex text-lg text-center items-center justify-center text-black text-gray-600 hover:font-semibold"
+                >
+                  Home
+                </Link>
+              ) : (
+                <Link
+                  href={'/login'}
+                  className="btn-header flex text-lg text-center items-center justify-center text-black text-gray-600 hover:font-semibold"
+                >
+                  Fazer login
+                </Link>
+              )}
+
+              {pathname === '/register' ? (
+                <Link
+                  href={'/'}
+                  className="btn-header flex text-lg items-center text-center justify-center text-black text-gray-600 hover:font-semibold"
+                >
+                  Home
+                </Link>
+              ) : (
+                <Link
+                  href={'/register'}
+                  className="btn-header flex text-lg items-center text-center justify-center text-black text-gray-600 hover:font-semibold"
+                >
+                  Cadastrar
+                </Link>
+              )}
+            </nav>
             <div className="flex items-center p-3  sm:hidden">
               <MenuMobile />
             </div>
