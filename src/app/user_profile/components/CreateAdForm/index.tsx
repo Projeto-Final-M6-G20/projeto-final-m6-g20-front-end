@@ -44,10 +44,6 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
     setImages([...images, '']);
   };
 
-  const CreateAdd = (data) => {
-    console.log(data);
-  };
-
   const {
     getCarBrands,
     brands,
@@ -56,7 +52,8 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
     models,
     selectedBrand,
     selectedModel,
-    setSelectedModel
+    setSelectedModel,
+    createCarAd
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -93,7 +90,7 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
         <ModalBody className="bg-white w-full max-w-xl rounded-b-md px-6 mb-3">
           <p className="text-sm mb-6">Infomações do veículo</p>
           <form
-            onSubmit={handleSubmit(CreateAdd)}
+            onSubmit={handleSubmit(createCarAd)}
             className="flex flex-row flex-wrap w-full justify-between overflow-scroll"
           >
             <div className="mb-2 w-full">
@@ -269,8 +266,8 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
               </div>
             ))}
           </form>
-          <div className="px-[20px] py-[12px] rounded-md text-brand-1 bg-brand-4 w-max text-sm font-semibold mb-[42px]">
-            <button onClick={AddInputImage}>
+          <div className="px-[20px] py-[12px] rounded-md text-brand-1 bg-brand-4 w-max text-sm font-semibold mb-[42px] disabled:text-brand-4">
+            <button onClick={AddInputImage} disabled={images.length >= 6}>
               Adicionar campo para imagem da galeria
             </button>
           </div>

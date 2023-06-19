@@ -1,18 +1,18 @@
 'use client';
 import '../styles/global.css';
 import { Inter } from 'next/font/google';
-import { IoIosArrowUp } from 'react-icons/io';
 import { usePathname } from 'next/navigation';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { IoIosArrowUp } from 'react-icons/io';
 
 import MenuMobile from './components/MenuMobile';
 
 import { AuthProvider } from 'context/AuthContext';
-import Link from 'next/link';
 import { UserProvider } from 'context/UserContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata = {
+const metadata = {
   title: 'Motors Shop',
   description: 'Encontre o seu carro aqui'
 };

@@ -1,6 +1,7 @@
 'use client';
 import { Dispatch, SetStateAction, createContext, useState } from 'react';
 
+import api from 'service/api';
 import instanceKenzieCars from 'service/kenzie_cars';
 
 interface AuthProviderProps {
@@ -16,6 +17,7 @@ interface UserValue {
   selectedModel: string;
   brands: string[];
   models: [];
+  createCarAd: (data) => Promise<void>;
 }
 
 export const UserContext = createContext<UserValue>({} as UserValue);
@@ -50,6 +52,15 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const createCarAd = async (data) => {
+    try {
+      const response = await api.post('/advertisements/', data);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -60,7 +71,8 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
         setSelectedBrand,
         selectedBrand,
         selectedModel,
-        setSelectedModel
+        setSelectedModel,
+        createCarAd
       }}
     >
       {children}
