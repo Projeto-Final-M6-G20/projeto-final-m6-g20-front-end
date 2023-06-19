@@ -1,4 +1,4 @@
-const Card = () => {
+const UserDisplay = () => {
   const carArray = [
     {
       id: 1,
@@ -7,6 +7,7 @@ const Card = () => {
       carName: 'Toyota Camry',
       userName: 'John Smith',
       mileage: 5000,
+      isActive: true,
       carValue: 25000
     },
     {
@@ -16,6 +17,7 @@ const Card = () => {
       carName: 'Honda Civic',
       userName: 'Emily Johnson',
       mileage: 8000,
+      isActive: true,
       carValue: 22000
     },
     {
@@ -25,6 +27,7 @@ const Card = () => {
       carName: 'Masserati',
       userName: 'Michael Brown',
       mileage: 3000,
+      isActive: true,
       carValue: 35000
     },
     {
@@ -34,6 +37,7 @@ const Card = () => {
       carName: 'Chevrolet Corvette',
       userName: 'Sophia Davis',
       mileage: 2000,
+      isActive: true,
       carValue: 45000
     },
     {
@@ -43,6 +47,7 @@ const Card = () => {
       carName: 'BMW 3 Series',
       userName: 'Daniel Wilson',
       mileage: 6000,
+      isActive: true,
       carValue: 30000
     },
     {
@@ -52,6 +57,7 @@ const Card = () => {
       carName: 'Audi A1',
       userName: 'Olivia Thompson',
       mileage: 4000,
+      isActive: false,
       carValue: 28000
     },
     {
@@ -61,6 +67,7 @@ const Card = () => {
       carName: 'Mercedes-Benz C-Class',
       userName: 'David Martinez',
       mileage: 10000,
+      isActive: true,
       carValue: 32000
     },
     {
@@ -70,6 +77,7 @@ const Card = () => {
       carName: 'Volkswagen Golf',
       userName: 'Emma Anderson',
       mileage: 1500,
+      isActive: false,
       carValue: 18000
     },
     {
@@ -79,15 +87,7 @@ const Card = () => {
       carName: 'Tesla Model S',
       userName: 'Noah Taylor',
       mileage: 100,
-      carValue: 70000
-    },
-    {
-      id: 11,
-      image:
-        'https://i.pinimg.com/564x/af/8b/2b/af8b2bddab3f12fe5117e814535bf0f8.jpg',
-      carName: 'Ford Mustang',
-      userName: 'Dan Wilson',
-      mileage: 1000,
+      isActive: true,
       carValue: 15000
     },
     {
@@ -97,6 +97,7 @@ const Card = () => {
       carName: 'Hundai Santa fe',
       userName: 'Cintya Jhonson',
       mileage: 4000,
+      isActive: true,
       carValue: 35000
     },
     {
@@ -106,20 +107,21 @@ const Card = () => {
       carName: 'Mitsubishi',
       userName: 'Ava Wilson',
       mileage: 9000,
+      isActive: false,
       carValue: 16000
     }
   ];
 
   return (
-    <div className="w-full h-full max-lg:h-80">
-      <ul className="flex h-full flex-wrap gap-8 max-lg:flex-col max-lg:overflow-x-auto">
+    <div className="w-10/12 h-full max-lg:h-80">
+      <ul className="flex h-full w-full flex-wrap gap-[4%] max-lg:flex-col max-lg:overflow-x-auto pt-20 px-[4%]">
         {carArray.map((item) => (
           <li
             key={item.id}
-            className="w-72 h-80 flex flex-col gap-5 max-lg:h-80"
+            className="w-[22%] flex flex-col gap-5 max-lg:h-80 mb-20 relative"
           >
-            <div className="flex  flex-col gap-4">
-              <div className="w-full h-32 flex  justify-center items-center">
+            <div className="flex  flex-col gap-4 ">
+              <div className="w-full h-32 flex  justify-center items-center bg-[#E9ECEF]">
                 <img
                   className="w-5/6   h-28  object-cover "
                   src={item.image}
@@ -127,23 +129,21 @@ const Card = () => {
                 />
               </div>
 
+              {item.isActive ? (
+                <div className="flex justify-center items-center h-[32px] w-[70px] absolute top-3 left-3 bg-brand-1 text-sm text-white font-medium pt-0.5 hover:bg-brand-2">
+                  Ativo
+                </div>
+              ) : (
+                <div className="flex justify-center items-center h-[32px] w-[70px] absolute top-3 left-3 bg-[#ADB5BD] text-sm text-white font-medium pt-0.5 hover:bg-brand-2">
+                  Inativo
+                </div>
+              )}
+
               <p className="font-bold">{item.carName}</p>
               <p className="text-sm text-gray-600">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry. Lorem...
               </p>
-            </div>
-
-            <div className="w-full h-full flex gap-3  items-center max-lg:h-0">
-              <div className="w-8 h-8 bg-pink-400  rounded-full bg-gray-900">
-                <p className="w-full h-full flex justify-center items-center  text-white">
-                  {item.userName.charAt(0)}
-                </p>
-              </div>
-
-              <span className="text-gray-700 font-semibold">
-                {item.userName}
-              </span>
             </div>
 
             <div className="w-full h-full flex gap-3 justify-between">
@@ -156,6 +156,14 @@ const Card = () => {
 
               <span className="font-bold">R$ {item.carValue}</span>
             </div>
+            <div className="flex flex-row gap-5">
+              <button className="flex flex-row justify-center items-center text-black font-semibold p-3 gap-2 w-max h-12 border-2 border-black rounded-md">
+                Editar
+              </button>
+              <button className="flex flex-row justify-center items-center text-black font-semibold p-3 gap-2 w-max h-12 border-2 border-black rounded-md">
+                Ver Detalhes
+              </button>
+            </div>
           </li>
         ))}
       </ul>
@@ -163,4 +171,4 @@ const Card = () => {
   );
 };
 
-export default Card;
+export default UserDisplay;
