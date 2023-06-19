@@ -57,9 +57,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         path: '/'
       });
 
-      //   setTimeout(() => {
-      //     router.push('/');
-      //   }, 2000);
+      setTimeout(() => {
+        router.push('/teste');
+      }, 2000);
     } catch (error) {
       console.log(error);
     }
