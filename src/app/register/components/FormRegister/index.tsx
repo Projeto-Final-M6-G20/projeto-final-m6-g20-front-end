@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 
 import Input from 'app/components/Input';
@@ -7,9 +8,8 @@ import CustomModal from 'app/components/Modal';
 import { UserData } from './validator';
 
 import { useDisclosure } from '@chakra-ui/react';
-import { zodResolver } from '@hookform/resolvers/zod';
+/* import { zodResolver } from '@hookform/resolvers/zod'; */
 import { useAuth } from 'hooks';
-import Link from 'next/link';
 
 const RegisterForm = () => {
   const {
@@ -31,7 +31,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-start max-w-md w-full border-2  rounded-md  p-8 bg-cover bg-center max-lg:w-3/4 max-sm:w-3/4">
+    <div className="flex flex-col items-start max-w-md w-full border-2 bg-white  rounded-md  p-8 bg-cover bg-center max-lg:w-3/4 max-sm:w-3/4">
       <div className="w-2/2">
         <h2 className="text-2xl font-bold  mb-6">Cadastro</h2>
 
@@ -233,7 +233,9 @@ const RegisterForm = () => {
             <p className="text-sm  mb-6">
               Agora você poderá ver seus negócios crescendo em grande escala
             </p>
-            <Link href={'/login'} type="button"
+            <Link
+              href={'/login'}
+              type="button"
               className="btn-primary relative top-0 left-0 w-2/5 font-bold"
             >
               Ir para o login
