@@ -1,9 +1,12 @@
 'use client';
-import Input from 'app/components/Input';
 import Link from 'next/link';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+
+import Input from 'app/components/Input';
+
 import { LoginData, LoginSchema } from './validator';
+
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useAuth } from 'hooks';
 
 const LoginForm = () => {
@@ -14,7 +17,7 @@ const LoginForm = () => {
   const { LoginFunction } = useAuth();
 
   return (
-    <div className="max-w-md w-full border-2 bg-gray-100  rounded-md  p-8 bg-cover bg-center max-lg:w-3/4 max-sm:w-3/4">
+    <div className="max-w-md w-full border-2 bg-white  rounded-md  p-8 bg-cover bg-center max-lg:w-3/4 max-sm:w-3/4">
       <div className="flex w-2/2 justify-between items-center ">
         <h2 className="text-2xl font-bold  mb-6">Login</h2>
       </div>
@@ -53,7 +56,11 @@ const LoginForm = () => {
             Enviar
           </button>
           <span className="text-gray-500">Ainda não possui uma conta?</span>
-          <Link href={'/register'} type="button" className="btn-form text-center w-3/4">
+          <Link
+            href={'/register'}
+            type="button"
+            className="btn-form text-center w-3/4"
+          >
             Cadastrar
           </Link>
         </div>
