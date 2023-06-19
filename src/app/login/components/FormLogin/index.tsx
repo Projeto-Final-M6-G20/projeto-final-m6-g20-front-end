@@ -4,9 +4,7 @@ import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { LoginData, LoginSchema } from './validator';
-import { useAuth } from '../hooks';
-import { useContext } from 'react';
-import { AuthContext } from 'context/AuthContext';
+import { useAuth } from 'hooks';
 
 const LoginForm = () => {
   const { register, handleSubmit } = useForm<LoginData>({
@@ -16,7 +14,7 @@ const LoginForm = () => {
   const { LoginFunction } = useAuth();
 
   return (
-    <div className="max-w-md w-full border-2  rounded-md  p-8 bg-cover bg-center max-lg:w-3/4 max-sm:w-3/4">
+    <div className="max-w-md w-full border-2 bg-gray-100  rounded-md  p-8 bg-cover bg-center max-lg:w-3/4 max-sm:w-3/4">
       <div className="flex w-2/2 justify-between items-center ">
         <h2 className="text-2xl font-bold  mb-6">Login</h2>
       </div>
@@ -30,7 +28,7 @@ const LoginForm = () => {
           id="email"
           placeholder="Digitar Email"
           label="Email"
-          className="input-style"
+          className="input-style w-full"
           {...register('email')}
         />
 
@@ -39,7 +37,7 @@ const LoginForm = () => {
           id="password"
           placeholder="Digitar senha"
           label="Senha"
-          className="input-style"
+          className="input-style w-full"
           {...register('password')}
         />
 
@@ -55,7 +53,7 @@ const LoginForm = () => {
             Enviar
           </button>
           <span className="text-gray-500">Ainda não possui uma conta?</span>
-          <Link href={'/'} type="button" className="btn-form text-center w-3/4">
+          <Link href={'/register'} type="button" className="btn-form text-center w-3/4">
             Cadastrar
           </Link>
         </div>
