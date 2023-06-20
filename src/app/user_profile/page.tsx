@@ -26,30 +26,15 @@ const UserProfile = () => {
     onClose: onCreateClose
   } = useDisclosure();
 
-  const onOpenFunction = () => {
-    setMode('profile');
-    onOpen();
-  };
-
-  const onCreateFunction = () => {
-    setMode('create');
-    onOpen();
-  };
-
   return (
     <main className="flex flex-col min-h-full min-w-full items-center justify-center py-20 backgroundImage bg-no-repeat">
       <div className="flex flex-col gap-6 bg-white rounded h-min w-3/4 px-10 py-11">
-        <Tooltip label="Editar perfil" fontSize="md">
-          <div
-            onClick={() => onOpenFunction()}
-            className="w-[104px] h-[104px] bg-pink-400  rounded-full bg-gray-900 cursor-pointer"
-          >
-            <p className="w-full h-full flex justify-center items-center  text-white text-4xl">
-              {sellerData.initials[0]}
-              {sellerData.initials[1]}
-            </p>
-          </div>
-        </Tooltip>
+        <div className="w-[104px] h-[104px] bg-pink-400  rounded-full bg-gray-900 cursor-pointer">
+          <p className="w-full h-full flex justify-center items-center  text-white text-4xl">
+            {sellerData.initials[0]}
+            {sellerData.initials[1]}
+          </p>
+        </div>
 
         <div className="flex flex-row items-center">
           <h2 className="heading-2-600">{sellerData.name}</h2>
@@ -82,9 +67,6 @@ const UserProfile = () => {
       </div>
 
       <CreateAdForm isOpen={isCreateOpen} onClose={onCreateClose} />
-
-      <ModalProfile onClose={onClose} onOpen={onOpen} isOpen={isOpen} />
-      <ModalDelete isOpen={isOpen} onClose={onClose} />
     </main>
   );
 };

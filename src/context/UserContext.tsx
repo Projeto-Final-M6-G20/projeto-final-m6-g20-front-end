@@ -40,6 +40,7 @@ interface iUser {
   cpf: string;
   cellphone: string;
   birth_date: string;
+  is_advertiser: boolean;
   Address: Address;
 }
 
@@ -56,6 +57,7 @@ interface UserValue {
   user: iUser | undefined;
   mode: string;
   setMode: Dispatch<SetStateAction<string>>;
+  getUser: () => Promise<void>;
 }
 
 export const UserContext = createContext<UserValue>({} as UserValue);
@@ -140,7 +142,8 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
         createCarAd,
         user,
         mode,
-        setMode
+        setMode,
+        getUser
       }}
     >
       {children}

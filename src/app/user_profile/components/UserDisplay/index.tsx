@@ -186,14 +186,6 @@ const UserDisplay = () => {
           </li>
         ))}
       </ul>
-
-      <ModalAd
-        onClose={onClose}
-        onOpen={onOpen}
-        isOpen={isOpen}
-        active={active}
-        setActive={setActive}
-      />
     </div>
   );
 };

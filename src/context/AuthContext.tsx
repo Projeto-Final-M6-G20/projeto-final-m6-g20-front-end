@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { createContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 import { LoginData } from 'app/login/components/FormLogin/validator';
 import { UserData } from 'app/register/components/FormRegister/validator';
@@ -8,6 +8,7 @@ import { UserData } from 'app/register/components/FormRegister/validator';
 import { useDisclosure } from '@chakra-ui/react';
 import { setCookie } from 'nookies';
 import api from 'service/api';
+import { UserContext } from './UserContext';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -58,8 +59,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       setTimeout(() => {
         router.push('/user_profile');
-
-      }, 2000);
+      }, 1000);
     } catch (error) {
       console.log(error);
     }
