@@ -1,14 +1,10 @@
-'use client';
 import '../styles/global.css';
 import { Inter } from 'next/font/google';
 import { IoIosArrowUp } from 'react-icons/io';
-import { usePathname } from 'next/navigation';
 
-import MenuMobile from './components/MenuMobile';
+import HeaderComponent from './components/Header';
 
 import { AuthProvider } from 'context/AuthContext';
-import Link from 'next/link';
-import { UserProvider } from 'context/UserContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,15 +18,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
   return (
     <html lang="en">
       <AuthProvider>
-        <UserProvider>
-          <body className={inter.className}>
-            <header className="w-full h-16 p-9 border-2 items-center border-b-gray-300 flex justify-between max-lg:p-5">
-              <p className="heading-1-700  bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text text p-3  ">
-                Motors <span className="text-lg font-bold">shop</span>
+
+        <body className={inter.className}>
+          <HeaderComponent />
+          {children}
+          <footer className="w-full flex justify-between h-32 bg-black max-lg:flex-col max-lg:items-center max-sm:min-h-80 max-sm:justify-normal max-sm:gap-3">
+            <div className="flex  text-center  justify-center items-center max-lg:w-5/6">
+              <p className="heading-2-600 text-white max-lg:text-center">
+                Motors <span className="text-lg">shop</span>
               </p>
               <nav className="flex items-center p-3 max-sm:hidden">
                 {pathname === '/login' ? (

@@ -1,11 +1,15 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { VscClose } from 'react-icons/vsc';
 
-import { Menu, MenuButton, MenuList, MenuItem, Button } from '@chakra-ui/react';
+import { Menu, MenuButton, MenuList, Button } from '@chakra-ui/react';
+
 const MenuMobile = () => {
+  const pathname = usePathname();
+
   return (
     <Menu>
       {({ isOpen }) => (
@@ -22,20 +26,38 @@ const MenuMobile = () => {
               display: 'flex',
               flexDirection: 'column',
               gap: '20px',
-              width: '100vw'
+              width: '100vw',
+              marginTop: '12px',
+              paddingLeft: '40px',
+              paddingRight: '40px'
             }}
           >
             <Link
-              href={'login'}
-              className="btn-header text-lg text-black text-gray-600 hover:font-semibold"
+              style={{
+                fontSize: '16px',
+                fontWeight: '600',
+                color: '#495057',
+                paddingTop: '15px'
+              }}
+              href={pathname === '/login' ? '/' : '/login'}
             >
-              Login
+              {pathname === '/login' ? 'Home' : 'Login'}
             </Link>
             <Link
-              href={'register'}
-              className="btn-header text-lg text-black text-gray-600 hover:font-semibold"
+              style={{
+                marginBottom: '15px',
+                padding: '8px',
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: 'solid 1px',
+                borderColor: '#ADB5BD'
+              }}
+              href={pathname === '/register' ? '/' : '/register'}
             >
-              Cadastrar
+              {pathname === '/register' ? 'Home' : 'Cadastrar'}
             </Link>
           </MenuList>
         </>
