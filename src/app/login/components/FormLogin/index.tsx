@@ -8,6 +8,8 @@ import { LoginData, LoginSchema } from './validator';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAuth } from 'hooks';
+import { useContext } from 'react';
+import { UserContext } from 'context/UserContext';
 
 const LoginForm = () => {
   const { register, handleSubmit } = useForm<LoginData>({
@@ -15,6 +17,7 @@ const LoginForm = () => {
   });
 
   const { LoginFunction } = useAuth();
+  const { getUser } = useContext(UserContext);
 
   return (
     <div className="max-w-md w-full border-2 bg-white  rounded-md  p-8 bg-cover bg-center max-lg:w-3/4 max-sm:w-3/4">
@@ -51,6 +54,7 @@ const LoginForm = () => {
         <div className="flex flex-col gap-4 items-center justify-between">
           <button
             type="submit"
+            onClick={() => getUser()}
             className="btn-primary relative top-0 left-0 w-3/4"
           >
             Enviar

@@ -9,25 +9,13 @@ interface ModalChildren {
   isOpen: boolean;
   onClose: () => void;
   onOpen: () => void;
-  active: boolean;
-  setActive: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const ModalAd = ({
-  isOpen,
-  onClose,
-  onOpen,
-  active,
-  setActive
-}: ModalChildren) => {
-  const onOpenFunction = () => {
-    onOpen();
-    setActive(true);
-  };
+const ModalAd = ({ isOpen, onClose, onOpen }: ModalChildren) => {
   const { user, mode } = useContext(UserContext);
 
   return (
     <>
-      {mode === 'ad' ? (
+      {mode === 'edit' ? (
         <CustomModal
           isOpen={isOpen}
           onClose={onClose}
@@ -99,7 +87,6 @@ const ModalAd = ({
                 <button
                   onClick={() => {
                     onClose();
-                    setActive(false);
                   }}
                   className="w-1/3 text-black box-border flex flex-row justify-center items-center p-3 gap-2 bg-gray-300 border-gray-300 border-2 rounded h-12 "
                 >
