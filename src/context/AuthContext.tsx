@@ -2,7 +2,6 @@
 import { useRouter } from 'next/navigation';
 import { createContext, useState } from 'react';
 
-import CustomModal from 'app/components/Modal';
 import { LoginData } from 'app/login/components/FormLogin/validator';
 import { UserData } from 'app/register/components/FormRegister/validator';
 
@@ -58,7 +57,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       });
 
       setTimeout(() => {
-        router.push('/teste');
+        router.push('/user_profile');
+
       }, 2000);
     } catch (error) {
       console.log(error);
@@ -67,7 +67,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   return (
     <AuthContext.Provider
-      value={{ LoginFunction, RegisterFunction, is_advertiser, isModal }}
+      value={{
+        LoginFunction,
+        RegisterFunction,
+        is_advertiser,
+        isModal
+      }}
     >
       {children}
     </AuthContext.Provider>

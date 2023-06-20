@@ -1,4 +1,12 @@
+import { Button, useDisclosure } from '@chakra-ui/react';
+import ModalProfile from './components/modalProfile';
+import React, { useContext, useState } from 'react';
+import { UserContext } from 'context/UserContext';
+import ModalAd from './components/modalAd';
+import ModalDelete from './components/modalDelete';
+
 const UserDisplay = () => {
+  const [active, setActive] = useState(false);
   const carArray = [
     {
       id: 1,
@@ -112,6 +120,14 @@ const UserDisplay = () => {
     }
   ];
 
+  const { setMode } = useContext(UserContext);
+  const { onOpen, onClose, isOpen } = useDisclosure();
+  const onOpenFunction = () => {
+    setMode('ad');
+    setActive(false);
+    onOpen();
+  };
+
   return (
     <div className="w-10/12 h-full max-lg:h-80">
       <ul className="flex h-full w-full flex-wrap gap-[4%] max-lg:flex-col max-lg:overflow-x-auto pt-20 px-[4%]">
@@ -157,7 +173,10 @@ const UserDisplay = () => {
               <span className="font-bold">R$ {item.carValue}</span>
             </div>
             <div className="flex flex-row gap-5">
-              <button className="flex flex-row justify-center items-center text-black font-semibold p-3 gap-2 w-max h-12 border-2 border-black rounded-md">
+              <button
+                onClick={() => onOpenFunction()}
+                className="flex flex-row justify-center items-center text-black font-semibold p-3 gap-2 w-max h-12 border-2 border-black rounded-md"
+              >
                 Editar
               </button>
               <button className="flex flex-row justify-center items-center text-black font-semibold p-3 gap-2 w-max h-12 border-2 border-black rounded-md">
@@ -167,6 +186,14 @@ const UserDisplay = () => {
           </li>
         ))}
       </ul>
+
+      <ModalAd
+        onClose={onClose}
+        onOpen={onOpen}
+        isOpen={isOpen}
+        active={active}
+        setActive={setActive}
+      />
     </div>
   );
 };
