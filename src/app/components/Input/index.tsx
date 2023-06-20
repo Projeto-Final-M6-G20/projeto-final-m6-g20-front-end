@@ -12,12 +12,12 @@ const Input = forwardRef<HTMLInputElement, iInputProps>(
   ({ type, id, error, label, ...rest }, ref) => {
     return (
       <>
-        <div className="mb-2">
+        <div className="mb-2 w-full">
           <label className="block  font-semibold mb-2" htmlFor={id}>
             {label}
           </label>
           <input
-            className="input-style"
+            className="input-style w-full focus:outline-slate-900"
             required
             type={type}
             id={id}

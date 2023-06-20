@@ -53,7 +53,11 @@ const LoginForm = () => {
             Enviar
           </button>
           <span className="text-gray-500">Ainda não possui uma conta?</span>
-          <Link href={'/register'} type="button" className="btn-form text-center w-3/4">
+          <Link
+            href={'/register'}
+            type="button"
+            className="btn-form text-center w-3/4"
+          >
             Cadastrar
           </Link>
         </div>
