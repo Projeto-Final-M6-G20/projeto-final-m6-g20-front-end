@@ -1,9 +1,6 @@
 import { Button, useDisclosure } from '@chakra-ui/react';
-import ModalProfile from './components/modalProfile';
 import React, { useContext, useState } from 'react';
 import { UserContext } from 'context/UserContext';
-import ModalAd from './components/modalAd';
-import ModalDelete from './components/modalDelete';
 
 const UserDisplay = () => {
   const [active, setActive] = useState(false);
