@@ -25,6 +25,19 @@ const DropDown = () => {
     onOpen();
   };
 
+  let initials = '';
+  const names = user?.fullname.split(' ');
+
+  if (names && names?.length > 0) {
+    const firstName = names[0];
+    initials += firstName.charAt(0).toUpperCase();
+  }
+
+  if (names && names?.length > 1) {
+    const lastName = names[names.length - 1];
+    initials += lastName.charAt(0).toUpperCase();
+  }
+
   const cookies = parseCookies();
   const token = cookies['user.Token'];
   const router = useRouter();
@@ -46,8 +59,7 @@ const DropDown = () => {
               <div className="w-full h-full flex gap-3  items-center max-lg:h-0">
                 <div className="w-8 h-8 bg-pink-400  rounded-full bg-gray-900">
                   <p className="w-full h-full flex justify-center items-center  text-white">
-                    {user?.fullname.charAt(0)}
-                    {user?.fullname.charAt(6)}
+                    {initials}
                   </p>
                 </div>
 
