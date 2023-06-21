@@ -1,14 +1,16 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useState } from 'react';
 
 import { LoginData } from 'app/login/components/FormLogin/validator';
 import { UserData } from 'app/register/components/FormRegister/validator';
+import {
+  ResetPasswordData,
+  SendEmailResetPasswordData
+} from 'app/resetPassword/components/FormResetPassword/validator';
 
-import { useDisclosure } from '@chakra-ui/react';
 import { setCookie } from 'nookies';
 import api from 'service/api';
-import { UserContext } from './UserContext';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -19,6 +21,8 @@ interface AuthValue {
   RegisterFunction: (data: any) => void;
   is_advertiser: () => void;
   isModal: boolean;
+  sendEmail: (sendEmailResetPasswordData: SendEmailResetPasswordData) => void;
+  resetPassword: (resetPasswordData: ResetPasswordData, token: string) => void;
 }
 
 export const AuthContext = createContext<AuthValue>({} as AuthValue);
@@ -65,13 +69,45 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const sendEmail = (
+    sendEmailResetPasswordData: SendEmailResetPasswordData
+  ) => {
+    api
+      .post('/users/resetPassword', sendEmailResetPasswordData)
+      .then(() => {
+        console.log('Email enviado com sucesso !');
+        router.push('/');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const resetPassword = (
+    resetPasswordData: ResetPasswordData,
+    token: string
+  ) => {
+    api
+      .patch(`/users/resetPassword/${token}`, {
+        password: resetPasswordData.password
+      })
+      .then(() => {
+        console.log('Senha atualizada com sucesso !');
+        router.push('/login');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <AuthContext.Provider
       value={{
         LoginFunction,
         RegisterFunction,
         is_advertiser,
-        isModal
+        isModal,
+        sendEmail,
+        resetPassword
       }}
     >
       {children}

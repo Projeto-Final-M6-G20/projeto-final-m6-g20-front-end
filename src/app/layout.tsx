@@ -24,9 +24,9 @@ export default function RootLayout({
     <html lang="en">
       <AuthProvider>
         <UserProvider>
-        <body className={inter.className}>
-          <HeaderComponent />
-         
+          <body className={inter.className}>
+            <HeaderComponent />
+
             {children}
             <footer className="w-full flex justify-between h-32 bg-black max-lg:flex-col max-lg:items-center max-sm:min-h-80 max-sm:justify-normal max-sm:gap-3">
               <div className="flex  text-center  justify-center items-center max-lg:w-5/6">
