@@ -8,7 +8,7 @@ export default function ResetPassword({
   params: { token: string };
 }) {
   return (
-    <main>
+    <main className="flex min-h-screen bg-gray-100  items-center  justify-center">
       <ResetPasswordForm token={params.token} />
     </main>
   );

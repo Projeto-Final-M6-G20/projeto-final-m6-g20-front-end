@@ -1,6 +1,5 @@
 'use client';
 import {
-  useDisclosure,
   ModalHeader,
   Modal,
   ModalOverlay,
@@ -11,25 +10,38 @@ import {
 interface ModalChildren {
   children: React.ReactNode;
   isOpen: boolean;
-  headerText: string;
+  headerText?: string;
   onClose: () => void;
+  MaxWidthHeader: string;
+  MaxWidthBody: string;
+  widthHeader: string;
+  widthBody: string;
 }
 
 const CustomModal = ({
   isOpen,
   onClose,
   children,
-  headerText
+  headerText,
+  MaxWidthHeader,
+  MaxWidthBody,
+  widthHeader,
+  widthBody
 }: ModalChildren) => {
-  //   const { onOpen, onClose } = useDisclosure();
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay className=" flex flex-col items-center justify-center bg-opacity-70 bg-black">
-        <ModalHeader className="w-1/2 bg-white flex justify-between justify-end p-4">
+        <ModalHeader
+          style={{ maxWidth: MaxWidthHeader, width: widthHeader }}
+          className=" bg-white flex justify-between  p-4"
+        >
           <p>{headerText}</p>
           <ModalCloseButton />
         </ModalHeader>
-        <ModalBody className="w-1/2 bg-white flex justify-start p-8">
+        <ModalBody
+          style={{ maxWidth: MaxWidthBody, width: widthBody }}
+          className=" bg-white flex justify-start p-8"
+        >
           {children}
         </ModalBody>
       </ModalOverlay>

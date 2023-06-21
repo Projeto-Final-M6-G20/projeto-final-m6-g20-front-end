@@ -2,17 +2,21 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import MenuMobile from '../MenuMobile';
 import DropDown from 'app/user_profile/components/UserDisplay/components/dropdownUser';
+
+import MenuMobile from '../MenuMobile';
 
 const HeaderComponent = () => {
   const pathname = usePathname();
 
   return (
     <header className="w-full h-16 p-9 border-2 items-center border-b-gray-300 flex justify-between max-lg:p-5">
-      <p className="heading-1-700  bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text text p-3  ">
+      <Link
+        href={'/'}
+        className="heading-1-700  bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text text p-3  "
+      >
         Motors <span className="text-lg font-bold">shop</span>
-      </p>
+      </Link>
 
       <>
         {pathname === '/user_profile' ? (
