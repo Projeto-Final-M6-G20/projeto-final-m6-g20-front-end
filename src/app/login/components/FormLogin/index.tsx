@@ -1,20 +1,25 @@
 'use client';
 import Link from 'next/link';
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Input from 'app/components/Input';
+import CustomModal from 'app/components/Modal';
 
+import SendEmailForm from '../FormSendEmail';
 import { LoginData, LoginSchema } from './validator';
 
+import { Button, useDisclosure } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useAuth } from 'hooks';
-import { useContext } from 'react';
 import { UserContext } from 'context/UserContext';
+import { useAuth } from 'hooks';
 
 const LoginForm = () => {
   const { register, handleSubmit } = useForm<LoginData>({
     resolver: zodResolver(LoginSchema)
   });
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { LoginFunction } = useAuth();
   const { getUser } = useContext(UserContext);
@@ -48,7 +53,9 @@ const LoginForm = () => {
         />
 
         <div className="w-full flex justify-end items-end">
-          <span className="text-gray-500">Esqueci minha senha</span>
+          <Button onClick={onOpen} className="text-gray-500">
+            Esqueci minha senha
+          </Button>
         </div>
 
         <div className="flex flex-col gap-4 items-center justify-between">
@@ -69,6 +76,13 @@ const LoginForm = () => {
           </Link>
         </div>
       </form>
+      <CustomModal
+        isOpen={isOpen}
+        onClose={onClose}
+        headerText="Enviar email de recuperação de senha"
+      >
+        <SendEmailForm />
+      </CustomModal>
     </div>
   );
 };
