@@ -29,7 +29,7 @@ const ModalAd = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                 type="text"
                 label="Cep"
                 id="cep"
-                placeholder={user?.Address.zip_code}
+                defaultValue={user?.Address.zip_code}
               />
 
               <div className="flex gap-12">
@@ -37,7 +37,7 @@ const ModalAd = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                   type="texto"
                   label="Estado"
                   id="state"
-                  placeholder={user?.Address.state}
+                  defaultValue={user?.Address.state}
                   style={{
                     width: '100%'
                   }}
@@ -47,7 +47,7 @@ const ModalAd = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                   type="text"
                   label="Cidade"
                   id="city"
-                  placeholder={user?.Address.city}
+                  defaultValue={user?.Address.city}
                   style={{
                     width: '100%'
                   }}
@@ -58,7 +58,7 @@ const ModalAd = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                 type="text"
                 label="Rua"
                 id="street"
-                placeholder={user?.Address.street}
+                defaultValue={user?.Address.street}
               />
 
               <div className="flex gap-12">
@@ -66,7 +66,7 @@ const ModalAd = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                   type="text"
                   label="Numero"
                   id="number"
-                  placeholder={user?.Address.number}
+                  defaultValue={user?.Address.number}
                   style={{
                     width: '100%'
                   }}
@@ -76,7 +76,7 @@ const ModalAd = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                   type="text"
                   label="Complemento"
                   id="complement"
-                  placeholder={user?.Address.complement}
+                  defaultValue={user?.Address.complement}
                   style={{
                     width: '100%'
                   }}
