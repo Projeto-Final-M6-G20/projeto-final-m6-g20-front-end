@@ -1,7 +1,9 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { createContext, useState } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
 
+import Toast from 'app/components/Toast';
 import { LoginData } from 'app/login/components/FormLogin/validator';
 import { UserData } from 'app/register/components/FormRegister/validator';
 import {
@@ -60,11 +62,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         maxAge: 60 * 1500,
         path: '/'
       });
+      Toast({ message: 'Login efetuado com sucesso!', isSucess: true });
 
       setTimeout(() => {
         router.push('/user_profile');
       }, 1000);
     } catch (error) {
+      Toast({ message: 'E-mail ou senha invalidos!' });
+
       console.log(error);
     }
   };
@@ -75,10 +80,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     api
       .post('/users/resetPassword', sendEmailResetPasswordData)
       .then(() => {
-        console.log('Email enviado com sucesso !');
+        Toast({ message: 'Email enviado com sucesso!', isSucess: true });
         router.push('/');
       })
       .catch((err) => {
+        Toast({
+          message: 'Verifique se o e-mail informado é válido!',
+          isSucess: false
+        });
         console.log(err);
       });
   };
@@ -91,7 +100,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         password: resetPasswordData.password
       })
       .then(() => {
-        console.log('Senha atualizada com sucesso !');
+        Toast({ message: 'Senha atualizada com sucesso !', isSucess: true });
         router.push('/login');
       })
       .catch((err) => {
