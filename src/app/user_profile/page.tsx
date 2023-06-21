@@ -17,8 +17,21 @@ const UserProfile = () => {
     id: 1,
     initials: ['J', 'C']
   };
-  const { onOpen, onClose, isOpen } = useDisclosure();
-  const { setMode } = useContext(UserContext);
+
+  const { user } = useContext(UserContext);
+
+  let initials = '';
+  const names = user?.fullname.split(' ');
+
+  if (names && names?.length > 0) {
+    const firstName = names[0];
+    initials += firstName.charAt(0).toUpperCase();
+  }
+
+  if (names && names?.length > 1) {
+    const lastName = names[names.length - 1];
+    initials += lastName.charAt(0).toUpperCase();
+  }
 
   const {
     isOpen: isCreateOpen,
@@ -30,20 +43,31 @@ const UserProfile = () => {
     <main className="flex flex-col min-h-full min-w-full items-center justify-center py-20 backgroundImage bg-no-repeat">
       <div className="flex flex-col gap-6 bg-white rounded h-min w-3/4 px-10 py-11">
         <div className="w-[104px] h-[104px] bg-pink-400  rounded-full bg-gray-900 cursor-pointer">
-          <p className="w-full h-full flex justify-center items-center  text-white text-4xl">
-            {sellerData.initials[0]}
-            {sellerData.initials[1]}
-          </p>
+          {names ? (
+            <p className="w-full h-full flex justify-center items-center  text-white text-4xl">
+              {initials}
+            </p>
+          ) : (
+            <p className="w-full h-full flex justify-center items-center  text-white text-4xl">
+              ??
+            </p>
+          )}
         </div>
 
         <div className="flex flex-row items-center">
-          <h2 className="heading-2-600">{sellerData.name}</h2>
-          <p className="text-brand-1  h-full rounded bg-brand-4 p-2 align-middle">
-            Anunciante
-          </p>
+          <h2 className="heading-2-600">{user?.fullname}</h2>
+          {user?.is_advertiser ? (
+            <p className="text-brand-1  h-full rounded bg-brand-4 p-2 align-middle">
+              Anunciante
+            </p>
+          ) : (
+            <p className="text-brand-1  h-full rounded bg-brand-4 p-2 align-middle">
+              <></>
+            </p>
+          )}
         </div>
 
-        <p className="text-base text-[#495057]">{sellerData.description}</p>
+        <p className="text-base text-[#495057]">{user?.description}</p>
 
         <button
           className="border-2 border-brand-1 rounded-md text-brand-1 px-7 py-2 w-max h-max font-semibold"
