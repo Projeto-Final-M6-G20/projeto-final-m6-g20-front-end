@@ -3,10 +3,13 @@ import { z } from 'zod';
 export const resetPasswordSchema = z
   .object({
     password: z.string().nonempty('Senha obrigatoria'),
-    passwordConfirm: z.string().min(1, 'A confirmação de senha é obrigatória')
+    passwordConfirm: z
+      .string()
+      .nonempty('Digite a senha novamente')
+      .min(1, 'A confirmação de senha é obrigatória')
   })
   .refine(({ password, passwordConfirm }) => password === passwordConfirm, {
-    message: 'As senhas precisam corresponderem',
+    message: 'As senhas precisam ser iguais',
     path: ['confirm']
   });
 

@@ -21,7 +21,7 @@ const SendEmailForm = () => {
   };
 
   return (
-    <div className="max-w-md w-full border-2 bg-white  rounded-md  p-8 bg-cover bg-center max-lg:w-3/4 max-sm:w-3/4">
+    <div className="w-full border-2 bg-white  rounded-md  p-8 bg-cover bg-center  ">
       <div className="flex w-2/2 justify-between items-center "></div>
       <form
         onSubmit={handleSubmit(onFormSubmit)}
