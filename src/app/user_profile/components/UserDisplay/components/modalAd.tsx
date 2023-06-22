@@ -6,7 +6,8 @@ import CustomModal from 'app/components/Modal';
 import ModalDelete from './modalDelete';
 
 import { Button, useDisclosure } from '@chakra-ui/react';
-import { UserContext } from 'context/UserContext';
+import { Address, UserContext } from 'context/UserContext';
+import { useForm } from 'react-hook-form';
 
 interface ModalChildren {
   isOpen: boolean;
@@ -14,7 +15,13 @@ interface ModalChildren {
   onOpen: () => void;
 }
 const ModalAd = ({ isOpen, onClose, onOpen }: ModalChildren) => {
-  const { user, mode } = useContext(UserContext);
+  const { user, mode,updateUserAddress } = useContext(UserContext);
+  const { register, handleSubmit } = useForm<Address>()
+
+  const onSubFunction = (data:Address)=>{
+    updateUserAddress(data)
+
+  }
 
   return (
     <>
@@ -31,12 +38,13 @@ const ModalAd = ({ isOpen, onClose, onOpen }: ModalChildren) => {
           <div className="flex flex-col w-full gap-4">
             <h2>Informações de endereço</h2>
 
-            <form className="w-full">
+            <form className="w-full" onSubmit={handleSubmit(onSubFunction)}>
               <Input
                 type="text"
                 label="Cep"
                 id="cep"
                 defaultValue={user?.Address.zip_code}
+                {...register("zip_code")}
               />
 
               <div className="flex gap-12">
@@ -45,6 +53,7 @@ const ModalAd = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                   label="Estado"
                   id="state"
                   defaultValue={user?.Address.state}
+                  {...register("state")}
                   style={{
                     width: '100%'
                   }}
@@ -55,6 +64,7 @@ const ModalAd = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                   label="Cidade"
                   id="city"
                   defaultValue={user?.Address.city}
+                  {...register("city")}
                   style={{
                     width: '100%'
                   }}
@@ -65,6 +75,7 @@ const ModalAd = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                 type="text"
                 label="Rua"
                 id="street"
+                {...register("street")}
                 defaultValue={user?.Address.street}
               />
 
@@ -73,6 +84,7 @@ const ModalAd = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                   type="text"
                   label="Numero"
                   id="number"
+                  {...register("number")}
                   defaultValue={user?.Address.number}
                   style={{
                     width: '100%'
@@ -83,6 +95,7 @@ const ModalAd = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                   type="text"
                   label="Complemento"
                   id="complement"
+                  {...register("complement")}
                   defaultValue={user?.Address.complement}
                   style={{
                     width: '100%'
@@ -92,6 +105,7 @@ const ModalAd = ({ isOpen, onClose, onOpen }: ModalChildren) => {
 
               <div className=" flex w-full justify-end gap-2">
                 <button
+                type='button'
                   onClick={() => {
                     onClose();
                   }}

@@ -13,6 +13,7 @@ import jwt from 'jsonwebtoken';
 import { parseCookies } from 'nookies';
 import api from 'service/api';
 import instanceKenzieCars from 'service/kenzie_cars';
+import { UserData } from 'app/register/components/FormRegister/validator';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -25,7 +26,7 @@ interface iModel {
   year: string;
 }
 
-interface Address {
+export interface Address {
   id: string;
   street: string;
   zip_code: string;
@@ -62,6 +63,8 @@ interface UserValue {
   getUser: () => Promise<void>;
   adv: NewAdData[] | undefined;
   setAdv: Dispatch<SetStateAction<NewAdData[]>>;
+  updateUser: (data: UserData) => Promise<void>
+  updateUserAddress: (data: Address) => Promise<void>
 }
 
 export const UserContext = createContext<UserValue>({} as UserValue);
@@ -138,6 +141,32 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const updateUser = async (data:UserData)=>{
+    try {
+      const decodedToken = jwt.decode(cookies['user.Token']);
+
+      const id = decodedToken ? decodedToken.sub : null;
+      const response = await api.patch(`user/${id}`,data)
+      console.log(response.data)
+      getUser()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const updateUserAddress = async (data:Address)=>{
+    try {
+      const decodedToken = jwt.decode(cookies['user.Token']);
+
+      const id = decodedToken ? decodedToken.sub : null;
+      const response = await api.patch(`address/user/${id}`,data)
+      console.log(response.data)
+      getUser()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     getUser();
     getAdPerId();
@@ -160,7 +189,9 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
         setMode,
         getUser,
         adv,
-        setAdv
+        setAdv,
+        updateUser,
+        updateUserAddress
       }}
     >
       {children}

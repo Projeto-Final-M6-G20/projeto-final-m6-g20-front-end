@@ -25,6 +25,10 @@ const ModalDelete = ({ isOpen, onClose }: ModalChildren) => {
         <CustomModal
           isOpen={isOpen}
           onClose={onClose}
+          MaxWidthBody="90%"
+          MaxWidthHeader="90%"
+          widthBody="600px"
+          widthHeader="600px"
           headerText="Excluir anuncio"
         >
           <div className="flex flex-col gap-5">
