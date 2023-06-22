@@ -1,7 +1,11 @@
+'use client';
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 
 import Banner from './components/Banner';
 import Card from './components/Card';
+import CarFilter from './components/Filter';
+
+import AdDetailView from './adDetailView/page';
 
 export default function Home() {
   return (
@@ -9,98 +13,7 @@ export default function Home() {
       <>
         <Banner />
         <section className="w-full h-full  flex m-14  max-lg:m-4">
-          <aside className="w-1/2 max-lg:hidden lg:block">
-            <div className="flex flex-col p-4 gap-2">
-              <h3 className="font-extrabold">Marcas</h3>
-              <div className="flex flex-col gap-0 text-gray-500 p-2">
-                <span>General Motors</span>
-                <span>Fiat</span>
-                <span>Ford</span>
-                <span>Honda</span>
-                <span>Porsche</span>
-                <span>Volkswagen</span>
-              </div>
-            </div>
-
-            <div className="flex flex-col p-4 gap-2">
-              <h3 className="font-extrabold">Modelos</h3>
-              <div className="flex flex-col gap-0 text-gray-500 p-2">
-                <span>Civic</span>
-                <span>Corolla</span>
-                <span>Cruze</span>
-                <span>Fit</span>
-                <span>Gol</span>
-                <span>Ka</span>
-                <span>Onix</span>
-                <span>Porsche</span>
-              </div>
-            </div>
-            <div className="flex flex-col p-4 gap-2">
-              <h3 className="font-extrabold">Cor</h3>
-              <div className="flex flex-col gap-0 text-gray-500 p-2">
-                <span>Azul</span>
-                <span>Branco</span>
-                <span>Cinza</span>
-                <span>Prata</span>
-                <span>Verde</span>
-              </div>
-            </div>
-
-            <div className="flex flex-col p-4 gap-2">
-              <h3 className="font-extrabold">Ano</h3>
-              <div className="flex flex-col gap-0 text-gray-500 p-2">
-                <span>2022</span>
-                <span>2021</span>
-                <span>2015</span>
-                <span>2013</span>
-                <span>2012</span>
-                <span>2010</span>
-              </div>
-            </div>
-
-            <div className="flex flex-col p-4 gap-2">
-              <h3 className="font-extrabold">Combustivel</h3>
-              <div className="flex flex-col gap-0 text-gray-500 p-2">
-                <span>Diesel</span>
-                <span>Etanol</span>
-                <span>Gasolia</span>
-                <span>Flex</span>
-              </div>
-            </div>
-
-            <div className="flex flex-col p-4 gap-2">
-              <h3 className="font-extrabold">Combustivel</h3>
-              <div className="flex  gap-6 text-gray-500 p-2">
-                <input
-                  className="w-28 outline-slate-300 text-center  bg-slate-300 "
-                  type="text"
-                  placeholder="Miníma"
-                />
-                <input
-                  className="w-28 outline-slate-300 text-center  bg-slate-300 "
-                  type="text"
-                  placeholder="Máxima"
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col p-4 gap-2">
-              <h3 className="font-extrabold">Preço</h3>
-              <div className="flex  gap-6 text-gray-500 p-2">
-                <input
-                  className="w-28 outline-slate-300 text-center  bg-slate-300 "
-                  type="text"
-                  placeholder="Miníma"
-                />
-                <input
-                  className="w-28 outline-slate-300 text-center  bg-slate-300 "
-                  type="text"
-                  placeholder="Máxima"
-                />
-              </div>
-            </div>
-          </aside>
-
+          <CarFilter />
           <Card />
         </section>
 
