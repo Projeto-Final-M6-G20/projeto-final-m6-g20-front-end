@@ -1,9 +1,12 @@
-import { Button, useDisclosure } from '@chakra-ui/react';
+import React, { useContext, useState } from 'react';
+
 import Input from 'app/components/Input';
 import CustomModal from 'app/components/Modal';
-import { UserContext } from 'context/UserContext';
-import React, { useContext, useState } from 'react';
+
 import ModalDelete from './modalDelete';
+
+import { Button, useDisclosure } from '@chakra-ui/react';
+import { UserContext } from 'context/UserContext';
 
 interface ModalChildren {
   isOpen: boolean;
@@ -17,6 +20,10 @@ const ModalAd = ({ isOpen, onClose, onOpen }: ModalChildren) => {
     <>
       {mode === 'edit' ? (
         <CustomModal
+          MaxWidthBody="90%"
+          MaxWidthHeader="90%"
+          widthBody="600px"
+          widthHeader="600px"
           isOpen={isOpen}
           onClose={onClose}
           headerText={'Editar Endereço'}
