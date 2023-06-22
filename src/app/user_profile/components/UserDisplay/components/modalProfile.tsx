@@ -1,8 +1,10 @@
-import { Button, useDisclosure } from '@chakra-ui/react';
+import React, { useContext, useEffect, useState } from 'react';
+
 import Input from 'app/components/Input';
 import CustomModal from 'app/components/Modal';
+
+import { Button, useDisclosure } from '@chakra-ui/react';
 import { UserContext } from 'context/UserContext';
-import React, { useContext, useEffect, useState } from 'react';
 
 interface ModalChildren {
   isOpen: boolean;
@@ -20,6 +22,10 @@ const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
     <>
       {mode === 'profile' ? (
         <CustomModal
+          MaxWidthBody="90%"
+          MaxWidthHeader="90%"
+          widthBody="600px"
+          widthHeader="600px"
           isOpen={isOpen}
           onClose={onClose}
           headerText={'Editar Perfil'}
