@@ -1,11 +1,49 @@
 'use client';
-import { Dispatch, SetStateAction, createContext, useState } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useEffect,
+  useState
+} from 'react';
 
+import { NewAdData } from 'app/user_profile/components/CreateAdForm/validator';
+
+import jwt from 'jsonwebtoken';
+import { parseCookies } from 'nookies';
 import api from 'service/api';
 import instanceKenzieCars from 'service/kenzie_cars';
 
 interface AuthProviderProps {
   children: React.ReactNode;
+}
+
+interface iModel {
+  name: string;
+  fuel: number;
+  value: string;
+  year: string;
+}
+
+interface Address {
+  id: string;
+  street: string;
+  zip_code: string;
+  number: string;
+  city: string;
+  state: string;
+  complement: string;
+}
+
+interface iUser {
+  email: string;
+  fullname: string;
+  cpf: string;
+  description: string;
+  cellphone: string;
+  birth_date: string;
+  is_advertiser: boolean;
+  Address: Address;
 }
 
 interface UserValue {
@@ -16,17 +54,31 @@ interface UserValue {
   setSelectedModel: Dispatch<SetStateAction<string>>;
   selectedModel: string;
   brands: string[];
-  models: [];
-  createCarAd: (data) => Promise<void>;
+  models: iModel[];
+  createCarAd: (data: NewAdData) => Promise<void>;
+  user: iUser | undefined;
+  mode: string;
+  setMode: Dispatch<SetStateAction<string>>;
+  getUser: () => Promise<void>;
+  adv: NewAdData[] | undefined;
+  setAdv: Dispatch<SetStateAction<NewAdData[]>>;
 }
 
 export const UserContext = createContext<UserValue>({} as UserValue);
 
 export const UserProvider = ({ children }: AuthProviderProps) => {
   const [brands, setBrands] = useState<string[]>([]);
-  const [models, setModels] = useState<[]>([]);
+  const [models, setModels] = useState<iModel[]>([]);
   const [selectedBrand, setSelectedBrand] = useState<string>('');
   const [selectedModel, setSelectedModel] = useState<string>('');
+  const [user, setUser] = useState<iUser>();
+  const [mode, setMode] = useState('');
+  const [adv, setAdv] = useState<NewAdData[]>([]);
+
+  const cookies = parseCookies();
+  if (cookies['user.Token']) {
+    api.defaults.headers.common.authorization = `Bearer ${cookies['user.Token']}`;
+  }
 
   const getCarBrands = async () => {
     try {
@@ -45,21 +97,51 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
           `/cars?brand=${selectedBrand}`
         );
         setModels(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.log(error);
       }
     }
   };
 
-  const createCarAd = async (data) => {
+  const getUser = async () => {
+    try {
+      const decodedToken = jwt.decode(cookies['user.Token']);
+
+      const id = decodedToken ? decodedToken.sub : null;
+      const response = await api.get(`users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${cookies['user.Token']}`
+        }
+      });
+      setUser(response.data);
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
+  const getAdPerId = async () => {
+    try {
+      const response = await api.get(`/advertisements/user`);
+      setAdv(response.data);
+    } catch (error) {}
+  };
+
+  const createCarAd = async (data: NewAdData) => {
     try {
       const response = await api.post('/advertisements/', data);
+
       console.log(response);
+      getAdPerId();
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    getUser();
+    getAdPerId();
+  }, []);
 
   return (
     <UserContext.Provider
@@ -72,7 +154,13 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
         selectedBrand,
         selectedModel,
         setSelectedModel,
-        createCarAd
+        createCarAd,
+        user,
+        mode,
+        setMode,
+        getUser,
+        adv,
+        setAdv
       }}
     >
       {children}

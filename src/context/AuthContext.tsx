@@ -1,12 +1,16 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { createContext, useState } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
 
-import CustomModal from 'app/components/Modal';
+import Toast from 'app/components/Toast';
 import { LoginData } from 'app/login/components/FormLogin/validator';
 import { UserData } from 'app/register/components/FormRegister/validator';
+import {
+  ResetPasswordData,
+  SendEmailResetPasswordData
+} from 'app/resetPassword/components/FormResetPassword/validator';
 
-import { useDisclosure } from '@chakra-ui/react';
 import { setCookie } from 'nookies';
 import api from 'service/api';
 
@@ -19,6 +23,8 @@ interface AuthValue {
   RegisterFunction: (data: any) => void;
   is_advertiser: () => void;
   isModal: boolean;
+  sendEmail: (sendEmailResetPasswordData: SendEmailResetPasswordData) => void;
+  resetPassword: (resetPasswordData: ResetPasswordData, token: string) => void;
 }
 
 export const AuthContext = createContext<AuthValue>({} as AuthValue);
@@ -56,18 +62,62 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         maxAge: 60 * 1500,
         path: '/'
       });
+      Toast({ message: 'Login efetuado com sucesso!', isSucess: true });
 
       setTimeout(() => {
-        router.push('/teste');
-      }, 2000);
+        router.push('/user_profile');
+      }, 1000);
     } catch (error) {
+      Toast({ message: 'E-mail ou senha invalidos!' });
+
       console.log(error);
     }
   };
 
+  const sendEmail = (
+    sendEmailResetPasswordData: SendEmailResetPasswordData
+  ) => {
+    api
+      .post('/users/resetPassword', sendEmailResetPasswordData)
+      .then(() => {
+        Toast({ message: 'Email enviado com sucesso!', isSucess: true });
+        router.push('/');
+      })
+      .catch((err) => {
+        Toast({
+          message: 'Verifique se o e-mail informado é válido!',
+          isSucess: false
+        });
+        console.log(err);
+      });
+  };
+  const resetPassword = (
+    resetPasswordData: ResetPasswordData,
+    token: string
+  ) => {
+    api
+      .patch(`/users/resetPassword/${token}`, {
+        password: resetPasswordData.password
+      })
+      .then(() => {
+        Toast({ message: 'Senha atualizada com sucesso !', isSucess: true });
+        router.push('/login');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <AuthContext.Provider
-      value={{ LoginFunction, RegisterFunction, is_advertiser, isModal }}
+      value={{
+        LoginFunction,
+        RegisterFunction,
+        is_advertiser,
+        isModal,
+        sendEmail,
+        resetPassword
+      }}
     >
       {children}
     </AuthContext.Provider>
