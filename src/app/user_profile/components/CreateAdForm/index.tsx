@@ -53,8 +53,7 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
     selectedBrand,
     selectedModel,
     setSelectedModel,
-    createCarAd,
-    mode
+    createCarAd
   } = useContext(UserContext);
 
   useEffect(() => {

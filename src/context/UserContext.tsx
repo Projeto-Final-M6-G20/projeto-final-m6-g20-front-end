@@ -1,7 +1,4 @@
 'use client';
-import { NewAdData } from 'app/user_profile/components/CreateAdForm/validator';
-import jwt from 'jsonwebtoken';
-import { parseCookies } from 'nookies';
 import {
   Dispatch,
   SetStateAction,
@@ -10,6 +7,10 @@ import {
   useState
 } from 'react';
 
+import { NewAdData } from 'app/user_profile/components/CreateAdForm/validator';
+
+import jwt from 'jsonwebtoken';
+import { parseCookies } from 'nookies';
 import api from 'service/api';
 import instanceKenzieCars from 'service/kenzie_cars';
 
@@ -92,7 +93,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
           `/cars?brand=${selectedBrand}`
         );
         setModels(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -111,7 +112,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
       });
       setUser(response.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
