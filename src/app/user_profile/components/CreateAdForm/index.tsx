@@ -157,21 +157,21 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
                 className="w-full h-12 bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4"
                 required
                 id={'fuel'}
-                {...register('fuel')}
+                {...register('fuel_type')}
                 value={fuel}
               />
             </div>
 
             <div className="mb-2 w-[48%]">
-              <label className="block  text-sm mb-2" htmlFor={'km'}>
+              <label className="block  text-sm mb-2" htmlFor={'milleage'}>
                 Quilometragem
               </label>
               <input
                 className="w-full h-12 bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4"
                 placeholder="30.000"
                 required
-                id={'km'}
-                {...register('km')}
+                id={'milleage'}
+                {...register('milleage')}
                 value={km}
                 onChange={(e) => setKm(e.target.value)}
               />
@@ -199,7 +199,7 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
                 required
                 id={'fipe'}
                 placeholder="R$ 48.000,00"
-                {...register('fipe')}
+                {...register('fipe_price')}
                 value={fipe}
               />
             </div>

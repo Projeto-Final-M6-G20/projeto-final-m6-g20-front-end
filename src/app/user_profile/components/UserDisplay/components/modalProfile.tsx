@@ -1,9 +1,10 @@
-import { Button, useDisclosure } from '@chakra-ui/react';
+import React, { useContext, useEffect, useState } from 'react';
+
 import Input from 'app/components/Input';
 import CustomModal from 'app/components/Modal';
+
+import { Button, useDisclosure } from '@chakra-ui/react';
 import { UserContext } from 'context/UserContext';
-import React, { useContext, useState } from 'react';
-import ModalDelete from './modalDelete';
 
 interface ModalChildren {
   isOpen: boolean;
@@ -12,6 +13,7 @@ interface ModalChildren {
 }
 const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
   const { user, mode, setMode } = useContext(UserContext);
+
   const onOpenFunction = () => {
     setMode('delete');
   };
@@ -20,6 +22,10 @@ const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
     <>
       {mode === 'profile' ? (
         <CustomModal
+          MaxWidthBody="90%"
+          MaxWidthHeader="90%"
+          widthBody="600px"
+          widthHeader="600px"
           isOpen={isOpen}
           onClose={onClose}
           headerText={'Editar Perfil'}
@@ -32,30 +38,35 @@ const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                 type="text"
                 label="Nome"
                 id="name"
-                placeholder={user?.fullname}
+                defaultValue={user?.fullname}
               />
 
               <Input
                 type="email"
                 label="Email"
                 id="email"
-                placeholder={user?.email}
+                defaultValue={user?.email}
               />
 
-              <Input type="text" label="Cpf" id="cpf" placeholder={user?.cpf} />
+              <Input
+                type="text"
+                label="Cpf"
+                id="cpf"
+                defaultValue={user?.cpf}
+              />
 
               <Input
                 type="text"
                 label="Celular"
                 id="cellphone"
-                placeholder={user?.cellphone}
+                defaultValue={user?.cellphone}
               />
 
               <Input
                 type="text"
                 label="Data de nascimento"
-                id="name"
-                placeholder={user?.birth_date}
+                id="birth_date"
+                defaultValue={user?.birth_date}
               />
 
               <Input

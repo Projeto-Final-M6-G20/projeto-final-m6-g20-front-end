@@ -39,6 +39,7 @@ interface iUser {
   email: string;
   fullname: string;
   cpf: string;
+  description: string;
   cellphone: string;
   birth_date: string;
   is_advertiser: boolean;
@@ -59,6 +60,8 @@ interface UserValue {
   mode: string;
   setMode: Dispatch<SetStateAction<string>>;
   getUser: () => Promise<void>;
+  adv: NewAdData[] | undefined;
+  setAdv: Dispatch<SetStateAction<NewAdData[]>>;
 }
 
 export const UserContext = createContext<UserValue>({} as UserValue);
@@ -70,6 +73,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
   const [selectedModel, setSelectedModel] = useState<string>('');
   const [user, setUser] = useState<iUser>();
   const [mode, setMode] = useState('');
+  const [adv, setAdv] = useState<NewAdData[]>([]);
 
   const cookies = parseCookies();
   if (cookies['user.Token']) {
@@ -116,10 +120,19 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const getAdPerId = async () => {
+    try {
+      const response = await api.get(`/advertisements/user`);
+      setAdv(response.data);
+    } catch (error) {}
+  };
+
   const createCarAd = async (data: NewAdData) => {
     try {
       const response = await api.post('/advertisements/', data);
+
       console.log(response);
+      getAdPerId();
     } catch (error) {
       console.log(error);
     }
@@ -127,6 +140,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     getUser();
+    getAdPerId();
   }, []);
 
   return (
@@ -144,7 +158,9 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
         user,
         mode,
         setMode,
-        getUser
+        getUser,
+        adv,
+        setAdv
       }}
     >
       {children}

@@ -79,7 +79,10 @@ const LoginForm = () => {
       <CustomModal
         isOpen={isOpen}
         onClose={onClose}
-        headerText="Enviar email de recuperação de senha"
+        MaxWidthBody="90%"
+        MaxWidthHeader="90%"
+        widthBody="600px"
+        widthHeader="600px"
       >
         <SendEmailForm />
       </CustomModal>
