@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import FooterComponent from './components/Footer';
 import HeaderComponent from './components/Header';
 
+import { AdvertisementsProvider } from 'context/AdvertisementsContext';
 import { AuthProvider } from 'context/AuthContext';
 import ToastProvider from 'context/ToastContext';
 import { UserProvider } from 'context/UserContext';
@@ -26,9 +27,11 @@ export default function RootLayout({
         <ToastProvider>
           <AuthProvider>
             <UserProvider>
-              <HeaderComponent />
-              {children}
-              <FooterComponent />
+              <AdvertisementsProvider>
+                <HeaderComponent />
+                {children}
+                <FooterComponent />
+              </AdvertisementsProvider>
             </UserProvider>
           </AuthProvider>
         </ToastProvider>
