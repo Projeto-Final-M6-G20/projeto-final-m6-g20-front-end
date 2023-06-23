@@ -16,13 +16,13 @@ interface ModalChildren {
 }
 const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
   const { user, mode, setMode,updateUser } = useContext(UserContext);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<UserData>();
 
   const onOpenFunction = () => {
     setMode('delete');
   };
 
-  const onSubFunction= (data:any)=>{
+  const onSubFunction= (data:UserData)=>{
     updateUser(data)
     onClose()
   }
