@@ -23,7 +23,8 @@ const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
   };
 
   const onSubFunction= (data:any)=>{
-    console.log(data)
+    updateUser(data)
+    onClose()
   }
 
   return (
@@ -56,7 +57,7 @@ const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                 label="Email"
                 id="email"
                 {...register("email")}
-                defaultValue={user?.email}
+                placeholder={user?.email}
                 
               />
 
@@ -65,8 +66,7 @@ const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                 label="Cpf"
                 id="cpf"
                 {...register("cpf")}
-                defaultValue={user?.cpf}
-                
+                placeholder={user?.cpf}
               />
 
               <Input
@@ -113,7 +113,7 @@ const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                   Excluir perfil
                 </button>
 
-                <button className="w-1/3 flex flex-row justify-center items-center text-white p-3 gap-2 bg-brand-1 border-2  rounded h-12">
+                <button type="submit" className="w-1/3 flex flex-row justify-center items-center text-white p-3 gap-2 bg-brand-1 border-2  rounded h-12">
                   Salvar alterações
                 </button>
               </div>
