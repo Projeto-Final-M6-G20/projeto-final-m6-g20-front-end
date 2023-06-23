@@ -58,7 +58,7 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
 
   useEffect(() => {
     // getCarBrands();
-  });
+  },[]);
 
   useEffect(() => {
     getCarModels();

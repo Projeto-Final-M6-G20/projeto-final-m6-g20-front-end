@@ -5,7 +5,7 @@ import CreateAdForm from './components/CreateAdForm';
 import UserDisplay from './components/UserDisplay';
 import { Tooltip } from '@chakra-ui/react';
 import { useDisclosure } from '@chakra-ui/react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { UserContext } from 'context/UserContext';
 import ModalProfile from './components/UserDisplay/components/modalProfile';
 import ModalDelete from './components/UserDisplay/components/modalDelete';
@@ -18,7 +18,7 @@ const UserProfile = () => {
     initials: ['J', 'C']
   };
 
-  const { user } = useContext(UserContext);
+  const { user,getUser } = useContext(UserContext);
 
   let initials = '';
   const names = user?.fullname.split(' ');
@@ -39,6 +39,9 @@ const UserProfile = () => {
     onClose: onCreateClose
   } = useDisclosure();
 
+  useEffect(()=>{
+    getUser()
+  },[])
   return (
     <main className="flex flex-col min-h-full min-w-full items-center justify-center py-20 backgroundImage bg-no-repeat">
       <div className="flex flex-col gap-6 bg-white rounded h-min w-3/4 px-10 py-11">

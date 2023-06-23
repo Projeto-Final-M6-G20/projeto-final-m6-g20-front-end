@@ -18,7 +18,7 @@ interface ModalChildren {
 }
 
 const ModalDelete = ({ isOpen, onClose }: ModalChildren) => {
-  const { mode } = useContext(UserContext);
+  const { mode,deleteUser } = useContext(UserContext);
   return (
     <>
       {mode === 'delete' ? (
@@ -49,7 +49,7 @@ const ModalDelete = ({ isOpen, onClose }: ModalChildren) => {
                 >
                   Cancelar
                 </button>
-                <button className="btn-error w-1/3 font-bold">
+                <button onClick={()=>deleteUser()} className="btn-error w-1/3 font-bold">
                   Sim, excluir
                 </button>
               </div>
