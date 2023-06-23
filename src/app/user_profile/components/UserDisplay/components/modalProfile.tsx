@@ -1,15 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Input from 'app/components/Input';
 import CustomModal from 'app/components/Modal';
-import {
-  UserData,
-  userSchema
-} from 'app/register/components/FormRegister/validator';
+import { UserData } from 'app/register/components/FormRegister/validator';
 
-import { Button, useDisclosure } from '@chakra-ui/react';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { UserContext } from 'context/UserContext';
 
 interface ModalChildren {
@@ -19,14 +14,15 @@ interface ModalChildren {
 }
 const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
   const { user, mode, setMode, updateUser } = useContext(UserContext);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<UserData>();
 
   const onOpenFunction = () => {
     setMode('delete');
   };
 
-  const onSubFunction = (data: any) => {
-    console.log(data);
+  const onSubFunction = (data: UserData) => {
+    updateUser(data);
+    onClose();
   };
 
   return (
@@ -58,7 +54,7 @@ const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                 label="Email"
                 id="email"
                 {...register('email')}
-                defaultValue={user?.email}
+                placeholder={user?.email}
               />
 
               <Input
@@ -66,7 +62,7 @@ const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                 label="Cpf"
                 id="cpf"
                 {...register('cpf')}
-                defaultValue={user?.cpf}
+                placeholder={user?.cpf}
               />
 
               <Input
@@ -113,7 +109,10 @@ const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                   Excluir perfil
                 </button>
 
-                <button className="w-1/3 flex flex-row justify-center items-center text-white p-3 gap-2 bg-brand-1 border-2  rounded h-12">
+                <button
+                  type="submit"
+                  className="w-1/3 flex flex-row justify-center items-center text-white p-3 gap-2 bg-brand-1 border-2  rounded h-12"
+                >
                   Salvar alterações
                 </button>
               </div>

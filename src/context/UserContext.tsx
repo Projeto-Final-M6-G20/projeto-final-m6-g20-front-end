@@ -1,4 +1,5 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import {
   Dispatch,
   SetStateAction,
@@ -7,6 +8,7 @@ import {
   useState
 } from 'react';
 
+import Toast from 'app/components/Toast';
 import { UserData } from 'app/register/components/FormRegister/validator';
 import { NewAdData } from 'app/user_profile/components/CreateAdForm/validator';
 
@@ -65,6 +67,7 @@ interface UserValue {
   setAdv: Dispatch<SetStateAction<NewAdData[]>>;
   updateUser: (data: UserData) => Promise<void>;
   updateUserAddress: (data: Address) => Promise<void>;
+  deleteUser: () => Promise<void>;
 }
 
 export const UserContext = createContext<UserValue>({} as UserValue);
@@ -77,6 +80,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<iUser>();
   const [mode, setMode] = useState('');
   const [adv, setAdv] = useState<NewAdData[]>([]);
+  const router = useRouter();
 
   const cookies = parseCookies();
   if (cookies['user.Token']) {
@@ -148,11 +152,18 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
       const decodedToken = jwt.decode(cookies['user.Token']);
 
       const id = decodedToken ? decodedToken.sub : null;
-      const response = await api.patch(`user/${id}`, data);
+      const response = await api.patch(`users/${id}`, data);
       console.log(response.data);
+      Toast({
+        message: 'Atualizado com sucesso!',
+        isSucess: true
+      });
       getUser();
     } catch (error) {
-      console.log(error);
+      Toast({
+        message: 'Algo deu errado!',
+        isSucess: false
+      });
     }
   };
 
@@ -162,8 +173,31 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
 
       const id = decodedToken ? decodedToken.sub : null;
       const response = await api.patch(`address/user/${id}`, data);
-      console.log(response.data);
+      Toast({
+        message: 'Atualizado com sucesso!',
+        isSucess: true
+      });
       getUser();
+    } catch (error) {
+      Toast({
+        message: 'Algo deu errado!',
+        isSucess: false
+      });
+    }
+  };
+
+  const deleteUser = async () => {
+    try {
+      const decodedToken = jwt.decode(cookies['user.Token']);
+
+      const id = decodedToken ? decodedToken.sub : null;
+      const response = await api.delete(`users/${id}`);
+      Toast({
+        message: 'Deletado com sucesso!',
+        isSucess: true
+      });
+
+      router.push('/');
     } catch (error) {
       console.log(error);
     }
@@ -193,7 +227,8 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
         adv,
         setAdv,
         updateUser,
-        updateUserAddress
+        updateUserAddress,
+        deleteUser
       }}
     >
       {children}

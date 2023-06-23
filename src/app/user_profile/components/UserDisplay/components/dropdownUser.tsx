@@ -16,6 +16,7 @@ import ModalDelete from './modalDelete';
 import ModalAd from './modalAd';
 import { parseCookies } from 'nookies';
 import { useRouter } from 'next/navigation';
+import Toast from 'app/components/Toast';
 
 const DropDown = () => {
   const { user, setMode } = useContext(UserContext);
@@ -47,6 +48,10 @@ const DropDown = () => {
     };
 
     deleteCookie(token);
+    Toast({
+      message: "Logout realizado!",
+      isSucess:true
+    })
     return router.push('/login');
   };
 
