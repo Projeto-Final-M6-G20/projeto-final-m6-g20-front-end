@@ -7,13 +7,13 @@ import {
   useState
 } from 'react';
 
+import { UserData } from 'app/register/components/FormRegister/validator';
 import { NewAdData } from 'app/user_profile/components/CreateAdForm/validator';
 
 import jwt from 'jsonwebtoken';
 import { parseCookies } from 'nookies';
 import api from 'service/api';
 import instanceKenzieCars from 'service/kenzie_cars';
-import { UserData } from 'app/register/components/FormRegister/validator';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -63,8 +63,8 @@ interface UserValue {
   getUser: () => Promise<void>;
   adv: NewAdData[] | undefined;
   setAdv: Dispatch<SetStateAction<NewAdData[]>>;
-  updateUser: (data: UserData) => Promise<void>
-  updateUserAddress: (data: Address) => Promise<void>
+  updateUser: (data: UserData) => Promise<void>;
+  updateUserAddress: (data: Address) => Promise<void>;
 }
 
 export const UserContext = createContext<UserValue>({} as UserValue);
@@ -127,7 +127,9 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     try {
       const response = await api.get(`/advertisements/user`);
       setAdv(response.data);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const createCarAd = async (data: NewAdData) => {
@@ -141,31 +143,31 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const updateUser = async (data:UserData)=>{
+  const updateUser = async (data: UserData) => {
     try {
       const decodedToken = jwt.decode(cookies['user.Token']);
 
       const id = decodedToken ? decodedToken.sub : null;
-      const response = await api.patch(`user/${id}`,data)
-      console.log(response.data)
-      getUser()
+      const response = await api.patch(`user/${id}`, data);
+      console.log(response.data);
+      getUser();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  const updateUserAddress = async (data:Address)=>{
+  const updateUserAddress = async (data: Address) => {
     try {
       const decodedToken = jwt.decode(cookies['user.Token']);
 
       const id = decodedToken ? decodedToken.sub : null;
-      const response = await api.patch(`address/user/${id}`,data)
-      console.log(response.data)
-      getUser()
+      const response = await api.patch(`address/user/${id}`, data);
+      console.log(response.data);
+      getUser();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     getUser();
