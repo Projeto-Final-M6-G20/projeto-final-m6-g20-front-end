@@ -1,29 +1,22 @@
-import { useEffect } from 'react';
+import { Spinner } from '@chakra-ui/react';
+import { iAdvertisements, iAdvertisement } from 'context/AdvertisementsContext';
 
-import { data } from 'autoprefixer';
-import {
-  iAdvertisement,
-  useAdvertisements
-} from 'context/AdvertisementsContext';
+const getInitials = (name: string) => {
+  const initials = name
+    .split(' ')
+    .map((word) => word.charAt(0))
+    .join('');
 
-const Card = () => {
-  const { advertisements, setAdvertisements, getAdvertisements } =
-    useAdvertisements();
+  return initials;
+};
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getAdvertisements({ limit: 12, page: 1 });
-      setAdvertisements(data);
-    };
-
-    fetchData();
-  }, []);
-
+interface CardProps {
+  advertisements: iAdvertisements | null | undefined;
+}
+const Card = ({ advertisements }: CardProps) => {
   if (!advertisements) {
-    return <p>Loading...</p>;
+    return <Spinner color="blue" />;
   }
-  console.log(advertisements);
-
   return (
     <div className="w-full h-full max-lg:h-80">
       <ul className="flex h-full flex-wrap gap-8 max-lg:flex-col max-lg:overflow-x-auto">
@@ -45,13 +38,15 @@ const Card = () => {
             </div>
 
             <div className="w-full h-full flex gap-3  items-center max-lg:h-0">
-              <div className="w-8 h-8 bg-pink-400  rounded-full bg-gray-900">
+              <div className="w-8 h-8 bg-pink-400  rounded-full ">
                 <p className="w-full h-full flex justify-center items-center  text-white">
-                  {}
+                  {getInitials(item.User.fullname)}
                 </p>
               </div>
 
-              <span className="text-gray-700 font-semibold">{}</span>
+              <span className="text-gray-700 font-semibold">
+                {item.User.fullname}
+              </span>
             </div>
 
             <div className="w-full h-full flex gap-3 justify-between">
