@@ -51,6 +51,13 @@ export interface iAdvertisements {
     models: string[];
     years: string[];
   };
+  filtersTypesThisPage: {
+    brands: string[];
+    colors: string[];
+    fuel_type: string[];
+    models: string[];
+    years: string[];
+  };
   data: Array<iAdvertisement>;
 }
 
