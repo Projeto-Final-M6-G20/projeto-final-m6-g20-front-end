@@ -23,12 +23,34 @@ export interface iAdvertisement {
   fipe_price: number;
   is_available: boolean;
   userId: string;
+  User: {
+    id: string;
+    fullname: string;
+    email: string;
+    description: string;
+    cpf: string;
+    cellphone: string;
+    is_advertiser: boolean;
+    birth_date: string;
+  };
 }
 
 export interface iAdvertisements {
-  totalCount: number;
-  pageNumber: number;
-  limitNumber: number;
+  pagination: {
+    totalCount?: number;
+    pageNumber: number;
+    limitNumber: number;
+    nextPageLink: number | null | undefined;
+    previousPageLink: number | null | undefined;
+    totalPages: number;
+  };
+  filtersTypes: {
+    brands: string[];
+    colors: string[];
+    fuel_type: string[];
+    models: string[];
+    years: string[];
+  };
   data: Array<iAdvertisement>;
 }
 
