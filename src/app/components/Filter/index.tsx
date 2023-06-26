@@ -54,11 +54,11 @@ const CarFilter = ({
     }
   };
 
-  useEffect(() => {
+  /* useEffect(() => {
     const queryParams = `filters${concatenatedValues}`;
     const url = `/${queryParams}`;
     window.history.pushState({}, '', url);
-  }, [concatenatedValues]);
+  }, [concatenatedValues]); */
 
   return (
     <aside className="w-1/2 max-lg:hidden lg:block px-[12px]">
