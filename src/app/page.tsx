@@ -4,7 +4,7 @@ import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 
 import Banner from './components/Banner';
 import Card from './components/Card';
-import CarFilter from './components/Filter/[filters]';
+import CarFilter from './components/Filter';
 
 import { useAdvertisements } from 'context/AdvertisementsContext';
 
@@ -29,7 +29,6 @@ export default function Home() {
     <main className="flex min-h-screen bg-white flex-col items-center justify-between">
       <div className="flex flex-col min-h-screen justify-center items-center  max-sm:w-screen max-[1024px]:w-full max-[1560px]:w-full max-[2560px]:w-3/5 ">
         <Banner />
-        <h3>values = = {concatenatedValues}</h3>
         <section className="w-full h-full  flex m-14  max-lg:m-4">
           <CarFilter
             advertisements={advertisements}
