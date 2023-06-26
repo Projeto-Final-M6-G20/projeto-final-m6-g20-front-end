@@ -51,7 +51,7 @@ export interface iAdvertisements {
     models: string[];
     years: string[];
   };
-  filtersTypesThisPage: {
+  filtersTypesThisSearch: {
     brands: string[];
     colors: string[];
     fuel_type: string[];
@@ -66,7 +66,11 @@ interface AdvertisementsProviderProps {
 }
 
 interface AdvertisementsValues {
-  getAdvertisements: (params: { limit: number; page: number }) => Promise<any>;
+  getAdvertisements: (params: {
+    limit: number;
+    page: number;
+    filters?: string;
+  }) => Promise<any>;
   advertisements: iAdvertisements | null | undefined;
   setAdvertisements: Dispatch<
     SetStateAction<iAdvertisements | null | undefined>
@@ -85,18 +89,16 @@ export const AdvertisementsProvider = ({
 
   const getAdvertisements = async ({
     limit,
-    page
+    page,
+    filters
   }: {
     limit: number;
     page: number;
+    filters?: string;
   }) => {
     try {
-      const response = await api.get('/advertisements', {
-        params: {
-          limit,
-          page
-        }
-      });
+      const url = `/advertisements?limit=${limit}&page=${page}${filters}`;
+      const response = await api.get(url);
       return response.data;
     } catch (error) {
       console.log(error);
