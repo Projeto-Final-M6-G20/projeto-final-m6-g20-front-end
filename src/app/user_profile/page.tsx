@@ -1,24 +1,15 @@
 'use client';
+import { useContext, useEffect } from 'react';
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 
 import CreateAdForm from './components/CreateAdForm';
 import UserDisplay from './components/UserDisplay';
-import { Tooltip } from '@chakra-ui/react';
-import { useDisclosure } from '@chakra-ui/react';
-import { useContext, useEffect } from 'react';
-import { UserContext } from 'context/UserContext';
-import ModalProfile from './components/UserDisplay/components/modalProfile';
-import ModalDelete from './components/UserDisplay/components/modalDelete';
 import Container from 'app/components/Container/container';
 
-const UserProfile = () => {
-  const sellerData = {
-    name: 'Julio Consentini',
-    description: 'um garoto batraquio',
-    id: 1,
-    initials: ['J', 'C']
-  };
+import { useDisclosure } from '@chakra-ui/react';
+import { UserContext } from 'context/UserContext';
 
+const UserProfile = () => {
   const { user, getUser } = useContext(UserContext);
 
   let initials = '';
@@ -45,10 +36,10 @@ const UserProfile = () => {
     getUser();
   }, []);
   return (
-    <main className="flex min-h-screen flex-col   items-center justify-center py-20 backgroundImage bg-contain bg-no-repeat">
+    <main className="flex min-h-screen w-full flex-col items-center justify-center py-20 backgroundImage bg-cover">
       <Container>
         <div className="flex flex-col gap-6 bg-white rounded h-min w-3/4 px-10 py-11">
-          <div className="w-[104px] h-[104px] bg-pink-400  rounded-full bg-gray-900 cursor-pointer">
+          <div className="w-[104px] h-[104px] bg-pink-400 rounded-full cursor-pointer">
             {names ? (
               <p className="w-full h-full flex justify-center items-center  text-white text-4xl">
                 {initials}

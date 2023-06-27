@@ -1,6 +1,6 @@
 'use client';
-import Container from 'app/components/Container/container';
 import LoginForm from './components/FormLogin';
+import Container from 'app/components/Container/container';
 
 const LoginPage = () => {
   return (
