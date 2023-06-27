@@ -1,41 +1,42 @@
 'use client';
 
-import { GiHamburgerMenu } from 'react-icons/gi';
-import { VscClose } from 'react-icons/vsc';
-
 import {
   Drawer,
   DrawerBody,
   DrawerHeader,
-  DrawerContent,
-  useDisclosure,
-  Button
+  DrawerContent
 } from '@chakra-ui/react';
 
-const DrawerFilter = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+interface DrawerProps {
+  children: React.ReactNode;
+  isOpen: boolean;
+  onOpen?: () => void;
+  onClose: () => void;
+}
 
+const DrawerFilter = ({ children, isOpen, onClose }: DrawerProps) => {
   return (
-    <>
-      <Button
-        colorScheme="blue"
-        onClick={onOpen}
-        leftIcon={isOpen ? <VscClose /> : <GiHamburgerMenu />}
-      ></Button>
-      <Drawer placement={'top'} onClose={onClose} isOpen={isOpen}>
-        <DrawerContent
-          style={{ background: 'white', position: 'fixed', top: '64px' }}
+    <Drawer placement={'bottom'} onClose={onClose} isOpen={isOpen}>
+      <DrawerContent
+        style={{ background: 'white', position: 'fixed', top: '64px' }}
+      >
+        <DrawerHeader
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            padding: '10px'
+          }}
+          borderBottomWidth="1px"
         >
-          <button onClick={onClose}>XXXX</button>
-          <DrawerHeader borderBottomWidth="1px">Basic Drawer</DrawerHeader>
-          <DrawerBody>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
-    </>
+          Filtro
+          <button onClick={onClose}>X</button>
+        </DrawerHeader>
+
+        <DrawerBody>
+          <>{children}</>
+        </DrawerBody>
+      </DrawerContent>
+    </Drawer>
   );
 };
 

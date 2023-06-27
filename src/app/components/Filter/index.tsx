@@ -6,16 +6,16 @@ import { iAdvertisements } from 'context/AdvertisementsContext';
 
 interface CarFilterProps {
   advertisements: iAdvertisements | null | undefined;
-  params?: { filters: string };
   concatenatedValues: string;
   setConcatenatedValues: React.Dispatch<React.SetStateAction<string>>;
+  hideClass: string;
 }
 
 const CarFilter = ({
   advertisements,
-  params,
   concatenatedValues,
-  setConcatenatedValues
+  setConcatenatedValues,
+  hideClass
 }: CarFilterProps) => {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
@@ -54,9 +54,12 @@ const CarFilter = ({
       setSelectedFilters([...selectedFilters, `${title}:${filter}`]);
     }
   };
+  const clearFilter = () => {
+    setSelectedFilters([]);
+  };
 
   return (
-    <aside className="w-1/2 max-lg:hidden lg:block px-[12px]">
+    <aside className={hideClass}>
       <div className="flex flex-col p-4 gap-2">
         <h3 className="font-extrabold">Marcas</h3>
         {concatenatedValues === '' ? (
@@ -257,9 +260,9 @@ const CarFilter = ({
         {selectedFilters && (
           <button
             className="bg-brand-1 text-white rounded py-[12px] px-[28px] self-center font-semibold"
-            /* onClick={() => {
+            onClick={() => {
               clearFilter();
-            }} */
+            }}
           >
             Limpar Filtro
           </button>
