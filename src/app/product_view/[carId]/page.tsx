@@ -1,8 +1,21 @@
+'use client';
+import { useEffect } from 'react';
+
 import Container from 'app/components/Container/container';
 
-const AdDetailView = () => {
-  const carro =
-    'https://i.pinimg.com/564x/d5/1c/07/d51c074264dc22c6b3b49fae2d2b8019.jpg';
+import { Spinner } from '@chakra-ui/react';
+import { useAdvertisements } from 'context/AdvertisementsContext';
+
+const AdDetailView = ({ params }: { params: { carId: string } }) => {
+  const { getAdvertisementById, car } = useAdvertisements();
+  useEffect(() => {
+    const id = params.carId;
+    getAdvertisementById(id);
+  }, []);
+
+  if (!car) {
+    return <Spinner color="blue" />;
+  }
 
   return (
     <main className="flex min-h-screen min-w-full items-start justify-center backgroundImage bg-cover bg-no-repeat py-6">
@@ -10,19 +23,21 @@ const AdDetailView = () => {
         <section className="flex items-start justify-between w-4/5 ">
           <section className="flex flex-col w-3/6 justify-center gap-6 ">
             <div className="bg-white h-60 flex justify-center ">
-              <img className=" w-3/6 object-contain " src={carro} alt="" />
+              <img
+                className=" w-3/6 object-contain "
+                src={car.images[0].url}
+                alt=""
+              />
             </div>
             <div className="grid justify-items-start gap-6  bg-white p-8">
-              <h2 className="text-lg font-semibold">
-                Mercedes Benz A 200 CGI ADVANCE SEDAN Mercedes Benz A 200
-              </h2>
+              <h2 className="text-lg font-semibold">{car.title}</h2>
               <div className="flex w-full gap-3 justify-between">
                 <div className="flex gap-2">
-                  <span className="text-brand-1 font-bold">O KM</span>
-                  <span className="text-brand-1 font-bold">2019</span>
+                  <span className="text-brand-1 font-bold">{car.mileage}</span>
+                  <span className="text-brand-1 font-bold">{car.year}</span>
                 </div>
 
-                <span className="font-bold">R$ 00.000,00</span>
+                <span className="font-bold">R$ {car.price}</span>
               </div>
               <button
                 type="button"
@@ -34,12 +49,7 @@ const AdDetailView = () => {
 
             <div className="grid justify-items-start gap-6  bg-white p-8">
               <h2 className="text-lg font-semibold">Descrição</h2>
-              <p className="mb-3 text-gray-500">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book.
-              </p>
+              <p className="mb-3 text-gray-500">{car.description}</p>
             </div>
           </section>
 
@@ -47,11 +57,11 @@ const AdDetailView = () => {
             <div className="flex flex-col justify-items-center gap-4 bg-white p-8 h-64">
               <h2 className="text-lg font-semibold">Fotos</h2>
               <div className="flex flex-wrap gap-2 gap-y-6">
-                <img className=" w-16 object-contain " src={carro} alt="" />
-                <img className=" w-16 object-contain " src={carro} alt="" />
-                <img className=" w-16 object-contain " src={carro} alt="" />
-                <img className=" w-16 object-contain " src={carro} alt="" />
-                <img className=" w-16 object-contain " src={carro} alt="" />
+                <img className=" w-16 object-contain " src="" alt="" />
+                <img className=" w-16 object-contain " src="" alt="" />
+                <img className=" w-16 object-contain " src="" alt="" />
+                <img className=" w-16 object-contain " src="" alt="" />
+                <img className=" w-16 object-contain " src="" alt="" />
               </div>
             </div>
 
@@ -60,7 +70,7 @@ const AdDetailView = () => {
               <h1 className="text-lg font-bold">Samuel Leão</h1>
               <p className="mb-3 text-gray-500">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's
+                industry. Lorem Ipsum has been the industrys
               </p>
               <button
                 type="button"

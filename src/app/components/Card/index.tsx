@@ -1,3 +1,5 @@
+import { useRouter } from 'next/navigation';
+
 import { Spinner } from '@chakra-ui/react';
 import { iAdvertisements, iAdvertisement } from 'context/AdvertisementsContext';
 
@@ -14,9 +16,15 @@ interface CardProps {
   advertisements: iAdvertisements | null | undefined;
 }
 const Card = ({ advertisements }: CardProps) => {
+  const router = useRouter();
   if (!advertisements) {
     return <Spinner color="blue" />;
   }
+
+  const handleCarId = (carId: string) => {
+    console.log(carId);
+    router.push(`/product_view/${carId}`);
+  };
   return (
     <div className="w-full h-full max-lg:h-80">
       <ul className="flex h-full flex-wrap gap-10 max-lg:flex-col max-lg:overflow-x-auto">
@@ -24,6 +32,7 @@ const Card = ({ advertisements }: CardProps) => {
           <li
             key={item.id}
             className="w-72 h-80 flex flex-col p-1 gap-4 max-lg:h-80 hover:cursor-pointer group"
+            onClick={() => handleCarId(item.id)}
           >
             <div className="flex  flex-col gap-4">
               <div className="w-full flex border-[2px] border-transparent group-hover:border-[2px] group-hover:border-[#4529E6]">
