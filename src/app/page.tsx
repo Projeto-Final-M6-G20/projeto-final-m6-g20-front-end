@@ -1,20 +1,43 @@
 'use client';
+import { useEffect, useState } from 'react';
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 
 import Banner from './components/Banner';
 import Card from './components/Card';
 import CarFilter from './components/Filter';
 
-import AdDetailView from './adDetailView/page';
+import { useAdvertisements } from 'context/AdvertisementsContext';
 
 export default function Home() {
+  const { advertisements, setAdvertisements, getAdvertisements } =
+    useAdvertisements();
+  const [concatenatedValues, setConcatenatedValues] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getAdvertisements({
+        limit: 12,
+        page: 1,
+        filters: concatenatedValues
+      });
+      setAdvertisements(data);
+    };
+    fetchData();
+  }, [concatenatedValues]);
+  console.log(advertisements);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between ">
-      <>
+    <main className="flex min-h-screen bg-white flex-col items-center justify-between">
+      <div className="flex flex-col min-h-screen justify-center items-center  max-sm:w-screen max-[1024px]:w-full max-[1560px]:w-full max-[2560px]:w-3/5  max-[3440px]:w-3/6 ">
         <Banner />
+        <h3>{concatenatedValues}</h3>
         <section className="w-full h-full  flex m-14  max-lg:m-4">
-          <CarFilter />
-          <Card />
+          <CarFilter
+            advertisements={advertisements}
+            concatenatedValues={concatenatedValues}
+            setConcatenatedValues={setConcatenatedValues}
+          />
+
+          <Card advertisements={advertisements} />
         </section>
 
         <div className="w-full flex justify-center items-center lg:hidden ">
@@ -24,14 +47,18 @@ export default function Home() {
         </div>
         <div className="flex w-full h-48 items-center justify-center gap-4">
           <div className="flex gap-2">
-            <p className="text-xl text-gray-500">1 </p>
-            <p className="text-xl text-gray-400"> de 2</p>
+            <p className="text-xl text-gray-500">
+              {advertisements?.pagination.pageNumber}
+            </p>
+            <p className="text-xl text-gray-400">
+              {advertisements?.pagination.totalPages}
+            </p>
           </div>
           <button className="text-brand-1 font-bold flex items-center justify-center">
             Seguinte <MdOutlineKeyboardArrowRight className="text-xl" />{' '}
           </button>
         </div>
-      </>
+      </div>
     </main>
   );
 }

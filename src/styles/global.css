@@ -74,4 +74,9 @@
   .heading-5-600 {
     @apply w-44 font-semibold text-2xl text-gray-900;
   }
+  .selected {
+    background-color: blue;
+    border: 1px solid blue;
+    color: white;
+  }
 }

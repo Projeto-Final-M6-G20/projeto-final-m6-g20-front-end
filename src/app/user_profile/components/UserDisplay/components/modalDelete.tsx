@@ -18,13 +18,17 @@ interface ModalChildren {
 }
 
 const ModalDelete = ({ isOpen, onClose }: ModalChildren) => {
-  const { mode } = useContext(UserContext);
+  const { mode,deleteUser } = useContext(UserContext);
   return (
     <>
       {mode === 'delete' ? (
         <CustomModal
           isOpen={isOpen}
           onClose={onClose}
+          MaxWidthBody="90%"
+          MaxWidthHeader="90%"
+          widthBody="600px"
+          widthHeader="600px"
           headerText="Excluir anuncio"
         >
           <div className="flex flex-col gap-5">
@@ -45,7 +49,7 @@ const ModalDelete = ({ isOpen, onClose }: ModalChildren) => {
                 >
                   Cancelar
                 </button>
-                <button className="btn-error w-1/3 font-bold">
+                <button onClick={()=>deleteUser()} className="btn-error w-1/3 font-bold">
                   Sim, excluir
                 </button>
               </div>

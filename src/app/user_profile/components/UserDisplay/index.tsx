@@ -1,5 +1,6 @@
 import { useDisclosure } from '@chakra-ui/react';
 import { TfiFaceSad } from 'react-icons/tfi';
+import { AiOutlineWarning } from 'react-icons/ai';
 import React, { useContext, useState } from 'react';
 import { UserContext } from 'context/UserContext';
 import CreateAdForm from '../CreateAdForm';
@@ -12,7 +13,7 @@ const UserDisplay = () => {
     onClose: onCreateClose
   } = useDisclosure();
 
-  const { setMode, adv } = useContext(UserContext);
+  const { setMode, adv, user } = useContext(UserContext);
   const { onOpen, onClose, isOpen } = useDisclosure();
   const onOpenFunction = () => {
     setMode('ad');
@@ -83,25 +84,44 @@ const UserDisplay = () => {
           </ul>
         </div>
       ) : (
-        <div className="w-full h-96 flex justify-center ">
-          <div className="w-full flex justify-center items-center flex-col gap-6">
-            <h2 className="font-bold text-3xl text-brand-2">
-              Você ainda não possui nenhum anuncio
-            </h2>
+        <div className="w-full h-80 flex justify-center ">
+          <div className="w-full h-full flex justify-center items-center flex-col gap-6">
+            <>
+              {user && user?.is_advertiser ? (
+                <>
+                  <h2 className="font-bold text-3xl text-brand-2 max-sm:text-base">
+                    Você ainda não possui nenhum anuncio
+                  </h2>
 
-            <TfiFaceSad
-              className="text-brand-2"
-              style={{
-                fontSize: '8rem'
-              }}
-            />
+                  <TfiFaceSad
+                    className="text-brand-2"
+                    style={{
+                      fontSize: '8rem'
+                    }}
+                  />
 
-            <button
-              className="border-2 border-brand-1 rounded-md text-brand-1 px-7 py-2 w-1/4 h-max font-semibold"
-              onClick={onCreateOpen}
-            >
-              Criar Anuncio
-            </button>
+                  <button
+                    className="border-2 border-brand-1 rounded-md text-brand-1 px-7 py-2 w-1/4 h-max font-semibold"
+                    onClick={onCreateOpen}
+                  >
+                    Criar Anuncio
+                  </button>
+                </>
+              ) : (
+                <>
+                  <h2 className="font-bold text-3xl text-brand-2">
+                    Essa pagina ainda está sendo desenvolvida...
+                  </h2>
+
+                  <AiOutlineWarning
+                    className="text-brand-2"
+                    style={{
+                      fontSize: '8rem'
+                    }}
+                  />
+                </>
+              )}
+            </>
           </div>
           <CreateAdForm isOpen={isCreateOpen} onClose={onCreateClose} />
         </div>

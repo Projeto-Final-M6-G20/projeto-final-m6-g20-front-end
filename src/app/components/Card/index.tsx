@@ -1,119 +1,26 @@
-const Card = () => {
-  const carArray = [
-    {
-      id: 1,
-      image:
-        'https://i.pinimg.com/736x/da/40/6d/da406db7a58751aa594e8ae36916b44f.jpg',
-      carName: 'Toyota Camry',
-      userName: 'John Smith',
-      mileage: 5000,
-      carValue: 25000
-    },
-    {
-      id: 2,
-      image:
-        'https://i.pinimg.com/564x/08/2f/7f/082f7ff6a8721f4d36a4b017011eee22.jpg',
-      carName: 'Honda Civic',
-      userName: 'Emily Johnson',
-      mileage: 8000,
-      carValue: 22000
-    },
-    {
-      id: 3,
-      image:
-        'https://i.pinimg.com/564x/33/95/77/3395770abda07fa452da041305519e9a.jpg',
-      carName: 'Masserati',
-      userName: 'Michael Brown',
-      mileage: 3000,
-      carValue: 35000
-    },
-    {
-      id: 4,
-      image:
-        'https://i.pinimg.com/564x/7d/72/76/7d7276b663438f33d7fbf1292e0361eb.jpg',
-      carName: 'Chevrolet Corvette',
-      userName: 'Sophia Davis',
-      mileage: 2000,
-      carValue: 45000
-    },
-    {
-      id: 5,
-      image:
-        'https://i.pinimg.com/564x/55/c7/e7/55c7e7818fc58a9e740a8527cb3d11b5.jpg',
-      carName: 'BMW 3 Series',
-      userName: 'Daniel Wilson',
-      mileage: 6000,
-      carValue: 30000
-    },
-    {
-      id: 6,
-      image:
-        'https://i.pinimg.com/564x/cb/a5/7a/cba57a095ad59c031ffff5aab9e26dcc.jpg',
-      carName: 'Audi A1',
-      userName: 'Olivia Thompson',
-      mileage: 4000,
-      carValue: 28000
-    },
-    {
-      id: 7,
-      image:
-        'https://i.pinimg.com/564x/c5/72/49/c572495a735f8c9a42c9419524c90b23.jpg',
-      carName: 'Mercedes-Benz C-Class',
-      userName: 'David Martinez',
-      mileage: 10000,
-      carValue: 32000
-    },
-    {
-      id: 8,
-      image:
-        'https://i.pinimg.com/564x/62/8d/e8/628de8483d7cf057885246ebdfad2fe2.jpg',
-      carName: 'Volkswagen Golf',
-      userName: 'Emma Anderson',
-      mileage: 1500,
-      carValue: 18000
-    },
-    {
-      id: 9,
-      image:
-        'https://i.pinimg.com/564x/80/fe/ce/80feceebd41999278f2eb2f5d5792c1b.jpg',
-      carName: 'Tesla Model S',
-      userName: 'Noah Taylor',
-      mileage: 100,
-      carValue: 70000
-    },
-    {
-      id: 11,
-      image:
-        'https://i.pinimg.com/564x/af/8b/2b/af8b2bddab3f12fe5117e814535bf0f8.jpg',
-      carName: 'Ford Mustang',
-      userName: 'Dan Wilson',
-      mileage: 1000,
-      carValue: 15000
-    },
-    {
-      id: 12,
-      image:
-        'https://i.pinimg.com/564x/d0/08/53/d00853120ee040ae6c1f3cb60d5b57be.jpg',
-      carName: 'Hundai Santa fe',
-      userName: 'Cintya Jhonson',
-      mileage: 4000,
-      carValue: 35000
-    },
-    {
-      id: 13,
-      image:
-        'https://i.pinimg.com/564x/68/08/2a/68082af4427fbbc513f2bf72b4dc2bd6.jpg',
-      carName: 'Mitsubishi',
-      userName: 'Ava Wilson',
-      mileage: 9000,
-      carValue: 16000
-    }
-  ];
+import { Spinner } from '@chakra-ui/react';
+import { iAdvertisements, iAdvertisement } from 'context/AdvertisementsContext';
 
+const getInitials = (name: string) => {
+  const initials = name
+    .split(' ')
+    .map((word) => word.charAt(0))
+    .join('');
+
+  return initials;
+};
+
+interface CardProps {
+  advertisements: iAdvertisements | null | undefined;
+}
+const Card = ({ advertisements }: CardProps) => {
+  if (!advertisements) {
+    return <Spinner color="blue" />;
+  }
   return (
     <div className="w-full h-full max-lg:h-80">
       <ul className="flex h-full flex-wrap gap-8 max-lg:flex-col max-lg:overflow-x-auto">
-        {carArray.map((item) => (
+        {advertisements.data.map((item: iAdvertisement) => (
           <li
             key={item.id}
             className="w-72 h-80 flex flex-col gap-5 max-lg:h-80"
@@ -122,27 +29,24 @@ const Card = () => {
               <div className="w-full h-32 flex  justify-center items-center">
                 <img
                   className="w-5/6   h-28  object-cover "
-                  src={item.image}
+                  src={item.images[0].url}
                   alt=""
                 />
               </div>
 
-              <p className="font-bold">{item.carName}</p>
-              <p className="text-sm text-gray-600">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem...
-              </p>
+              <p className="font-bold">{item.title}</p>
+              <p className="text-sm text-gray-600">{item.description}</p>
             </div>
 
             <div className="w-full h-full flex gap-3  items-center max-lg:h-0">
-              <div className="w-8 h-8 bg-pink-400  rounded-full bg-gray-900">
+              <div className="w-8 h-8 bg-pink-400  rounded-full ">
                 <p className="w-full h-full flex justify-center items-center  text-white">
-                  {item.userName.charAt(0)}
+                  {getInitials(item.User.fullname)}
                 </p>
               </div>
 
               <span className="text-gray-700 font-semibold">
-                {item.userName}
+                {item.User.fullname}
               </span>
             </div>
 
@@ -154,7 +58,7 @@ const Card = () => {
                 <span className="text-brand-1 font-bold">2019</span>
               </div>
 
-              <span className="font-bold">R$ {item.carValue}</span>
+              <span className="font-bold">R$ {item.price}</span>
             </div>
           </li>
         ))}
