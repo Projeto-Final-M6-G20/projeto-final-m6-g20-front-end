@@ -23,7 +23,7 @@ const Card = ({ advertisements }: CardProps) => {
         {advertisements.data.map((item: iAdvertisement) => (
           <li
             key={item.id}
-            className="w-72 h-80 flex flex-col p-1 gap-4 max-lg:h-8 hover:cursor-pointer group"
+            className="w-72 h-80 flex flex-col p-1 gap-4 max-lg:h-80 hover:cursor-pointer group"
           >
             <div className="flex  flex-col gap-4">
               <div className="w-full flex border-[2px] border-transparent group-hover:border-[2px] group-hover:border-[#4529E6]">
