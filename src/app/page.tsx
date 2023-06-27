@@ -24,11 +24,12 @@ export default function Home() {
     };
     fetchData();
   }, [concatenatedValues]);
-
+  console.log(advertisements);
   return (
     <main className="flex min-h-screen bg-white flex-col items-center justify-between">
-      <div className="flex flex-col min-h-screen justify-center items-center  max-sm:w-screen max-[1024px]:w-full max-[1560px]:w-full max-[2560px]:w-3/5 ">
+      <div className="flex flex-col min-h-screen justify-center items-center  max-sm:w-screen max-[1024px]:w-full max-[1560px]:w-full max-[2560px]:w-3/5  max-[3440px]:w-3/6 ">
         <Banner />
+        <h3>{concatenatedValues}</h3>
         <section className="w-full h-full  flex m-14  max-lg:m-4">
           <CarFilter
             advertisements={advertisements}
@@ -46,8 +47,12 @@ export default function Home() {
         </div>
         <div className="flex w-full h-48 items-center justify-center gap-4">
           <div className="flex gap-2">
-            <p className="text-xl text-gray-500">1 </p>
-            <p className="text-xl text-gray-400"> de 2</p>
+            <p className="text-xl text-gray-500">
+              {advertisements?.pagination.pageNumber}
+            </p>
+            <p className="text-xl text-gray-400">
+              {advertisements?.pagination.totalPages}
+            </p>
           </div>
           <button className="text-brand-1 font-bold flex items-center justify-center">
             Seguinte <MdOutlineKeyboardArrowRight className="text-xl" />{' '}
