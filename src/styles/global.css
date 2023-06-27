@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .backgroundImage {
-  background-image: url('../app/adDetailView/components/Images/background2.svg');
+  background-image: url('../app/product_view/components/Images/background2.svg');
 }
 
 @layer components {
