@@ -27,14 +27,15 @@ const Card = ({ advertisements }: CardProps) => {
           >
             <div className="flex  flex-col gap-4">
               <div className="w-full h-32 flex  justify-center items-center">
-                <img className="w-5/6   h-28  object-cover " src="" alt="" />
+                <img
+                  className="w-5/6   h-28  object-cover "
+                  src={item.images[0].url}
+                  alt=""
+                />
               </div>
 
               <p className="font-bold">{item.title}</p>
-              <p className="text-sm text-gray-600">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem...
-              </p>
+              <p className="text-sm text-gray-600">{item.description}</p>
             </div>
 
             <div className="w-full h-full flex gap-3  items-center max-lg:h-0">

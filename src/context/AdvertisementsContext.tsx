@@ -33,6 +33,11 @@ export interface iAdvertisement {
     is_advertiser: boolean;
     birth_date: string;
   };
+  images: [
+    {
+      url: string;
+    }
+  ];
 }
 
 export interface iAdvertisements {

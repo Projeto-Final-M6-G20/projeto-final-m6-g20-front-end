@@ -1,4 +1,5 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 
 import { iAdvertisements } from 'context/AdvertisementsContext';
@@ -53,12 +54,6 @@ const CarFilter = ({
       setSelectedFilters([...selectedFilters, `${title}:${filter}`]);
     }
   };
-
-  /* useEffect(() => {
-    const queryParams = `filters${concatenatedValues}`;
-    const url = `/${queryParams}`;
-    window.history.pushState({}, '', url);
-  }, [concatenatedValues]); */
 
   return (
     <aside className="w-1/2 max-lg:hidden lg:block px-[12px]">
@@ -258,18 +253,18 @@ const CarFilter = ({
         </div>
       </div>
 
-      {/*  <div className="flex w-full justify-center">
-        {isFiltered && (
+      <div className="flex w-full justify-center">
+        {selectedFilters && (
           <button
             className="bg-brand-1 text-white rounded py-[12px] px-[28px] self-center font-semibold"
-            onClick={() => {
+            /* onClick={() => {
               clearFilter();
-            }}
+            }} */
           >
             Limpar Filtro
           </button>
         )}
-      </div> */}
+      </div>
     </aside>
   );
 };
