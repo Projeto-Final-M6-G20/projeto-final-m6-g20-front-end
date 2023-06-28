@@ -11,7 +11,7 @@ const HeaderComponent = () => {
 
   return (
     <div className="flex flex-col justify-center border-2 border-b-gray-300 items-center  max-sm:w-screen max-[1024px]:w-full max-[1560px]:w-full max-[2560px]:w-full  max-[1560px]:w-1/2">
-      <header className="w-full h-16 p-9  items-center  flex justify-between max-lg:p-5 max-[1560px]:w-full max-[2560px]:w-[60%]">
+      <header className="w-full h-16 p-9  items-center  flex justify-between max-lg:p-5 max-[1560px]:w-full max-[2560px]:w-[60%] max-[3440px]:w-[50%]">
         <Link
           href={'/'}
           className="heading-1-700  bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text text p-3  "

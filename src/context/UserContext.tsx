@@ -1,4 +1,5 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import {
   Dispatch,
   SetStateAction,
@@ -7,15 +8,14 @@ import {
   useState
 } from 'react';
 
+import Toast from 'app/components/Toast';
+import { UserData } from 'app/register/components/FormRegister/validator';
 import { NewAdData } from 'app/user_profile/components/CreateAdForm/validator';
 
 import jwt from 'jsonwebtoken';
 import { parseCookies } from 'nookies';
 import api from 'service/api';
 import instanceKenzieCars from 'service/kenzie_cars';
-import { UserData } from 'app/register/components/FormRegister/validator';
-import Toast from 'app/components/Toast';
-import { useRouter } from 'next/navigation';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -137,7 +137,9 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     try {
       const response = await api.get(`/advertisements/user`);
       setAdv(response.data);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const createCarAd = async (data: NewAdData) => {
@@ -246,6 +248,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+
   useEffect(() => {
     getUser();
     getAdPerId();
@@ -277,6 +280,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
         getAd,
         updateAdv,
         deleteAd
+        deleteUser
       }}
     >
       {children}
