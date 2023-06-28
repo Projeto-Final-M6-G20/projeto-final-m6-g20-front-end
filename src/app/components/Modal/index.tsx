@@ -6,6 +6,7 @@ import {
   ModalBody,
   ModalCloseButton
 } from '@chakra-ui/react';
+import { useState } from 'react';
 
 interface ModalChildren {
   children: React.ReactNode;
@@ -16,6 +17,7 @@ interface ModalChildren {
   MaxWidthBody: string;
   widthHeader: string;
   widthBody: string;
+  heightBody?: string;
 }
 
 const CustomModal = ({
@@ -26,7 +28,8 @@ const CustomModal = ({
   MaxWidthHeader,
   MaxWidthBody,
   widthHeader,
-  widthBody
+  widthBody,
+  heightBody
 }: ModalChildren) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -39,7 +42,12 @@ const CustomModal = ({
           <ModalCloseButton />
         </ModalHeader>
         <ModalBody
-          style={{ maxWidth: MaxWidthBody, width: widthBody }}
+          style={{
+            padding: '1rem',
+            maxWidth: MaxWidthBody,
+            width: widthBody,
+            height: heightBody
+          }}
           className=" bg-white flex justify-start p-8"
         >
           {children}

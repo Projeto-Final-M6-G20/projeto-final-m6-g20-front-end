@@ -68,6 +68,11 @@ interface UserValue {
   updateUser: (data: UserData) => Promise<void>;
   updateUserAddress: (data: Address) => Promise<void>;
   deleteUser: () => Promise<void>;
+  adData: NewAdData | undefined;
+  setAdData: Dispatch<SetStateAction<NewAdData | undefined>>;
+  getAd: (id: string) => Promise<void>;
+  updateAdv: (data?: NewAdData, id?: string) => Promise<void>;
+  deleteAd: (id: string) => Promise<void>;
 }
 
 export const UserContext = createContext<UserValue>({} as UserValue);
@@ -80,6 +85,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<iUser>();
   const [mode, setMode] = useState('');
   const [adv, setAdv] = useState<NewAdData[]>([]);
+  const [adData, setAdData] = useState<NewAdData>();
   const router = useRouter();
 
   const cookies = parseCookies();
@@ -93,7 +99,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
       const brandsCars = Object.keys(response.data);
       setBrands(brandsCars);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -106,7 +112,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
         setModels(response.data);
         // console.log(response.data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
   };
@@ -203,6 +209,46 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const getAd = async (id: string) => {
+    try {
+      const response = await api.get(`/advertisements/${id}`);
+      console.log(response.data);
+      setAdData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateAdv = async (data?: NewAdData, id?: string) => {
+    try {
+      const response = await api.patch(`advertisements/${id}`, data);
+      Toast({
+        message: 'Atualizado com sucesso!',
+        isSucess: true
+      });
+      getAdPerId();
+    } catch (error) {
+      Toast({
+        message: 'Algo deu errado!',
+        isSucess: false
+      });
+    }
+  };
+
+  const deleteAd = async (id: string) => {
+    try {
+      const response = await api.delete(`advertisements/${id}`);
+      Toast({
+        message: 'Deletado com sucesso!',
+        isSucess: true
+      });
+      getAdPerId();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   useEffect(() => {
     getUser();
     getAdPerId();
@@ -228,6 +274,12 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
         setAdv,
         updateUser,
         updateUserAddress,
+        deleteUser,
+        adData,
+        setAdData,
+        getAd,
+        updateAdv,
+        deleteAd
         deleteUser
       }}
     >

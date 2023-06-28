@@ -18,10 +18,10 @@ interface ModalChildren {
 }
 
 const ModalDelete = ({ isOpen, onClose }: ModalChildren) => {
-  const { mode,deleteUser } = useContext(UserContext);
+  const { mode, deleteUser, adData, deleteAd } = useContext(UserContext);
   return (
     <>
-      {mode === 'delete' ? (
+      {mode === 'delete' || mode === 'deleteAd' ? (
         <CustomModal
           isOpen={isOpen}
           onClose={onClose}
@@ -33,14 +33,37 @@ const ModalDelete = ({ isOpen, onClose }: ModalChildren) => {
         >
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-5">
-              <h3>Tem certeza que deseja remover este anúncio?</h3>
+              {mode === 'deleteAd' ? (
+                <>
+                  <h3>Tem certeza que deseja excluir este anuncio?</h3>
 
-              <div>
-                <p>
-                  Essa ação não pode ser desfeita. Isso excluirá permanentemente
-                  sua conta e removerá seus dados de nossos servidores.
-                </p>
-              </div>
+                  <div>
+                    <p>
+                      Essa ação não pode ser desfeita. Isso excluirá
+                      permanentemente sua conta e removerá seus dados de nossos
+                      servidores.
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
+
+              {mode === 'delete' ? (
+                <>
+                  <h3>Tem certeza que deseja excluir este Perfil?</h3>
+
+                  <div>
+                    <p>
+                      Essa ação não pode ser desfeita. Isso excluirá
+                      permanentemente sua conta e removerá seus dados de nossos
+                      servidores.
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
 
               <div className="w-full flex justify-end gap-2">
                 <button
@@ -49,7 +72,20 @@ const ModalDelete = ({ isOpen, onClose }: ModalChildren) => {
                 >
                   Cancelar
                 </button>
-                <button onClick={()=>deleteUser()} className="btn-error w-1/3 font-bold">
+                <button
+                  onClick={() => {
+                    if (mode === 'delete') {
+                      deleteUser();
+                    }
+
+                    if (mode === 'deleteAd') {
+                      deleteAd(adData!.id);
+                    }
+
+                    onClose();
+                  }}
+                  className="btn-error w-1/3 font-bold"
+                >
                   Sim, excluir
                 </button>
               </div>

@@ -4,6 +4,7 @@ import { AiOutlineWarning } from 'react-icons/ai';
 import React, { useContext, useState } from 'react';
 import { UserContext } from 'context/UserContext';
 import CreateAdForm from '../CreateAdForm';
+import EditAdModal from '../EditAdForm/editModalAd';
 
 const UserDisplay = () => {
   const [active, setActive] = useState(false);
@@ -13,12 +14,17 @@ const UserDisplay = () => {
     onClose: onCreateClose
   } = useDisclosure();
 
-  const { setMode, adv, user } = useContext(UserContext);
+  const { setMode, mode, adv, user, getAd, updateAdv } =
+    useContext(UserContext);
   const { onOpen, onClose, isOpen } = useDisclosure();
-  const onOpenFunction = () => {
-    setMode('ad');
-    setActive(false);
+  const onOpenFunction = (id: string) => {
+    getAd(id);
+    setMode('editAd');
     onOpen();
+  };
+
+  const capitalizeFirstLetter = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
   return (
@@ -51,26 +57,27 @@ const UserDisplay = () => {
                       </div>
                     )}
 
-                    <p className="font-bold">{item.title}</p>
-                    <p className="text-sm text-gray-600">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem...
+                    <p className="font-bold">
+                      {capitalizeFirstLetter(item.title)}
                     </p>
+                    <p className="text-sm text-gray-600">{item.description}</p>
                   </div>
 
                   <div className="w-full h-full flex gap-3 justify-between">
                     <div className="flex gap-2">
                       <span className="text-brand-1 font-bold">
-                        {item.milleage} KM
+                        {item.mileage} KM
                       </span>
-                      <span className="text-brand-1 font-bold">2019</span>
+                      <span className="text-brand-1 font-bold">
+                        {item.year}
+                      </span>
                     </div>
 
                     <span className="font-bold">R$ {item.price}</span>
                   </div>
                   <div className="flex flex-row gap-5">
                     <button
-                      onClick={() => onOpenFunction()}
+                      onClick={() => onOpenFunction(item.id)}
                       className="flex flex-row justify-center items-center text-black font-semibold p-3 gap-2 w-max h-12 border-2 border-black rounded-md"
                     >
                       Editar
@@ -123,9 +130,9 @@ const UserDisplay = () => {
               )}
             </>
           </div>
-          <CreateAdForm isOpen={isCreateOpen} onClose={onCreateClose} />
         </div>
       )}
+      <EditAdModal isOpen={isOpen} onClose={onClose} />
     </>
   );
 };

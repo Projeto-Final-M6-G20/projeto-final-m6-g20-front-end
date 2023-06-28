@@ -5,6 +5,7 @@ import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import CreateAdForm from './components/CreateAdForm';
 import UserDisplay from './components/UserDisplay';
 import Container from 'app/components/Container/container';
+import EditAdModal from './components/EditAdForm/editModalAd';
 
 import { useDisclosure } from '@chakra-ui/react';
 import { UserContext } from 'context/UserContext';
@@ -30,6 +31,7 @@ const UserProfile = () => {
     onOpen: onCreateOpen,
     onClose: onCreateClose
   } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     console.log(user);
