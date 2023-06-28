@@ -1,34 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Motors Shop - E-commerce de Carros
 
-## Getting Started
+## Descrição do Projeto
 
-First, run the development server:
+Motors Shop é um E-commerce de carros que permite aos usuários comprar veículos anunciados pelos usuários anunciantes. A plataforma proporciona uma experiência intuitiva e fácil de usar, conectando compradores e vendedores interessados em transações de carros.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Tecnologias Utilizadas
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Linguagem de Programação: [TypeScript](https://www.typescriptlang.org/)
+- Framework Frontend: [NextJs](https://nextjs.org/)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Funcionalidades Principais
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Registro de Usuário: Os usuários podem criar uma conta no Motors Shop para acessar todas as funcionalidades do e-commerce.
+- Anúncios de Carros: Os usuários anunciantes podem criar anúncios de carros, incluindo informações detalhadas sobre os veículos.
+- Busca de Carros: Os usuários compradores podem pesquisar e filtrar carros com base em diferentes critérios, como marca, modelo, ano, preço, etc.
 
-## Learn More
+## Backend
 
-To learn more about Next.js, take a look at the following resources:
+- Repositorio Backend: [Projeto-Final-M6-G20-BackEnd](Projeto-Final-M6-G20-BackEnd)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Integrantes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Integrante: [Cielzx](https://github.com/Cielzx)
+- Integrante: [lucasbatista-dev](https://github.com/lucasbatista-dev)
+- Integrante: [FCroccoli](https://github.com/FCroccoli)
+- Integrante: [awasomelucas](https://github.com/awesomelucas)

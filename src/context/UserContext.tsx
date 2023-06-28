@@ -280,7 +280,6 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
         getAd,
         updateAdv,
         deleteAd
-        deleteUser
       }}
     >
       {children}
