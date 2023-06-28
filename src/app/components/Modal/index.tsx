@@ -1,12 +1,8 @@
 'use client';
-import {
-  ModalHeader,
-  Modal,
-  ModalOverlay,
-  ModalBody,
-  ModalCloseButton
-} from '@chakra-ui/react';
-import { useState } from 'react';
+
+import { IoIosClose } from 'react-icons/io';
+
+import { ModalHeader, Modal, ModalOverlay, ModalBody } from '@chakra-ui/react';
 
 interface ModalChildren {
   children: React.ReactNode;
@@ -33,22 +29,39 @@ const CustomModal = ({
 }: ModalChildren) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay className=" flex flex-col items-center justify-center bg-opacity-70 bg-black">
+      <ModalOverlay
+        style={{
+          flexGrow: 0,
+          flexShrink: 0
+        }}
+        className="flex flex-col items-center justify-center bg-opacity-70 bg-black"
+      >
         <ModalHeader
-          style={{ maxWidth: MaxWidthHeader, width: widthHeader }}
+          style={{
+            maxWidth: MaxWidthHeader,
+            width: widthHeader,
+            flexGrow: 0,
+            flexShrink: 0,
+            height: '30px',
+            padding: '5px'
+          }}
           className=" bg-white flex justify-between  p-4"
         >
           <p>{headerText}</p>
-          <ModalCloseButton />
+          <button onClick={onClose}>
+            <IoIosClose className="text-3xl" />
+          </button>
         </ModalHeader>
         <ModalBody
           style={{
             padding: '1rem',
             maxWidth: MaxWidthBody,
             width: widthBody,
-            height: heightBody
+            height: heightBody,
+            flexGrow: 0,
+            flexShrink: 0
           }}
-          className=" bg-white flex justify-start p-8"
+          className=" bg-white flex  justify-start p-8"
         >
           {children}
         </ModalBody>
