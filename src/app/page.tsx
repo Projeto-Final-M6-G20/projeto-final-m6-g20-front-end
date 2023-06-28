@@ -1,6 +1,9 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
+import {
+  MdOutlineKeyboardArrowRight,
+  MdOutlineKeyboardArrowLeft
+} from 'react-icons/md';
 
 import Banner from './components/Banner';
 import Card from './components/Card';
@@ -27,7 +30,35 @@ export default function Home() {
     };
     fetchData();
   }, [concatenatedValues]);
-  console.log(advertisements);
+  if (!advertisements) {
+    return <p>Loading...</p>;
+  }
+  const handleNextPage = (currentPage: number) => {
+    if (!advertisements?.pagination.nextPageLink) return null;
+    const fetchData = async () => {
+      const data = await getAdvertisements({
+        limit: 12,
+        page: currentPage + 1,
+        filters: concatenatedValues
+      });
+      setAdvertisements(data);
+    };
+    fetchData();
+  };
+  const handlePreviousPage = (currentPage: number) => {
+    if (!advertisements?.pagination.previousPageLink) return null;
+    const fetchData = async () => {
+      const data = await getAdvertisements({
+        limit: 12,
+        page: currentPage - 1,
+        filters: concatenatedValues
+      });
+      setAdvertisements(data);
+    };
+    fetchData();
+  };
+
+  console.log(advertisements.pagination);
   return (
     <main className="flex min-h-screen bg-white flex-col items-center justify-between">
       <div className="flex flex-col min-h-screen justify-center items-center  max-sm:w-screen max-[1024px]:w-full max-[1560px]:w-full max-[2560px]:w-3/5  max-[3440px]:w-3/6 ">
@@ -53,16 +84,57 @@ export default function Home() {
         </div>
         <div className="flex w-full h-48 items-center justify-center gap-4">
           <div className="flex gap-2">
-            <p className="text-xl text-gray-500">
-              {advertisements?.pagination.pageNumber}
-            </p>
-            <p className="text-xl text-gray-400">
-              {advertisements?.pagination.totalPages}
-            </p>
+            {advertisements.pagination.previousPageLink ? (
+              <button
+                onClick={() =>
+                  handlePreviousPage(advertisements.pagination.pageNumber)
+                }
+                className="text-brand-1 font-bold flex items-center justify-center px"
+              >
+                <MdOutlineKeyboardArrowLeft className="text-xl" /> Anterior
+              </button>
+            ) : null}
+            {advertisements.pagination.pageNumber ===
+            advertisements.pagination.totalPages ? (
+              <p
+                onClick={() =>
+                  handlePreviousPage(advertisements.pagination.pageNumber)
+                }
+                className="text-xl text-gray-400"
+              >
+                {advertisements.pagination.pageNumber - 1}
+              </p>
+            ) : (
+              <p className="text-xl text-gray-500">
+                {advertisements.pagination.pageNumber}
+              </p>
+            )}
+            {advertisements.pagination.pageNumber ===
+            advertisements.pagination.totalPages ? (
+              <p className="text-xl text-gray-500">
+                {advertisements.pagination.totalPages}
+              </p>
+            ) : (
+              <p
+                onClick={() =>
+                  handleNextPage(advertisements.pagination.pageNumber)
+                }
+                className="text-xl text-gray-400"
+              >
+                {advertisements.pagination.totalPages}
+              </p>
+            )}
           </div>
-          <button className="text-brand-1 font-bold flex items-center justify-center px">
-            Seguinte <MdOutlineKeyboardArrowRight className="text-xl" />{' '}
-          </button>
+          {advertisements.pagination.nextPageLink ? (
+            <button
+              onClick={() =>
+                handleNextPage(advertisements.pagination.pageNumber)
+              }
+              className="text-brand-1 font-bold flex items-center justify-center px"
+            >
+              Seguinte <MdOutlineKeyboardArrowRight className="text-xl" />{' '}
+            </button>
+          ) : null}
         </div>
       </div>
       <DrawerFilter isOpen={isOpen} onClose={onClose}>
