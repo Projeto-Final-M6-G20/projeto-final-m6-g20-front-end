@@ -22,7 +22,6 @@ const Card = ({ advertisements }: CardProps) => {
   }
 
   const handleCarId = (carId: string) => {
-    console.log(carId);
     router.push(`/product_view/${carId}`);
   };
   return (
