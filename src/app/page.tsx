@@ -6,11 +6,12 @@ import Card from './components/Card';
 import CarFilter from './components/Filter';
 
 import AdDetailView from './adDetailView/page';
+import Container from './components/Container/container';
 
 export default function Home() {
   return (
     <main className="flex min-h-screen bg-white flex-col items-center justify-between">
-      <div className="flex flex-col min-h-screen justify-center items-center  max-sm:w-screen max-[1024px]:w-full max-[1560px]:w-full max-[2560px]:w-3/5 max-[1560px]:w-1/2">
+      <Container>
         <Banner />
         <section className="w-full h-full  flex m-14  max-lg:m-4">
           <CarFilter />
@@ -31,7 +32,7 @@ export default function Home() {
             Seguinte <MdOutlineKeyboardArrowRight className="text-xl" />{' '}
           </button>
         </div>
-      </div>
+      </Container>
     </main>
   );
 }

@@ -10,6 +10,7 @@ import { UserContext } from 'context/UserContext';
 import ModalProfile from './components/UserDisplay/components/modalProfile';
 import ModalDelete from './components/UserDisplay/components/modalDelete';
 import Container from 'app/components/Container/container';
+import EditAdModal from './components/EditAdForm/editModalAd';
 
 const UserProfile = () => {
   const sellerData = {
@@ -39,6 +40,7 @@ const UserProfile = () => {
     onOpen: onCreateOpen,
     onClose: onCreateClose
   } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     console.log(user);
