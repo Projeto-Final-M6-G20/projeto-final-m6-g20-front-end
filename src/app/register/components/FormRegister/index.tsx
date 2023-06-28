@@ -224,7 +224,14 @@ const RegisterForm = () => {
       </form>
 
       {
-        <CustomModal isOpen={isOpen} onClose={onClose}>
+        <CustomModal
+          MaxWidthBody="90%"
+          MaxWidthHeader="90%"
+          widthBody="600px"
+          widthHeader="600px"
+          isOpen={isOpen}
+          onClose={onClose}
+        >
           <div className="flex flex-col">
             <h2 className="text-xl font-bold  mb-6">Sucesso!</h2>
             <h2 className="text-xl font-bold  mb-6">

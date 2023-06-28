@@ -53,12 +53,13 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
     selectedBrand,
     selectedModel,
     setSelectedModel,
-    createCarAd
+    createCarAd,
+    mode
   } = useContext(UserContext);
 
   useEffect(() => {
-    // getCarBrands();
-  },[]);
+    getCarBrands();
+  }, []);
 
   useEffect(() => {
     getCarModels();
@@ -170,8 +171,8 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
                 className="w-full h-12 bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4"
                 placeholder="30.000"
                 required
-                id={'milleage'}
-                {...register('milleage')}
+                id={'mileage'}
+                {...register('mileage')}
                 value={km}
                 onChange={(e) => setKm(e.target.value)}
               />
