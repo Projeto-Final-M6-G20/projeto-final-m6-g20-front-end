@@ -7,13 +7,12 @@ import {
 
 import Banner from './components/Banner';
 import Card from './components/Card';
+import Container from './components/Container/container';
 import CarFilter from './components/Filter';
 import DrawerFilter from './components/FilterMobile';
-import AdDetailView from './adDetailView/page';
-import Container from './components/Container/container';
+
 import { useDisclosure } from '@chakra-ui/react';
 import { useAdvertisements } from 'context/AdvertisementsContext';
-
 
 export default function Home() {
   const { advertisements, setAdvertisements, getAdvertisements } =
@@ -63,7 +62,6 @@ export default function Home() {
   console.log(advertisements.pagination);
   return (
     <main className="flex min-h-screen bg-white flex-col items-center justify-between">
-
       <Container>
         <Banner />
         <section className="w-full h-full  flex m-14  max-lg:m-4">
@@ -139,7 +137,6 @@ export default function Home() {
             </button>
           ) : null}
         </div>
-
       </Container>
 
       <DrawerFilter isOpen={isOpen} onClose={onClose}>
@@ -150,7 +147,6 @@ export default function Home() {
           hideClass="w-full px-[12px]"
         />
       </DrawerFilter>
-
     </main>
   );
 }

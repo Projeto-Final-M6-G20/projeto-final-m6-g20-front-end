@@ -248,7 +248,6 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-
   useEffect(() => {
     getUser();
     getAdPerId();
