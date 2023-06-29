@@ -1,13 +1,15 @@
 'use client';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 import DropDown from 'app/user_profile/components/UserDisplay/components/dropdownUser';
 
 import MenuMobile from '../MenuMobile';
+import { parseCookies } from 'nookies';
 
 const HeaderComponent = () => {
   const pathname = usePathname();
+  const cookies = parseCookies();
 
   return (
     <div className="flex flex-col justify-center border-2 border-b-gray-300 items-center  max-sm:w-screen max-[1024px]:w-full max-[1560px]:w-full max-[2560px]:w-full  max-[1560px]:w-1/2">
@@ -20,42 +22,46 @@ const HeaderComponent = () => {
         </Link>
 
         <>
-          {pathname === '/user_profile' ? (
-            <DropDown />
+          {cookies['user.Token'] ? (
+            <>
+              <DropDown />
+            </>
           ) : (
-            <nav className="flex items-center p-3 max-sm:hidden">
-              {pathname === '/login' ? (
-                <Link
-                  href={'/'}
-                  className="btn-header flex text-lg text-center items-center justify-center text-black hover:font-semibold"
-                >
-                  Home
-                </Link>
-              ) : (
-                <Link
-                  href={'/login'}
-                  className="btn-header flex text-lg text-center items-center justify-center text-gray-600 hover:font-semibold"
-                >
-                  Fazer login
-                </Link>
-              )}
+            <>
+              <nav className="flex items-center p-3 max-sm:hidden">
+                {pathname === '/login' ? (
+                  <Link
+                    href={'/'}
+                    className="btn-header flex text-lg text-center items-center justify-center text-black hover:font-semibold"
+                  >
+                    Home
+                  </Link>
+                ) : (
+                  <Link
+                    href={'/login'}
+                    className="btn-header flex text-lg text-center items-center justify-center text-gray-600 hover:font-semibold"
+                  >
+                    Fazer login
+                  </Link>
+                )}
 
-              {pathname === '/register' ? (
-                <Link
-                  href={'/'}
-                  className="btn-header flex text-lg items-center text-center justify-center text-black  hover:font-semibold"
-                >
-                  Home
-                </Link>
-              ) : (
-                <Link
-                  href={'/register'}
-                  className="btn-header flex text-lg items-center text-center justify-center text-black  hover:font-semibold"
-                >
-                  Cadastrar
-                </Link>
-              )}
-            </nav>
+                {pathname === '/register' ? (
+                  <Link
+                    href={'/'}
+                    className="btn-header flex text-lg items-center text-center justify-center text-black  hover:font-semibold"
+                  >
+                    Home
+                  </Link>
+                ) : (
+                  <Link
+                    href={'/register'}
+                    className="btn-header flex text-lg items-center text-center justify-center text-black  hover:font-semibold"
+                  >
+                    Cadastrar
+                  </Link>
+                )}
+              </nav>
+            </>
           )}
 
           <div className="flex items-center p-3  sm:hidden">

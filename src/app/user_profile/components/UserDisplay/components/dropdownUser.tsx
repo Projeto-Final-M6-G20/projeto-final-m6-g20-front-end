@@ -14,7 +14,7 @@ import { VscClose } from 'react-icons/vsc';
 import ModalProfile from './modalProfile';
 import ModalDelete from './modalDelete';
 import ModalAd from './modalAd';
-import { parseCookies } from 'nookies';
+import { destroyCookie, parseCookies } from 'nookies';
 import { useRouter } from 'next/navigation';
 import Toast from 'app/components/Toast';
 
@@ -43,15 +43,11 @@ const DropDown = () => {
   const token = cookies['user.Token'];
   const router = useRouter();
   const handleLogout = () => {
-    const deleteCookie = (cookie: string) => {
-      document.cookie = `${cookie}`;
-    };
-
-    deleteCookie(token);
+    destroyCookie(null, 'user.Token');
     Toast({
-      message: "Logout realizado!",
-      isSucess:true
-    })
+      message: 'Logout realizado!',
+      isSucess: true
+    });
     return router.push('/login');
   };
 

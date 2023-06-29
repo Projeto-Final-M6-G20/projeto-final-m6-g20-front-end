@@ -49,7 +49,7 @@ const Card = ({ advertisements }: CardProps) => {
             <div className="w-full h-full flex gap-3  items-center max-lg:h-0">
               <div className="w-8 h-8 bg-pink-400  rounded-full ">
                 <p className="w-full h-full flex justify-center items-center  text-white">
-                  {getInitials(item.User.fullname)}
+                  {getInitials(item.User.fullname).toLocaleUpperCase()}
                 </p>
               </div>
 

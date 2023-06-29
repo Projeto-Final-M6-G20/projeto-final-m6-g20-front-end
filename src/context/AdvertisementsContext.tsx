@@ -5,8 +5,11 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
+  useEffect,
   useState
 } from 'react';
+
+import { usePathname } from 'next/navigation';
 
 import api from 'service/api';
 export interface iAdvertisement {
@@ -66,6 +69,10 @@ export interface iAdvertisements {
   data: Array<iAdvertisement>;
 }
 
+export interface iComment {
+  content: string;
+}
+
 interface AdvertisementsProviderProps {
   children: React.ReactNode;
 }
@@ -82,6 +89,9 @@ interface AdvertisementsValues {
   >;
   getAdvertisementById: (carId: string) => Promise<iAdvertisement>;
   car: iAdvertisement | undefined;
+  comment: iComment[] | undefined;
+  getComment: () => Promise<void>;
+  createComment: (data: iComment, id: string) => Promise<void>;
   getAllAvailableSellerAds: (sellerId: string) => Promise<iAdvertisement[]>;
 }
 
@@ -96,6 +106,7 @@ export const AdvertisementsProvider = ({
     useState<iAdvertisements | null>();
 
   const [car, setCar] = useState<iAdvertisement>();
+  const [comment, setComment] = useState<iComment[]>([]);
 
   const getAdvertisements = async ({
     limit,
@@ -126,15 +137,39 @@ export const AdvertisementsProvider = ({
     }
   };
 
+  const getComment = async () => {
+    try {
+      const pathname = usePathname();
+      const id = pathname.split('/')[2];
+      const response = await api.get(`/comments/advertisement/${id}`);
+      setComment(response.data);
+
   const getAllAvailableSellerAds = async (sellerId: string) => {
     try {
       const url = `/advertisements/user/${sellerId}`;
       const response = await api.get(url);
       return response.data;
+
     } catch (error) {
       console.log(error);
     }
   };
+
+
+  const createComment = async (data: iComment, id: string) => {
+    try {
+      const response = await api.post(`/comments/advertisement/${id}`, data);
+      console.log(response.data);
+      getComment();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getComment();
+  }, []);
+
 
   return (
     <AdvertisementsContext.Provider
@@ -143,6 +178,10 @@ export const AdvertisementsProvider = ({
         advertisements,
         setAdvertisements,
         getAdvertisementById,
+        car,
+        comment,
+        getComment,
+        createComment
         getAllAvailableSellerAds,
         car
       }}
