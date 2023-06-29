@@ -1,5 +1,5 @@
 'use client';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import {
   Dispatch,
   SetStateAction,
@@ -122,6 +122,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
       const decodedToken = jwt.decode(cookies['user.Token']);
 
       const id = decodedToken ? decodedToken.sub : null;
+      console.log(id);
       const response = await api.get(`users/${id}`, {
         headers: {
           Authorization: `Bearer ${cookies['user.Token']}`
@@ -133,7 +134,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const getAdPerId = async () => {
+  const getUserAd = async () => {
     try {
       const response = await api.get(`/advertisements/user`);
       setAdv(response.data);
@@ -147,7 +148,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
       const response = await api.post('/advertisements/', data);
 
       console.log(response);
-      getAdPerId();
+      getUserAd();
     } catch (error) {
       console.log(error);
     }
@@ -226,7 +227,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
         message: 'Atualizado com sucesso!',
         isSucess: true
       });
-      getAdPerId();
+      getUserAd();
     } catch (error) {
       Toast({
         message: 'Algo deu errado!',
@@ -242,7 +243,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
         message: 'Deletado com sucesso!',
         isSucess: true
       });
-      getAdPerId();
+      getUserAd();
     } catch (error) {
       console.log(error);
     }
@@ -250,7 +251,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     getUser();
-    getAdPerId();
+    getUserAd();
   }, []);
 
   return (

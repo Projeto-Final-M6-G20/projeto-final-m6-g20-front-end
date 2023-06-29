@@ -1,13 +1,19 @@
 'use client';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 
 import Container from 'app/components/Container/container';
 
 import { Spinner } from '@chakra-ui/react';
-import { useAdvertisements } from 'context/AdvertisementsContext';
+import {
+  AdvertisementsContext,
+  useAdvertisements
+} from 'context/AdvertisementsContext';
+import CommentCard from '../components/CommentsCard';
+import CommentForm from '../components/CommentForm';
 
 const AdDetailView = ({ params }: { params: { carId: string } }) => {
   const { getAdvertisementById, car } = useAdvertisements();
+  const { getComment } = useContext(AdvertisementsContext);
   useEffect(() => {
     const id = params.carId;
     getAdvertisementById(id);
@@ -16,6 +22,8 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
   if (!car) {
     return <Spinner color="blue" />;
   }
+
+  getComment();
 
   const getInitials = (name: string) => {
     const initials = name
@@ -60,6 +68,15 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
               <h2 className="text-lg font-semibold">Descrição</h2>
               <p className="mb-3 text-gray-500">{car.description}</p>
             </div>
+
+            <div className="flex flex-col w-[600px] justify-items-start p-8">
+              <h2 className="text-lg font-semibold">Comentários</h2>
+              <div className="flex flex-col w-full">
+                <CommentCard />
+              </div>
+
+              <CommentForm />
+            </div>
           </section>
 
           <section className="flex flex-col w-[90%] lg:w-35% lg:w-2/6 justify-center gap-6">
@@ -77,7 +94,7 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
             <div className="grid justify-items-center gap-6 bg-white p-8">
               <div className="rounded-full bg-brand-1 w-20 h-20">
                 <p className="w-full h-full flex justify-center items-center  text-white text-4xl">
-                  {getInitials(car.User.fullname)}
+                  {getInitials(car.User.fullname).toLocaleUpperCase()}
                 </p>
               </div>
               <h1 className="text-lg font-bold">{car.User.fullname}</h1>
