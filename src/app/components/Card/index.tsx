@@ -1,3 +1,5 @@
+import { useRouter } from 'next/navigation';
+
 import { Spinner } from '@chakra-ui/react';
 import { iAdvertisements, iAdvertisement } from 'context/AdvertisementsContext';
 
@@ -14,21 +16,27 @@ interface CardProps {
   advertisements: iAdvertisements | null | undefined;
 }
 const Card = ({ advertisements }: CardProps) => {
+  const router = useRouter();
   if (!advertisements) {
     return <Spinner color="blue" />;
   }
+
+  const handleCarId = (carId: string) => {
+    router.push(`/product_view/${carId}`);
+  };
   return (
     <div className="w-full h-full max-lg:h-80">
-      <ul className="flex h-full flex-wrap gap-8 max-lg:flex-col max-lg:overflow-x-auto">
+      <ul className="flex h-full flex-wrap gap-10 max-lg:flex-col max-lg:overflow-x-auto">
         {advertisements.data.map((item: iAdvertisement) => (
           <li
             key={item.id}
-            className="w-72 h-80 flex flex-col gap-5 max-lg:h-80"
+            className="w-72 h-80 flex flex-col p-1 gap-4 max-lg:h-80 hover:cursor-pointer group"
+            onClick={() => handleCarId(item.id)}
           >
             <div className="flex  flex-col gap-4">
-              <div className="w-full h-32 flex  justify-center items-center">
+              <div className="w-full flex border-[2px] border-transparent group-hover:border-[2px] group-hover:border-[#4529E6]">
                 <img
-                  className="w-5/6   h-28  object-cover "
+                  className="w-full h-28 object-cover  "
                   src={item.images[0].url}
                   alt=""
                 />
@@ -50,14 +58,15 @@ const Card = ({ advertisements }: CardProps) => {
               </span>
             </div>
 
-            <div className="w-full h-full flex gap-3 justify-between">
+            <div className="w-full h-full flex gap-4 justify-between items-center">
               <div className="flex gap-2">
-                <span className="text-brand-1 font-bold">
+                <span className="text-brand-1 font-normal rounded bg-brand-4 p-2 align-middle ">
                   {item.mileage} KM
                 </span>
-                <span className="text-brand-1 font-bold">2019</span>
+                <span className="text-brand-1 font-normal rounded bg-brand-4 p-2 align-middle">
+                  {item.year}
+                </span>
               </div>
-
               <span className="font-bold">R$ {item.price}</span>
             </div>
           </li>

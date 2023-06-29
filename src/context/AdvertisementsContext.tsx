@@ -80,6 +80,8 @@ interface AdvertisementsValues {
   setAdvertisements: Dispatch<
     SetStateAction<iAdvertisements | null | undefined>
   >;
+  getAdvertisementById: (carId: string) => Promise<iAdvertisement>;
+  car: iAdvertisement | undefined;
 }
 
 export const AdvertisementsContext = createContext<AdvertisementsValues>(
@@ -91,6 +93,8 @@ export const AdvertisementsProvider = ({
 }: AdvertisementsProviderProps) => {
   const [advertisements, setAdvertisements] =
     useState<iAdvertisements | null>();
+
+  const [car, setCar] = useState<iAdvertisement>();
 
   const getAdvertisements = async ({
     limit,
@@ -110,9 +114,26 @@ export const AdvertisementsProvider = ({
     }
   };
 
+  const getAdvertisementById = async (carId: string) => {
+    try {
+      const url = `/advertisements/${carId}`;
+      const response = await api.get(url);
+      setCar(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AdvertisementsContext.Provider
-      value={{ getAdvertisements, advertisements, setAdvertisements }}
+      value={{
+        getAdvertisements,
+        advertisements,
+        setAdvertisements,
+        getAdvertisementById,
+        car
+      }}
     >
       {children}
     </AdvertisementsContext.Provider>

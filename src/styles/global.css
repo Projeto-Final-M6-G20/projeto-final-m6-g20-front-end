@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .backgroundImage {
-  background-image: url('../app/adDetailView/components/Images/background2.svg');
+  background-image: url('../app/product_view/components/Images/background2.svg');
 }
 
 @layer components {
@@ -12,7 +12,7 @@
   }
 
   .btn-secundary {
-    @apply box-border flex flex-row justify-center text-white items-center p-3 gap-2 bg-brand-1 absolute w-40 h-12 left-10 top-2 bg-gray-900 border-gray-900 border-2 rounded-md;
+    @apply box-border flex flex-row justify-center text-white items-center p-3 gap-2  absolute w-40 h-12 left-10 top-2 bg-gray-900 border-gray-900 border-2 rounded-md;
   }
 
   .btn-form {
@@ -32,11 +32,11 @@
   }
 
   .btn-big-text {
-    @apply w-32 font-normal font-semibold text-base;
+    @apply w-32 font-normal  text-base;
   }
 
   .btn-medium-text {
-    @apply w-28 font-normal font-semibold text-sm;
+    @apply w-28 font-normal  text-sm;
   }
 
   .btn-header {
