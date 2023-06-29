@@ -82,6 +82,7 @@ interface AdvertisementsValues {
   >;
   getAdvertisementById: (carId: string) => Promise<iAdvertisement>;
   car: iAdvertisement | undefined;
+  getAllAvailableSellerAds: (sellerId: string) => Promise<iAdvertisement[]>;
 }
 
 export const AdvertisementsContext = createContext<AdvertisementsValues>(
@@ -125,6 +126,16 @@ export const AdvertisementsProvider = ({
     }
   };
 
+  const getAllAvailableSellerAds = async (sellerId: string) => {
+    try {
+      const url = `/advertisements/user/${sellerId}`;
+      const response = await api.get(url);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AdvertisementsContext.Provider
       value={{
@@ -132,6 +143,7 @@ export const AdvertisementsProvider = ({
         advertisements,
         setAdvertisements,
         getAdvertisementById,
+        getAllAvailableSellerAds,
         car
       }}
     >

@@ -1,8 +1,10 @@
+import { useRouter } from 'next/navigation';
+
 import { Spinner } from '@chakra-ui/react';
-import { iAdvertisements, iAdvertisement } from 'context/AdvertisementsContext';
+import { iAdvertisement } from 'context/AdvertisementsContext';
 
 interface CardProps {
-  advertisements: iAdvertisements | null | undefined;
+  advertisements: iAdvertisement[] | null | undefined;
 }
 
 const getInitials = (name: string) => {
@@ -15,16 +17,21 @@ const getInitials = (name: string) => {
 };
 
 const ListAds = ({ advertisements }: CardProps) => {
+  const router = useRouter();
   if (!advertisements) {
     return <Spinner color="blue" />;
   }
+  const handleCarId = (carId: string) => {
+    router.push(`/product_view/${carId}`);
+  };
   return (
     <div className="w-full h-full  max-lg:h-80">
       <ul className="flex w-full h-full flex-wrap gap-11 max-lg:flex-col max-lg:overflow-x-auto">
-        {advertisements.data.map((item: iAdvertisement) => (
+        {advertisements.map((item: iAdvertisement) => (
           <li
+            onClick={() => handleCarId(item.id)}
             key={item.id}
-            className="w-4/5 flex flex-col gap-5 max-lg:h-80 sm:w-2/6 lg:w-5/12 xl:w-60 "
+            className="w-4/5 flex flex-col gap-5 max-lg:h-80 sm:w-2/6 lg:w-5/12 xl:w-60 cursor-pointer "
           >
             <div className="flex  flex-col gap-4">
               <div className="w-full h-32 flex  justify-center items-center bg-gray-300">
