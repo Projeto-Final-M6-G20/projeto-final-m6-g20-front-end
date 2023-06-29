@@ -2,8 +2,6 @@
 import { useContext, useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-
 
 import Container from 'app/components/Container/container';
 
@@ -20,9 +18,7 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
 
   const { getComment } = useContext(AdvertisementsContext);
 
-
   const router = useRouter();
-
 
   useEffect(() => {
     const id = params.carId;
