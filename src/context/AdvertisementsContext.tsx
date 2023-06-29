@@ -92,6 +92,7 @@ interface AdvertisementsValues {
   comment: iComment[] | undefined;
   getComment: () => Promise<void>;
   createComment: (data: iComment, id: string) => Promise<void>;
+  getAllAvailableSellerAds: (sellerId: string) => Promise<iAdvertisement[]>;
 }
 
 export const AdvertisementsContext = createContext<AdvertisementsValues>(
@@ -142,10 +143,18 @@ export const AdvertisementsProvider = ({
       const id = pathname.split('/')[2];
       const response = await api.get(`/comments/advertisement/${id}`);
       setComment(response.data);
+
+  const getAllAvailableSellerAds = async (sellerId: string) => {
+    try {
+      const url = `/advertisements/user/${sellerId}`;
+      const response = await api.get(url);
+      return response.data;
+
     } catch (error) {
       console.log(error);
     }
   };
+
 
   const createComment = async (data: iComment, id: string) => {
     try {
@@ -161,6 +170,7 @@ export const AdvertisementsProvider = ({
     getComment();
   }, []);
 
+
   return (
     <AdvertisementsContext.Provider
       value={{
@@ -172,6 +182,8 @@ export const AdvertisementsProvider = ({
         comment,
         getComment,
         createComment
+        getAllAvailableSellerAds,
+        car
       }}
     >
       {children}

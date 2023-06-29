@@ -1,6 +1,10 @@
 'use client';
 import { useContext, useEffect } from 'react';
 
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+
+
 import Container from 'app/components/Container/container';
 
 import { Spinner } from '@chakra-ui/react';
@@ -13,7 +17,13 @@ import CommentForm from '../components/CommentForm';
 
 const AdDetailView = ({ params }: { params: { carId: string } }) => {
   const { getAdvertisementById, car } = useAdvertisements();
+
   const { getComment } = useContext(AdvertisementsContext);
+
+
+  const router = useRouter();
+
+
   useEffect(() => {
     const id = params.carId;
     getAdvertisementById(id);
@@ -32,6 +42,9 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
       .join('');
 
     return initials;
+  };
+  const handleSellerId = (sellerId: string) => {
+    router.push(`/seller_advertisers/${sellerId}`);
   };
 
   return (
@@ -100,6 +113,7 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
               <h1 className="text-lg font-bold">{car.User.fullname}</h1>
               <p className="mb-3 text-gray-500">{car.User.description}</p>
               <button
+                onClick={() => handleSellerId(car.User.id)}
                 type="button"
                 className="text-white bg-primary hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5"
               >
