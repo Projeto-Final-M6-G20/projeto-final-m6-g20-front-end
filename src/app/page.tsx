@@ -59,7 +59,6 @@ export default function Home() {
     fetchData();
   };
 
-  console.log(advertisements.pagination);
   return (
     <main className="flex min-h-screen bg-white flex-col items-center justify-between">
       <Container>
@@ -67,6 +66,7 @@ export default function Home() {
         <section className="w-full h-full  flex m-14  max-lg:m-4">
           <CarFilter
             advertisements={advertisements}
+            setAdvertisements={setAdvertisements}
             concatenatedValues={concatenatedValues}
             setConcatenatedValues={setConcatenatedValues}
             hideClass="w-[30%] max-lg:hidden lg:block px-[12px]"
@@ -142,6 +142,7 @@ export default function Home() {
       <DrawerFilter isOpen={isOpen} onClose={onClose}>
         <CarFilter
           advertisements={advertisements}
+          setAdvertisements={setAdvertisements}
           concatenatedValues={concatenatedValues}
           setConcatenatedValues={setConcatenatedValues}
           hideClass="w-full px-[12px]"
