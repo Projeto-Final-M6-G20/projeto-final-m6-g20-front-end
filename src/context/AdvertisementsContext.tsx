@@ -143,18 +143,20 @@ export const AdvertisementsProvider = ({
       const id = pathname.split('/')[2];
       const response = await api.get(`/comments/advertisement/${id}`);
       setComment(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getAllAvailableSellerAds = async (sellerId: string) => {
     try {
       const url = `/advertisements/user/${sellerId}`;
       const response = await api.get(url);
       return response.data;
-
     } catch (error) {
       console.log(error);
     }
   };
-
 
   const createComment = async (data: iComment, id: string) => {
     try {
@@ -170,7 +172,6 @@ export const AdvertisementsProvider = ({
     getComment();
   }, []);
 
-
   return (
     <AdvertisementsContext.Provider
       value={{
@@ -181,9 +182,8 @@ export const AdvertisementsProvider = ({
         car,
         comment,
         getComment,
-        createComment
-        getAllAvailableSellerAds,
-        car
+        createComment,
+        getAllAvailableSellerAds
       }}
     >
       {children}
