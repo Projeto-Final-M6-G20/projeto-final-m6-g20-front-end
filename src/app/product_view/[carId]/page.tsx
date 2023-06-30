@@ -1,7 +1,7 @@
 'use client';
 import { useContext, useEffect } from 'react';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import Container from 'app/components/Container/container';
 
@@ -29,7 +29,10 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
     return <Spinner color="blue" />;
   }
 
-  getComment();
+  const pathname = usePathname();
+  const id = pathname.split('/')[2];
+
+  getComment(id);
 
   const getInitials = (name: string) => {
     const initials = name

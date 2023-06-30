@@ -293,7 +293,7 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
                     required={false}
                     id={'cover_image'}
                     placeholder="https://image.com"
-                    {...register('cover_image')}
+                    {...register('url_image')}
                     value={image}
                     onChange={(event) => changeImage(event, index)}
                   />

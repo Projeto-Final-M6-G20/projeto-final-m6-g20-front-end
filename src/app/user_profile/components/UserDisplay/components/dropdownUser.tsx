@@ -105,7 +105,12 @@ const DropDown = () => {
                       Editar Endereço
                     </button>
 
-                    <button className="flex text-gray-400 text-base">
+                    <button
+                      onClick={() => {
+                        router.push('/user_profile');
+                      }}
+                      className="flex text-gray-400 text-base"
+                    >
                       Meus Anuncios
                     </button>
 
