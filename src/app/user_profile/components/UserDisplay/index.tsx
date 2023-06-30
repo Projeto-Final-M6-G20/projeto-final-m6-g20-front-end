@@ -17,7 +17,7 @@ const UserDisplay = () => {
 
   const { car } = useAdvertisements();
 
-  const { setMode, mode, adv, user, getAd, updateAdv } =
+  const { setMode, mode, adv, user, getAd, getUserAd } =
     useContext(UserContext);
   const { onOpen, onClose, isOpen } = useDisclosure();
   const onOpenFunction = (id: string) => {
@@ -25,7 +25,7 @@ const UserDisplay = () => {
     setMode('editAd');
     onOpen();
   };
-  console.log(adv);
+  // getUserAd();
 
   const capitalizeFirstLetter = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -46,7 +46,7 @@ const UserDisplay = () => {
                     <div className="w-full h-32 flex  justify-center items-center bg-[#E9ECEF]">
                       <img
                         className="w-5/6   h-28  object-cover "
-                        src={car?.images[0].url}
+                        src={item.images[0].url}
                         alt=""
                       />
                     </div>

@@ -11,17 +11,24 @@ import { useDisclosure } from '@chakra-ui/react';
 import { UserContext } from 'context/UserContext';
 
 const UserProfile = () => {
-  const { user, getUser } = useContext(UserContext);
+  const { user, getUser, getUserAd } = useContext(UserContext);
 
   let initials = '';
-  const names = user?.fullname.split(' ');
+  if (!user) {
+    return (
+      <>
+        <p>Carregando...</p>
+      </>
+    );
+  }
+  const names = user.fullname.split(' ');
 
-  if (names && names?.length > 0) {
+  if (names && names.length > 0) {
     const firstName = names[0];
     initials += firstName.charAt(0).toUpperCase();
   }
 
-  if (names && names?.length > 1) {
+  if (names && names.length > 1) {
     const lastName = names[names.length - 1];
     initials += lastName.charAt(0).toUpperCase();
   }
@@ -32,13 +39,16 @@ const UserProfile = () => {
     onClose: onCreateClose
   } = useDisclosure();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const capitalizeFirstLetter = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
 
   useEffect(() => {
-    console.log(user);
+    getUserAd();
     getUser();
   }, []);
   return (
-    <main className="flex min-h-screen w-full flex-col items-center justify-center py-20 backgroundImage bg-cover">
+    <main className="flex min-h-screen w-full flex-col items-center justify-center py-20 backgroundImage bg-contain">
       <Container>
         <div className="flex flex-col gap-6 bg-white rounded h-min w-3/4 px-10 py-11">
           <div className="w-[104px] h-[104px] bg-pink-400 rounded-full cursor-pointer">
@@ -54,7 +64,9 @@ const UserProfile = () => {
           </div>
 
           <div className="flex flex-row items-center">
-            <h2 className="w-[13rem] heading-2-600">{user?.fullname}</h2>
+            <h2 className="w-[13rem] heading-2-600">
+              {capitalizeFirstLetter(user.fullname)}
+            </h2>
             {user?.is_advertiser ? (
               <p className="text-brand-1  h-full rounded bg-brand-4 p-2 align-middle">
                 Anunciante

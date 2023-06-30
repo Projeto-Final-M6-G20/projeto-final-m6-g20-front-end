@@ -73,6 +73,7 @@ interface UserValue {
   getAd: (id: string) => Promise<void>;
   updateAdv: (data?: NewAdData, id?: string) => Promise<void>;
   deleteAd: (id: string) => Promise<void>;
+  getUserAd: () => Promise<void>;
 }
 
 export const UserContext = createContext<UserValue>({} as UserValue);
@@ -279,7 +280,8 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
         setAdData,
         getAd,
         updateAdv,
-        deleteAd
+        deleteAd,
+        getUserAd
       }}
     >
       {children}
