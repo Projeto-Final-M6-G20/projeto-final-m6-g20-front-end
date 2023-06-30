@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   MdOutlineKeyboardArrowRight,
   MdOutlineKeyboardArrowLeft
@@ -13,10 +13,12 @@ import DrawerFilter from './components/FilterMobile';
 
 import { useDisclosure } from '@chakra-ui/react';
 import { useAdvertisements } from 'context/AdvertisementsContext';
+import { UserContext } from 'context/UserContext';
 
 export default function Home() {
   const { advertisements, setAdvertisements, getAdvertisements } =
     useAdvertisements();
+  const { getUser } = useContext(UserContext);
   const [concatenatedValues, setConcatenatedValues] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -29,6 +31,7 @@ export default function Home() {
       });
       setAdvertisements(data);
     };
+    getUser();
     fetchData();
   }, [concatenatedValues]);
   if (!advertisements) {

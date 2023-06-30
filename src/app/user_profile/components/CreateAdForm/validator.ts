@@ -1,5 +1,9 @@
 import { z } from 'zod';
 
+const urlSchema = z.object({
+  url: z.string()
+});
+
 export const NewAdSchema = z.object({
   id: z.string(),
   brand: z.string({ required_error: 'Campo obrigatário' }),
@@ -15,6 +19,7 @@ export const NewAdSchema = z.object({
   is_available: z.boolean(),
   is_good_price: z.boolean().optional(),
   published: z.boolean().optional(),
+  images: z.array(urlSchema),
   url_image: z.string({ required_error: 'Campo obrigatário' }),
   images_1: z.string().optional(),
   images_2: z.string().optional(),

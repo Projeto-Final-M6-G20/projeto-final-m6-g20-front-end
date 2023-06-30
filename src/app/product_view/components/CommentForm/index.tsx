@@ -3,6 +3,7 @@ import {
   iComment,
   useAdvertisements
 } from 'context/AdvertisementsContext';
+import { UserContext } from 'context/UserContext';
 import { usePathname } from 'next/navigation';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
@@ -11,7 +12,8 @@ const CommentForm = () => {
   const { register, handleSubmit, reset } = useForm<iComment>();
   const { createComment } = useContext(AdvertisementsContext);
   const { car } = useAdvertisements();
-  if (!car) {
+  const { user } = useContext(UserContext);
+  if (!car || !user) {
     return <></>;
   }
   const getInitials = (name: string) => {
@@ -44,12 +46,12 @@ const CommentForm = () => {
             <div className="w-full h-full flex gap-3  items-center max-lg:h-0">
               <div className="w-8 h-8 bg-pink-400  rounded-full ">
                 <p className="w-full h-full flex justify-center items-center  text-white">
-                  {getInitials(car.User.fullname).toLocaleUpperCase()}
+                  {getInitials(user.fullname).toLocaleUpperCase()}
                 </p>
               </div>
 
               <span className="text-gray-700 font-semibold">
-                {capitalizeFirstLetter(car.User.fullname)}
+                {capitalizeFirstLetter(user.fullname)}
               </span>
             </div>
           </div>
