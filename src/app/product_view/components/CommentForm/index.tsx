@@ -8,7 +8,7 @@ import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 
 const CommentForm = () => {
-  const { register, handleSubmit } = useForm<iComment>();
+  const { register, handleSubmit, reset } = useForm<iComment>();
   const { createComment } = useContext(AdvertisementsContext);
   const { car } = useAdvertisements();
   if (!car) {
@@ -32,10 +32,12 @@ const CommentForm = () => {
 
   const onSub = (data: iComment) => {
     createComment(data, id);
+
+    reset();
   };
 
   return (
-    <div className="my-40">
+    <div className="my-32">
       <form onSubmit={handleSubmit(onSub)}>
         <div className="mb-2 w-full flex flex-col gap-2">
           <div>

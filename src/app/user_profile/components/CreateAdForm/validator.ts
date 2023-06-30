@@ -15,7 +15,7 @@ export const NewAdSchema = z.object({
   is_available: z.boolean(),
   is_good_price: z.boolean().optional(),
   published: z.boolean().optional(),
-  cover_image: z.string({ required_error: 'Campo obrigatário' }),
+  url_image: z.string({ required_error: 'Campo obrigatário' }),
   images_1: z.string().optional(),
   images_2: z.string().optional(),
   images_3: z.string().optional(),

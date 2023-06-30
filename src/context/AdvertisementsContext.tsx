@@ -70,7 +70,9 @@ export interface iAdvertisements {
 }
 
 export interface iComment {
+  id: string;
   content: string;
+  createdAt: string;
 }
 
 interface AdvertisementsProviderProps {
@@ -90,7 +92,7 @@ interface AdvertisementsValues {
   getAdvertisementById: (carId: string) => Promise<iAdvertisement>;
   car: iAdvertisement | undefined;
   comment: iComment[] | undefined;
-  getComment: () => Promise<void>;
+  getComment: (id: string) => Promise<void>;
   createComment: (data: iComment, id: string) => Promise<void>;
   getAllAvailableSellerAds: (sellerId: string) => Promise<iAdvertisement[]>;
 }
@@ -137,10 +139,8 @@ export const AdvertisementsProvider = ({
     }
   };
 
-  const getComment = async () => {
+  const getComment = async (id: string) => {
     try {
-      const pathname = usePathname();
-      const id = pathname.split('/')[2];
       const response = await api.get(`/comments/advertisement/${id}`);
       setComment(response.data);
     } catch (error) {
@@ -162,15 +162,11 @@ export const AdvertisementsProvider = ({
     try {
       const response = await api.post(`/comments/advertisement/${id}`, data);
       console.log(response.data);
-      getComment();
+      getComment(id);
     } catch (error) {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    getComment();
-  }, []);
 
   return (
     <AdvertisementsContext.Provider

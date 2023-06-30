@@ -5,6 +5,7 @@ import React, { useContext, useState } from 'react';
 import { UserContext } from 'context/UserContext';
 import CreateAdForm from '../CreateAdForm';
 import EditAdModal from '../EditAdForm/editModalAd';
+import { useAdvertisements } from 'context/AdvertisementsContext';
 
 const UserDisplay = () => {
   const [active, setActive] = useState(false);
@@ -14,6 +15,8 @@ const UserDisplay = () => {
     onClose: onCreateClose
   } = useDisclosure();
 
+  const { car } = useAdvertisements();
+
   const { setMode, mode, adv, user, getAd, updateAdv } =
     useContext(UserContext);
   const { onOpen, onClose, isOpen } = useDisclosure();
@@ -22,6 +25,7 @@ const UserDisplay = () => {
     setMode('editAd');
     onOpen();
   };
+  console.log(adv);
 
   const capitalizeFirstLetter = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -42,7 +46,7 @@ const UserDisplay = () => {
                     <div className="w-full h-32 flex  justify-center items-center bg-[#E9ECEF]">
                       <img
                         className="w-5/6   h-28  object-cover "
-                        src={item.cover_image}
+                        src={car?.images[0].url}
                         alt=""
                       />
                     </div>
