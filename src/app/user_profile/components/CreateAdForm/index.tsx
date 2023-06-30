@@ -244,7 +244,7 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
                 required
                 id={'cover_image'}
                 placeholder="https://image.com"
-                {...register('cover_image')}
+                {...register('url_image')}
                 value={coverImage}
                 onChange={(e) => setCoverImage(e.target.value)}
               />
@@ -252,15 +252,15 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
 
             {images.map((image, index) => (
               <div className="mb-2 w-full" key={index + 1}>
-                <label className="block  text-sm mb-2" htmlFor={'cover_image'}>
+                <label className="block  text-sm mb-2" htmlFor={'url_image'}>
                   {`${index + 1}° Imagem da galeria`}
                 </label>
                 <input
                   className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-12"
                   required
-                  id={'cover_image'}
+                  id={'url_image'}
                   placeholder="https://image.com"
-                  {...register('cover_image')}
+                  {...register('url_image')}
                   value={image}
                   onChange={(event) => changeImage(event, index)}
                 />

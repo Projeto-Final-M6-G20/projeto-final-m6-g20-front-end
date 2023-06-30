@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       Toast({ message: 'Login efetuado com sucesso!', isSucess: true });
 
       setTimeout(() => {
-        router.push('/user_profile');
+        router.push('/');
       }, 1000);
     } catch (error) {
       Toast({ message: 'E-mail ou senha invalidos!' });
