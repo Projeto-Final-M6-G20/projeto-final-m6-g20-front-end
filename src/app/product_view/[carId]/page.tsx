@@ -19,6 +19,15 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
 
   const router = useRouter();
 
+  const pathname = usePathname();
+  const id = pathname.split('/')[2];
+
+  getComment(id);
+
+  const capitalizeFirstLetter = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   useEffect(() => {
     const id = params.carId;
     getAdvertisementById(id);
@@ -27,11 +36,6 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
   if (!car) {
     return <Spinner color="blue" />;
   }
-
-  const pathname = usePathname();
-  const id = pathname.split('/')[2];
-
-  getComment(id);
 
   const getInitials = (name: string) => {
     const initials = name
@@ -108,7 +112,9 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
                   {getInitials(car.User.fullname).toLocaleUpperCase()}
                 </p>
               </div>
-              <h1 className="text-lg font-bold">{car.User.fullname}</h1>
+              <h1 className="text-lg font-bold">
+                {capitalizeFirstLetter(car.User.fullname)}
+              </h1>
               <p className="mb-3 text-gray-500">{car.User.description}</p>
               <button
                 onClick={() => handleSellerId(car.User.id)}

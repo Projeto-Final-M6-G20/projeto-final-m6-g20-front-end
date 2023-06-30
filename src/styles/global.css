@@ -4,7 +4,7 @@
 
 .backgroundImage {
   background-image: url('../app/product_view/components/Images/background2.svg');
-  /* background-size: contain; */
+  background-size: cover;
 }
 
 @layer components {

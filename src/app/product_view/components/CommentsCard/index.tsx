@@ -2,16 +2,17 @@ import {
   AdvertisementsContext,
   useAdvertisements
 } from 'context/AdvertisementsContext';
-import { TfiFaceSad } from 'react-icons/tfi';
+import { BiMessageError } from 'react-icons/bi';
 import { useContext } from 'react';
 import 'moment/locale/pt-br';
 import moment from 'moment';
+import { UserContext } from 'context/UserContext';
 
 const CommentCard = () => {
   const { comment } = useContext(AdvertisementsContext);
   const { car } = useAdvertisements();
-
-  if (!car) {
+  const { user } = useContext(UserContext);
+  if (!car || !user) {
     return <></>;
   }
 
@@ -40,12 +41,12 @@ const CommentCard = () => {
                     <div className="w-full h-full flex gap-3  items-center max-lg:h-0">
                       <div className="w-8 h-8 bg-pink-400  rounded-full ">
                         <p className="w-full h-full flex justify-center items-center  text-white">
-                          {getInitials(car.User.fullname).toLocaleUpperCase()}
+                          {getInitials(user.fullname).toLocaleUpperCase()}
                         </p>
                       </div>
 
                       <span className="text-gray-700 font-semibold">
-                        {capitalizeFirstLetter(car.User.fullname)}
+                        {capitalizeFirstLetter(user.fullname)}
                       </span>
 
                       <span className="text-gray-400 font-semibold">
@@ -64,12 +65,12 @@ const CommentCard = () => {
         </ul>
       ) : (
         <>
-          <div className="w-full  flex flex-col gap-2 justify-center items-center">
-            <h2 className="font-bold text-xl text-brand-2 max-sm:text-base">
-              Você ainda não possui nenhum anuncio
+          <div className="w-full h-[250px] flex flex-col gap-2 justify-center items-center">
+            <h2 className="font-bold text-2xl text-brand-2 max-sm:text-base">
+              Sem comentários...
             </h2>
 
-            <TfiFaceSad
+            <BiMessageError
               className="text-brand-2"
               style={{
                 fontSize: '6rem'

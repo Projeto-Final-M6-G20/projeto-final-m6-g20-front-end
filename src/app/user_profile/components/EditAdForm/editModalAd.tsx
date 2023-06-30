@@ -291,9 +291,9 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
                   <input
                     className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-12"
                     required={false}
-                    id={'cover_image'}
+                    id={'url_image'}
                     placeholder="https://image.com"
-                    {...register('url_image')}
+                    {...register('images')}
                     value={image}
                     onChange={(event) => changeImage(event, index)}
                   />

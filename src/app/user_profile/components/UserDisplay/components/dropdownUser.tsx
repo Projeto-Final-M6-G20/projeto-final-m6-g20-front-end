@@ -26,10 +26,14 @@ const DropDown = () => {
     onOpen();
   };
 
-  let initials = '';
-  const names = user?.fullname.split(' ');
+  if (!user) {
+    return <></>;
+  }
 
-  if (names && names?.length > 0) {
+  let initials = '';
+  const names = user.fullname.split(' ');
+
+  if (names && names.length > 0) {
     const firstName = names[0];
     initials += firstName.charAt(0).toUpperCase();
   }
@@ -38,7 +42,9 @@ const DropDown = () => {
     const lastName = names[names.length - 1];
     initials += lastName.charAt(0).toUpperCase();
   }
-
+  const capitalizeFirstLetter = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
   const cookies = parseCookies();
   const token = cookies['user.Token'];
   const router = useRouter();
@@ -65,7 +71,7 @@ const DropDown = () => {
                 </div>
 
                 <span className="text-gray-700 font-semibold">
-                  {user?.fullname}
+                  {capitalizeFirstLetter(user.fullname)}
                 </span>
               </div>
             </MenuButton>

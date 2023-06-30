@@ -21,6 +21,9 @@ const Card = ({ advertisements }: CardProps) => {
     return <Spinner color="blue" />;
   }
 
+  const capitalizeFirstLetter = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
   const handleCarId = (carId: string) => {
     router.push(`/product_view/${carId}`);
   };
@@ -54,7 +57,7 @@ const Card = ({ advertisements }: CardProps) => {
               </div>
 
               <span className="text-gray-700 font-semibold">
-                {item.User.fullname}
+                {capitalizeFirstLetter(item.User.fullname)}
               </span>
             </div>
 
