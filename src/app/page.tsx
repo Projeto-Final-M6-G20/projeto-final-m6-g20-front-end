@@ -32,9 +32,10 @@ export default function Home() {
       });
       setAdvertisements(data);
     };
-    getUser();
     fetchData();
+    getUser();
   }, [concatenatedValues]);
+
   if (!advertisements) {
     return <Loading />;
   }

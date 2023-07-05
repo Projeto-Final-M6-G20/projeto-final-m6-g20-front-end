@@ -3,15 +3,21 @@ import {
   useAdvertisements
 } from 'context/AdvertisementsContext';
 import { BiMessageError } from 'react-icons/bi';
+import { AiOutlineEllipsis } from 'react-icons/ai';
 import { useContext } from 'react';
 import 'moment/locale/pt-br';
 import moment from 'moment';
 import { UserContext } from 'context/UserContext';
+import DropDown from 'app/user_profile/components/UserDisplay/components/dropdownUser';
+import DropDownComment from '../DropDownComments/dropdownComment';
+import { useDisclosure } from '@chakra-ui/react';
+import EditComment from '../EditCommentForm';
 
 const CommentCard = () => {
   const { comment } = useContext(AdvertisementsContext);
   const { car } = useAdvertisements();
-  const { user } = useContext(UserContext);
+  const { user, setMode } = useContext(UserContext);
+  const { onOpen, onClose, isOpen } = useDisclosure();
   if (!car || !user) {
     return <></>;
   }
@@ -52,6 +58,11 @@ const CommentCard = () => {
                       <span className="text-gray-400 font-semibold">
                         {time}
                       </span>
+
+                      <DropDownComment
+                        commentId={item.id}
+                        adsId={item.advertisementId}
+                      />
                     </div>
                   </div>
 

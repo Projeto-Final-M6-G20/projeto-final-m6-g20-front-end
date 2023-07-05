@@ -50,9 +50,9 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
   };
 
   return (
-    <main className="flex min-h-screen min-w-full items-start justify-center backgroundImage bg-cover bg-no-repeat">
+    <main className="flex min-h-screen min-w-full items-start justify-center backgroundImage  bg-cover bg-no-repeat">
       <Container>
-        <section className="flex flex-col items-center lg:flex-row lg:items-start justify-between w-full  ">
+        <section className="flex flex-col items-center lg:flex-row lg:items-start justify-between w-full p-14 max-sm:flex-col-reverse">
           <section className="flex flex-col w-[90%] lg:w-[63%] justify-center gap-6 ">
             <div className="bg-white h-[380px] flex justify-center ">
               <img
@@ -62,7 +62,7 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
               />
             </div>
             <div className="grid justify-items-start gap-6  bg-white p-8">
-              <h2 className="text-lg font-semibold">{car.title}</h2>
+              <h2 className="text-lg font-semibold">{car.model}</h2>
               <div className="flex w-full gap-3 justify-between">
                 <div className="flex gap-2">
                   <span className="text-brand-1 font-bold">{car.mileage}</span>
@@ -84,8 +84,8 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
               <p className="mb-3 text-gray-500">{car.description}</p>
             </div>
 
-            <div className="flex flex-col w-[600px] justify-items-start p-8">
-              <h2 className="text-lg font-semibold">Comentários</h2>
+            <div className="flex flex-col justify-items-start p-8 bg-white w-full max-sm:w-screen max-sm:p-2">
+              <h2 className="text-lg font-semibold mb-1">Comentários</h2>
               <div className="flex flex-col w-full">
                 <CommentCard />
               </div>

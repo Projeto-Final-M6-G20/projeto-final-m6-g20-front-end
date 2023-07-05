@@ -123,7 +123,6 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
       const decodedToken = jwt.decode(cookies['user.Token']);
 
       const id = decodedToken ? decodedToken.sub : null;
-      console.log(id);
       const response = await api.get(`users/${id}`, {
         headers: {
           Authorization: `Bearer ${cookies['user.Token']}`
