@@ -45,7 +45,7 @@ const Card = ({ advertisements }: CardProps) => {
                 />
               </div>
 
-              <p className="font-bold">{item.model}</p>
+              <p className="font-bold">{item.title}</p>
               <p className="text-sm text-gray-600">{item.description}</p>
             </div>
 
