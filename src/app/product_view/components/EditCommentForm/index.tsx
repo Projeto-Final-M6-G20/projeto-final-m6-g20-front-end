@@ -61,6 +61,8 @@ const EditComment = ({ isOpen, onClose, commentId, adsId }: ModalChildren) => {
                 type="text"
                 label="Comentario"
                 id="content"
+                placeholder="Edite seu comentario
+                "
                 {...register('content')}
               />
               <div className="flex flex-row w-full justify-end gap-[10px] mb-[18px]">

@@ -39,10 +39,10 @@ const CommentForm = () => {
   };
 
   return (
-    <div className="my-32 mb-0 w-[100%]">
+    <div className="my-20 mb-0 w-[60%]">
       <form onSubmit={handleSubmit(onSub)}>
         <div className="mb-2 w-full flex flex-col gap-2 bg-white">
-          <div>
+          <div className="h-5">
             <div className="w-full h-full flex gap-3  items-center max-lg:h-0">
               <div className="w-8 h-8 bg-pink-400  rounded-full ">
                 <p className="w-full h-full flex justify-center items-center  text-white">
@@ -67,7 +67,7 @@ const CommentForm = () => {
           <div className="w-full flex justify-end">
             <button
               type="submit"
-              className="bg-brand-1 w-1/4 h-11 rounded-md text-white"
+              className="bg-brand-1 w-1/4 h-11 rounded-md text-white max-lg:w-full max-sm:w-full"
             >
               Comentar
             </button>
