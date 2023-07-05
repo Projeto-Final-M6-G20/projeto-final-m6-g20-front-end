@@ -12,6 +12,7 @@ import {
 import { usePathname } from 'next/navigation';
 
 import api from 'service/api';
+import Toast from 'app/components/Toast';
 export interface iAdvertisement {
   id: string;
   title: string;
@@ -72,6 +73,7 @@ export interface iAdvertisements {
 export interface iComment {
   id: string;
   content: string;
+  advertisementId: string;
   createdAt: string;
 }
 
@@ -95,6 +97,8 @@ interface AdvertisementsValues {
   getComment: (id: string) => Promise<void>;
   createComment: (data: iComment, id: string) => Promise<void>;
   getAllAvailableSellerAds: (sellerId: string) => Promise<iAdvertisement[]>;
+  updateComment: (data: iComment, id: string, adsId: string) => Promise<void>;
+  deleteComment: (id: string, adsId: string) => Promise<void>;
 }
 
 export const AdvertisementsContext = createContext<AdvertisementsValues>(
@@ -108,7 +112,7 @@ export const AdvertisementsProvider = ({
     useState<iAdvertisements | null>();
 
   const [car, setCar] = useState<iAdvertisement>();
-  const [comment, setComment] = useState<iComment[]>([]);
+  const [comment, setComment] = useState<iComment[]>();
 
   const getAdvertisements = async ({
     limit,
@@ -148,6 +152,28 @@ export const AdvertisementsProvider = ({
     }
   };
 
+  const updateComment = async (data: iComment, id: string, adsId: string) => {
+    try {
+      const response = await api.patch(`/comments/${id}`, data);
+      getComment(adsId);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteComment = async (id: string, adsId: string) => {
+    try {
+      const response = await api.delete(`comments/${id}`);
+      Toast({
+        message: 'Deletado com sucesso!',
+        isSucess: true
+      });
+      getComment(adsId);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getAllAvailableSellerAds = async (sellerId: string) => {
     try {
       const url = `/advertisements/user/${sellerId}`;
@@ -179,7 +205,9 @@ export const AdvertisementsProvider = ({
         comment,
         getComment,
         createComment,
-        getAllAvailableSellerAds
+        getAllAvailableSellerAds,
+        updateComment,
+        deleteComment
       }}
     >
       {children}

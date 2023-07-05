@@ -9,19 +9,23 @@ import {
   useDisclosure
 } from '@chakra-ui/react';
 import CustomModal from 'app/components/Modal';
+import { AdvertisementsContext } from 'context/AdvertisementsContext';
 import { UserContext } from 'context/UserContext';
 import React, { useContext, useRef, useState } from 'react';
 
 interface ModalChildren {
   isOpen: boolean;
   onClose: () => void;
+  commentId?: string;
+  adsId?: string;
 }
 
-const ModalDelete = ({ isOpen, onClose }: ModalChildren) => {
+const ModalDelete = ({ isOpen, onClose, commentId, adsId }: ModalChildren) => {
   const { mode, deleteUser, adData, deleteAd } = useContext(UserContext);
+  const { deleteComment } = useContext(AdvertisementsContext);
   return (
     <>
-      {mode === 'delete' || mode === 'deleteAd' ? (
+      {mode === 'delete' || mode === 'deleteAd' || mode === 'deleteComment' ? (
         <CustomModal
           isOpen={isOpen}
           onClose={onClose}
@@ -40,8 +44,8 @@ const ModalDelete = ({ isOpen, onClose }: ModalChildren) => {
                   <div>
                     <p>
                       Essa ação não pode ser desfeita. Isso excluirá
-                      permanentemente sua conta e removerá seus dados de nossos
-                      servidores.
+                      permanentemente seu anuncio e removerá seus dados de
+                      nossos servidores.
                     </p>
                   </div>
                 </>
@@ -65,6 +69,21 @@ const ModalDelete = ({ isOpen, onClose }: ModalChildren) => {
                 <></>
               )}
 
+              {mode === 'deleteComment' ? (
+                <>
+                  <h3>Tem certeza que deseja excluir este comentario?</h3>
+
+                  <div>
+                    <p>
+                      Essa ação não pode ser desfeita. Isso excluirá
+                      permanentemente seu comentario.
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
+
               <div className="w-full flex justify-end gap-2">
                 <button
                   onClick={() => onClose()}
@@ -80,6 +99,10 @@ const ModalDelete = ({ isOpen, onClose }: ModalChildren) => {
 
                     if (mode === 'deleteAd') {
                       deleteAd(adData!.id);
+                    }
+
+                    if (mode === 'deleteComment') {
+                      deleteComment(commentId!, adsId!);
                     }
 
                     onClose();

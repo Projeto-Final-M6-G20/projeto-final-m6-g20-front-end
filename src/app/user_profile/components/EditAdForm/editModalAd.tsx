@@ -6,8 +6,9 @@ import { useContext, useEffect, useState } from 'react';
 import { NewAdData, NewAdSchema } from '../CreateAdForm/validator';
 import { UserContext } from 'context/UserContext';
 import ModalDelete from '../UserDisplay/components/modalDelete';
-import { useDisclosure } from '@chakra-ui/react';
+import { Tooltip, useDisclosure } from '@chakra-ui/react';
 import api from 'service/api';
+import { add } from 'date-fns';
 
 interface ModalChildren {
   isOpen: boolean;
@@ -18,28 +19,8 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
   const { register, handleSubmit, setValue } = useForm<NewAdData>({
     // resolver: zodResolver(NewAdSchema)
   });
-  const {
-    mode,
-    adData,
-    setMode,
-    setAdData,
-    updateAdv,
-    brands,
-    setSelectedBrand,
-    models,
-    setSelectedModel,
-    selectedBrand,
-    getCarModels,
-    getCarBrands,
-    selectedModel
-  } = useContext(UserContext);
-
-  const [year, setYear] = useState('');
-  const [fuel, setFuel] = useState('');
-  const [fipe, setFipe] = useState('');
-  const [price, setPrice] = useState('');
-  const [km, setKm] = useState('');
-
+  const { mode, adData, setMode, setAdData, updateAdv } =
+    useContext(UserContext);
   const [images, setImages] = useState<string[]>(['', '']);
 
   const changeImage = (
@@ -54,50 +35,38 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
     setImages([...images, '']);
   };
 
+  if (!adData) {
+    return (
+      <>
+        <p>Carregando</p>
+      </>
+    );
+  }
+
   const onSubFunction = (updata: any) => {
-    console.log(updata);
+    const newImage = updata.url_image;
+    const updatedImage = [{ url: newImage }];
     const newData = {
       ...updata,
       price: Number(updata.price),
       year: Number(updata.year),
-      fipe_price: Number(updata.fipe_price)
+      fipe_price: Number(updata.fipe_price),
+      images: updatedImage
     };
-    updateAdv(newData, adData!.id);
+    console.log(newData);
+    updateAdv(newData, adData?.id);
     onClose();
   };
 
-  useEffect(() => {
-    getCarBrands();
-  }, []);
-
-  useEffect(() => {
-    getCarModels();
-  }, [selectedBrand, getCarModels]);
-
-  useEffect(() => {
-    if (models) {
-      const modelInfo = models.filter(
-        (element) => element.name == selectedModel
-      );
-      setFuel(
-        modelInfo[0]?.fuel == 1
-          ? 'Flex'
-          : modelInfo[0]?.fuel == 2
-          ? 'Híbrido'
-          : modelInfo[0]?.fuel == 3
-          ? 'Elétrico'
-          : ''
-      );
-      setFipe(modelInfo[0]?.value);
-      setYear(modelInfo[0]?.year);
-    }
-  }, [selectedModel]);
-
-  useEffect(() => {
-    setValue('year', year);
-    setValue('fipe_price', fipe);
-    setValue('fuel_type', fuel);
-  }, [getCarModels]);
+  setValue('year', adData.year);
+  setValue('fipe_price', adData.fipe_price);
+  setValue('fuel_type', adData.fuel_type);
+  setValue('model', adData.model);
+  setValue('brand', adData.brand);
+  setValue('color', adData.color);
+  setValue('mileage', adData.mileage);
+  setValue('price', adData.price);
+  setValue('description', adData.description);
 
   return (
     <>
@@ -118,48 +87,28 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
               className="w-full h-full p-2"
               onSubmit={handleSubmit(onSubFunction)}
             >
-              <div className="mb-2 w-full">
-                <label className="block  text-sm mb-2" htmlFor={'brand'}>
-                  Marca
-                </label>
-                <select
-                  className="w-full h-12 bg-white rounded-md border-2 focus:border-brand-1 pl-4"
-                  required
-                  id={'brand'}
-                  placeholder="selecione a marca"
-                  {...register('title')}
-                  onChange={(event) => {
-                    setSelectedBrand(event.target.value);
+              <Tooltip label="Campo desabilitado por motivos de segurança">
+                <Input
+                  type="text"
+                  label="Marca"
+                  disabled={true}
+                  id="brand"
+                  style={{
+                    width: '100%'
                   }}
-                >
-                  {brands.map((element, index) => (
-                    <option value={element} key={index}>
-                      {element}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                  {...register('brand')}
+                />
+              </Tooltip>
 
-              <div className="mb-2 w-full">
-                <label className="block  text-sm mb-2" htmlFor={'model'}>
-                  Modelo
-                </label>
-                <select
-                  className="w-full h-12 bg-white rounded-md border-2 focus:border-brand-1 pl-4"
-                  required
-                  id={'model'}
-                  {...register('model')}
-                  onChange={(event) => {
-                    setSelectedModel(event.target.value);
-                  }}
-                >
-                  {models.map((element, index) => (
-                    <option value={element.name} key={index}>
-                      {element.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <Input
+                type="text"
+                label="Modelo"
+                id="model"
+                style={{
+                  width: '100%'
+                }}
+                {...register('model')}
+              />
 
               <div className="flex gap-12">
                 <Input
@@ -170,7 +119,6 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
                     width: '100%'
                   }}
                   {...register('year')}
-                  value={year}
                 />
 
                 <Input
@@ -181,7 +129,6 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
                     width: '100%'
                   }}
                   {...register('fuel_type')}
-                  value={fuel}
                 />
               </div>
 
@@ -210,16 +157,18 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
               </div>
 
               <div className="flex gap-12">
-                <Input
-                  type="text"
-                  label="Tabela de preço FIPE"
-                  id="fipe"
-                  defaultValue={fipe}
-                  style={{
-                    width: '100%'
-                  }}
-                  {...register('fipe_price')}
-                />
+                <Tooltip label="Campo desabilitado por motivos de segurança">
+                  <Input
+                    type="text"
+                    label="Tabela de preço FIPE"
+                    id="fipe"
+                    disabled
+                    style={{
+                      width: '100%'
+                    }}
+                    {...register('fipe_price')}
+                  />
+                </Tooltip>
 
                 <Input
                   type="text"
@@ -280,6 +229,17 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
                 </div>
               </div>
 
+              <Input
+                type="text"
+                label="Imagem de capa"
+                id="url_image"
+                placeholder="https://image.com"
+                {...register('url_image')}
+                style={{
+                  width: '100%'
+                }}
+              />
+
               {images.map((image, index) => (
                 <div className="mb-2 w-full" key={index + 1}>
                   <label
@@ -294,8 +254,8 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
                     id={'url_image'}
                     placeholder="https://image.com"
                     {...register('images')}
-                    value={image}
-                    onChange={(event) => changeImage(event, index)}
+                    // value={image}
+                    // onChange={(event) => changeImage(event, index)}
                   />
                 </div>
               ))}
