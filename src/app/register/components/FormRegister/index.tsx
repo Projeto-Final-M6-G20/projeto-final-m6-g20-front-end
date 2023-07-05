@@ -24,7 +24,6 @@ const RegisterForm = () => {
 
   const onFormSubmit = (formData: UserData) => {
     RegisterFunction(formData);
-    console.log(isModal);
     if (isModal) {
       onOpen();
     }

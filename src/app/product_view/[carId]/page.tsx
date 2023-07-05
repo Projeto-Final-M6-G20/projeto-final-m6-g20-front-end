@@ -52,7 +52,7 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
   return (
     <main className="flex min-h-screen min-w-full items-start justify-center backgroundImage  bg-cover bg-no-repeat">
       <Container>
-        <section className="flex flex-col items-center lg:flex-row lg:items-start justify-between w-full p-14 max-sm:flex-col-reverse">
+        <section className="flex flex-col items-center lg:flex-row lg:items-start justify-between w-full p-14 max-sm:flex-col-reverse max-sm:p-0 max-sm:my-6">
           <section className="flex flex-col w-[90%] lg:w-[63%] justify-center gap-6 ">
             <div className="bg-white h-[380px] flex justify-center ">
               <img

@@ -26,7 +26,7 @@ const ListAds = ({ advertisements }: CardProps) => {
   };
   return (
     <div className="w-full h-full  max-lg:h-80">
-      <ul className="flex w-full h-full flex-wrap gap-11 max-lg:flex-col max-lg:overflow-x-auto">
+      <ul className="flex justify-center w-full h-full flex-wrap gap-11 max-lg:flex-col max-lg:overflow-x-auto">
         {advertisements.map((item: iAdvertisement) => (
           <li
             onClick={() => handleCarId(item.id)}
