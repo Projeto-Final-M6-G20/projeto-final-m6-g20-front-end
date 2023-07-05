@@ -5,7 +5,7 @@ const urlSchema = z.object({
   url: z.string()
 });
 
-export const NewAdSchema = z.object({
+export const EditAdSchema = z.object({
   id: z.string(),
   brand: z.string({ required_error: 'Campo obrigatário' }),
   model: z.string({ required_error: 'Campo obrigatário' }),
@@ -31,4 +31,4 @@ export const NewAdSchema = z.object({
   images_6: z.string().optional()
 });
 
-export type NewAdData = z.infer<typeof NewAdSchema>;
+export type EditAdData = z.infer<typeof EditAdSchema>;

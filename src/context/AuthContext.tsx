@@ -1,6 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { createContext, useState } from 'react';
+import jwt from 'jsonwebtoken';
+import { createContext, useContext, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Toast from 'app/components/Toast';
@@ -13,9 +14,31 @@ import {
 
 import { setCookie } from 'nookies';
 import api from 'service/api';
+import { UserContext } from './UserContext';
 
 interface AuthProviderProps {
   children: React.ReactNode;
+}
+
+export interface Address {
+  id: string;
+  street: string;
+  zip_code: string;
+  number: string;
+  city: string;
+  state: string;
+  complement: string;
+}
+
+interface iUser {
+  email: string;
+  fullname: string;
+  cpf: string;
+  description: string;
+  cellphone: string;
+  birth_date: string;
+  is_advertiser: boolean;
+  Address: Address;
 }
 
 interface AuthValue {
@@ -25,6 +48,7 @@ interface AuthValue {
   isModal: boolean;
   sendEmail: (sendEmailResetPasswordData: SendEmailResetPasswordData) => void;
   resetPassword: (resetPasswordData: ResetPasswordData, token: string) => void;
+  user: iUser | undefined;
 }
 
 export const AuthContext = createContext<AuthValue>({} as AuthValue);
@@ -32,7 +56,7 @@ export const AuthContext = createContext<AuthValue>({} as AuthValue);
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const router = useRouter();
   const [isModal, setIsModal] = useState(true);
-
+  const [user, setUser] = useState<iUser>();
   const is_advertiser = () => {
     const radios: any = document.getElementById('is_advertiser');
 
@@ -57,6 +81,23 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const { token } = response.data;
 
       api.defaults.headers.common.authorization = `Bearer ${token}`;
+
+      const getUser = async () => {
+        try {
+          const decodedToken = jwt.decode(token);
+
+          const id = decodedToken ? decodedToken.sub : null;
+          const response = await api.get(`users/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+          setUser(response.data);
+        } catch (error) {
+          // console.log(error);
+        }
+      };
+      getUser();
 
       setCookie(null, 'user.Token', token, {
         maxAge: 60 * 1500,
@@ -116,7 +157,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         is_advertiser,
         isModal,
         sendEmail,
-        resetPassword
+        resetPassword,
+        user
       }}
     >
       {children}

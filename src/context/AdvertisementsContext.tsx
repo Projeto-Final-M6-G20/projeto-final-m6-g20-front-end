@@ -13,6 +13,7 @@ import { usePathname } from 'next/navigation';
 
 import api from 'service/api';
 import Toast from 'app/components/Toast';
+import { UserContext } from './UserContext';
 export interface iAdvertisement {
   id: string;
   title: string;
@@ -77,6 +78,10 @@ export interface iComment {
   createdAt: string;
 }
 
+interface image {
+  url: string;
+}
+
 interface AdvertisementsProviderProps {
   children: React.ReactNode;
 }
@@ -99,6 +104,7 @@ interface AdvertisementsValues {
   getAllAvailableSellerAds: (sellerId: string) => Promise<iAdvertisement[]>;
   updateComment: (data: iComment, id: string, adsId: string) => Promise<void>;
   deleteComment: (id: string, adsId: string) => Promise<void>;
+  updateImage: (id: string, data: image) => Promise<void>;
 }
 
 export const AdvertisementsContext = createContext<AdvertisementsValues>(
@@ -110,7 +116,7 @@ export const AdvertisementsProvider = ({
 }: AdvertisementsProviderProps) => {
   const [advertisements, setAdvertisements] =
     useState<iAdvertisements | null>();
-
+  const { getUserAd } = useContext(UserContext);
   const [car, setCar] = useState<iAdvertisement>();
   const [comment, setComment] = useState<iComment[]>();
 
@@ -147,6 +153,15 @@ export const AdvertisementsProvider = ({
     try {
       const response = await api.get(`/comments/advertisement/${id}`);
       setComment(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateImage = async (id: string, data: image) => {
+    try {
+      const response = await api.patch(`/images/${id}`, data);
+      getUserAd();
     } catch (error) {
       console.log(error);
     }
@@ -207,7 +222,8 @@ export const AdvertisementsProvider = ({
         createComment,
         getAllAvailableSellerAds,
         updateComment,
-        deleteComment
+        deleteComment,
+        updateImage
       }}
     >
       {children}
