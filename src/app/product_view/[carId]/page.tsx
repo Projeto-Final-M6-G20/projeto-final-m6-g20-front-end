@@ -84,7 +84,7 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
               <p className="mb-3 text-gray-500">{car.description}</p>
             </div>
 
-            <div className="flex flex-col justify-items-start p-8 bg-white w-full max-sm:w-screen max-sm:p-2">
+            <div className="flex flex-col justify-items-start p-8 bg-white">
               <h2 className="text-lg font-semibold mb-1">Comentários</h2>
               <div className="flex flex-col w-full">
                 <CommentCard />
