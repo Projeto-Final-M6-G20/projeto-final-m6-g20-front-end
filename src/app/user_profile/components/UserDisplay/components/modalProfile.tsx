@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
+import { useForm } from 'react-hook-form';
 
 import Input from 'app/components/Input';
 import CustomModal from 'app/components/Modal';
+import { UserData } from 'app/register/components/FormRegister/validator';
 
-import { Button, useDisclosure } from '@chakra-ui/react';
 import { UserContext } from 'context/UserContext';
 
 interface ModalChildren {
@@ -12,10 +13,16 @@ interface ModalChildren {
   onOpen: () => void;
 }
 const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
-  const { user, mode, setMode } = useContext(UserContext);
+  const { user, mode, setMode, updateUser } = useContext(UserContext);
+  const { register, handleSubmit } = useForm<UserData>();
 
   const onOpenFunction = () => {
     setMode('delete');
+  };
+
+  const onSubFunction = (data: UserData) => {
+    updateUser(data);
+    onClose();
   };
 
   return (
@@ -33,11 +40,12 @@ const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
           <div className="flex flex-col w-full gap-4">
             <h2>Informações pessoais</h2>
 
-            <form className="w-full">
+            <form className="w-full" onSubmit={handleSubmit(onSubFunction)}>
               <Input
                 type="text"
                 label="Nome"
-                id="name"
+                id="fullname"
+                {...register('fullname')}
                 defaultValue={user?.fullname}
               />
 
@@ -45,14 +53,16 @@ const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                 type="email"
                 label="Email"
                 id="email"
-                defaultValue={user?.email}
+                {...register('email')}
+                placeholder={user?.email}
               />
 
               <Input
                 type="text"
                 label="Cpf"
                 id="cpf"
-                defaultValue={user?.cpf}
+                {...register('cpf')}
+                placeholder={user?.cpf}
               />
 
               <Input
@@ -60,6 +70,7 @@ const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                 label="Celular"
                 id="cellphone"
                 defaultValue={user?.cellphone}
+                {...register('cellphone')}
               />
 
               <Input
@@ -67,17 +78,21 @@ const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                 label="Data de nascimento"
                 id="birth_date"
                 defaultValue={user?.birth_date}
+                {...register('birth_date')}
               />
 
               <Input
                 type="text"
                 label="Descrição"
                 id="description"
+                defaultValue={user?.description}
                 className=" w-full rounded-md p-2  focus:outline-slate-900 border h-20"
+                {...register('description')}
               />
 
               <div className=" flex w-full justify-center gap-2">
                 <button
+                  type="button"
                   onClick={() => {
                     onClose();
                   }}
@@ -94,7 +109,10 @@ const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
                   Excluir perfil
                 </button>
 
-                <button className=" w-1/3 flex flex-row justify-center items-center text-white p-3 gap-2 bg-brand-1 border-2  rounded h-12">
+                <button
+                  type="submit"
+                  className="w-1/3 flex flex-row justify-center items-center text-white p-3 gap-2 bg-brand-1 border-2  rounded h-12"
+                >
                   Salvar alterações
                 </button>
               </div>

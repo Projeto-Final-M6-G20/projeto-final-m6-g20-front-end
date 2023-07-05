@@ -1,28 +1,33 @@
 'use client';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 import DropDown from 'app/user_profile/components/UserDisplay/components/dropdownUser';
 
 import MenuMobile from '../MenuMobile';
+import { parseCookies } from 'nookies';
+import dynamic from 'next/dynamic';
 
 const HeaderComponent = () => {
   const pathname = usePathname();
+  const cookies = parseCookies();
 
   return (
-    <header className="w-full h-16 p-9 border-2 items-center border-b-gray-300 flex justify-between max-lg:p-5">
-      <Link
-        href={'/'}
-        className="heading-1-700  bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text text p-3  "
-      >
-        Motors <span className="text-lg font-bold">shop</span>
-      </Link>
+    <div className="flex flex-col justify-center border-2 border-b-gray-300 items-center  max-sm:w-screen max-[1024px]:w-full max-[1560px]:w-full max-[2560px]:w-full  max-[1560px]:w-1/2">
+      <header className="w-full h-16 p-9  items-center  flex justify-between max-lg:p-5 max-[1560px]:w-full max-[2560px]:w-[60%] max-[3440px]:w-[50%]">
+        <Link
+          href={'/'}
+          className="heading-1-700  bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text text p-3  "
+        >
+          Motors <span className="text-lg font-bold">shop</span>
+        </Link>
 
-      <>
-        {pathname === '/user_profile' ? (
+        {pathname === '/user_profile' ||
+        ('/product_view/:carId' && cookies['user.Token']) ||
+        ('/' && cookies['user.Token']) ? (
           <DropDown />
         ) : (
-          <nav className="flex items-center p-3 max-sm:hidden">
+          <div className="flex items-center p-3 max-sm:hidden">
             {pathname === '/login' ? (
               <Link
                 href={'/'}
@@ -54,15 +59,17 @@ const HeaderComponent = () => {
                 Cadastrar
               </Link>
             )}
-          </nav>
+          </div>
         )}
 
         <div className="flex items-center p-3  sm:hidden">
           <MenuMobile />
         </div>
-      </>
-    </header>
+      </header>
+    </div>
   );
 };
 
-export default HeaderComponent;
+export default dynamic(() => Promise.resolve(HeaderComponent), { ssr: false });
+
+export { HeaderComponent };

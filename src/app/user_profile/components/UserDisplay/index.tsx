@@ -1,8 +1,11 @@
 import { useDisclosure } from '@chakra-ui/react';
 import { TfiFaceSad } from 'react-icons/tfi';
+import { AiOutlineWarning } from 'react-icons/ai';
 import React, { useContext, useState } from 'react';
 import { UserContext } from 'context/UserContext';
 import CreateAdForm from '../CreateAdForm';
+import EditAdModal from '../EditAdForm/editModalAd';
+import { useAdvertisements } from 'context/AdvertisementsContext';
 
 const UserDisplay = () => {
   const [active, setActive] = useState(false);
@@ -12,12 +15,20 @@ const UserDisplay = () => {
     onClose: onCreateClose
   } = useDisclosure();
 
-  const { setMode, adv } = useContext(UserContext);
+  const { car } = useAdvertisements();
+
+  const { setMode, mode, adv, user, getAd, getUserAd } =
+    useContext(UserContext);
   const { onOpen, onClose, isOpen } = useDisclosure();
-  const onOpenFunction = () => {
-    setMode('ad');
-    setActive(false);
+  const onOpenFunction = (id: string) => {
+    getAd(id);
+    setMode('editAd');
     onOpen();
+  };
+  // getUserAd();
+
+  const capitalizeFirstLetter = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
   return (
@@ -35,7 +46,7 @@ const UserDisplay = () => {
                     <div className="w-full h-32 flex  justify-center items-center bg-[#E9ECEF]">
                       <img
                         className="w-5/6   h-28  object-cover "
-                        src={item.cover_image}
+                        src={item.images[0].url}
                         alt=""
                       />
                     </div>
@@ -50,26 +61,27 @@ const UserDisplay = () => {
                       </div>
                     )}
 
-                    <p className="font-bold">{item.title}</p>
-                    <p className="text-sm text-gray-600">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem...
+                    <p className="font-bold">
+                      {capitalizeFirstLetter(item.model)}
                     </p>
+                    <p className="text-sm text-gray-600">{item.description}</p>
                   </div>
 
                   <div className="w-full h-full flex gap-3 justify-between">
                     <div className="flex gap-2">
                       <span className="text-brand-1 font-bold">
-                        {item.milleage} KM
+                        {item.mileage} KM
                       </span>
-                      <span className="text-brand-1 font-bold">2019</span>
+                      <span className="text-brand-1 font-bold">
+                        {item.year}
+                      </span>
                     </div>
 
                     <span className="font-bold">R$ {item.price}</span>
                   </div>
                   <div className="flex flex-row gap-5">
                     <button
-                      onClick={() => onOpenFunction()}
+                      onClick={() => onOpenFunction(item.id)}
                       className="flex flex-row justify-center items-center text-black font-semibold p-3 gap-2 w-max h-12 border-2 border-black rounded-md"
                     >
                       Editar
@@ -83,29 +95,48 @@ const UserDisplay = () => {
           </ul>
         </div>
       ) : (
-        <div className="w-full h-96 flex justify-center ">
-          <div className="w-full flex justify-center items-center flex-col gap-6">
-            <h2 className="font-bold text-3xl text-brand-2">
-              Você ainda não possui nenhum anuncio
-            </h2>
+        <div className="w-full h-80 flex justify-center ">
+          <div className="w-full h-full flex justify-center items-center flex-col gap-6">
+            <>
+              {user && user?.is_advertiser ? (
+                <>
+                  <h2 className="font-bold text-3xl text-brand-2 max-sm:text-base">
+                    Você ainda não possui nenhum anuncio
+                  </h2>
 
-            <TfiFaceSad
-              className="text-brand-2"
-              style={{
-                fontSize: '8rem'
-              }}
-            />
+                  <TfiFaceSad
+                    className="text-brand-2"
+                    style={{
+                      fontSize: '8rem'
+                    }}
+                  />
 
-            <button
-              className="border-2 border-brand-1 rounded-md text-brand-1 px-7 py-2 w-1/4 h-max font-semibold"
-              onClick={onCreateOpen}
-            >
-              Criar Anuncio
-            </button>
+                  <button
+                    className="border-2 border-brand-1 rounded-md text-brand-1 px-7 py-2 w-1/4 h-max font-semibold"
+                    onClick={onCreateOpen}
+                  >
+                    Criar Anuncio
+                  </button>
+                </>
+              ) : (
+                <>
+                  <h2 className="font-bold text-3xl text-brand-2">
+                    Essa pagina ainda está sendo desenvolvida...
+                  </h2>
+
+                  <AiOutlineWarning
+                    className="text-brand-2"
+                    style={{
+                      fontSize: '8rem'
+                    }}
+                  />
+                </>
+              )}
+            </>
           </div>
-          <CreateAdForm isOpen={isCreateOpen} onClose={onCreateClose} />
         </div>
       )}
+      <EditAdModal isOpen={isOpen} onClose={onClose} />
     </>
   );
 };

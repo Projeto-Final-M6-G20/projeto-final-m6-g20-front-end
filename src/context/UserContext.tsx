@@ -1,4 +1,5 @@
 'use client';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import {
   Dispatch,
   SetStateAction,
@@ -7,6 +8,8 @@ import {
   useState
 } from 'react';
 
+import Toast from 'app/components/Toast';
+import { UserData } from 'app/register/components/FormRegister/validator';
 import { NewAdData } from 'app/user_profile/components/CreateAdForm/validator';
 
 import jwt from 'jsonwebtoken';
@@ -25,7 +28,7 @@ interface iModel {
   year: string;
 }
 
-interface Address {
+export interface Address {
   id: string;
   street: string;
   zip_code: string;
@@ -62,6 +65,15 @@ interface UserValue {
   getUser: () => Promise<void>;
   adv: NewAdData[] | undefined;
   setAdv: Dispatch<SetStateAction<NewAdData[]>>;
+  updateUser: (data: UserData) => Promise<void>;
+  updateUserAddress: (data: Address) => Promise<void>;
+  deleteUser: () => Promise<void>;
+  adData: NewAdData | undefined;
+  setAdData: Dispatch<SetStateAction<NewAdData | undefined>>;
+  getAd: (id: string) => Promise<void>;
+  updateAdv: (data?: NewAdData, id?: string) => Promise<void>;
+  deleteAd: (id: string) => Promise<void>;
+  getUserAd: () => Promise<void>;
 }
 
 export const UserContext = createContext<UserValue>({} as UserValue);
@@ -74,6 +86,8 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<iUser>();
   const [mode, setMode] = useState('');
   const [adv, setAdv] = useState<NewAdData[]>([]);
+  const [adData, setAdData] = useState<NewAdData>();
+  const router = useRouter();
 
   const cookies = parseCookies();
   if (cookies['user.Token']) {
@@ -86,7 +100,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
       const brandsCars = Object.keys(response.data);
       setBrands(brandsCars);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -99,7 +113,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
         setModels(response.data);
         // console.log(response.data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
   };
@@ -120,11 +134,13 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const getAdPerId = async () => {
+  const getUserAd = async () => {
     try {
       const response = await api.get(`/advertisements/user`);
       setAdv(response.data);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const createCarAd = async (data: NewAdData) => {
@@ -132,7 +148,102 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
       const response = await api.post('/advertisements/', data);
 
       console.log(response);
-      getAdPerId();
+      getUserAd();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateUser = async (data: UserData) => {
+    try {
+      const decodedToken = jwt.decode(cookies['user.Token']);
+
+      const id = decodedToken ? decodedToken.sub : null;
+      const response = await api.patch(`users/${id}`, data);
+      console.log(response.data);
+      Toast({
+        message: 'Atualizado com sucesso!',
+        isSucess: true
+      });
+      getUser();
+    } catch (error) {
+      Toast({
+        message: 'Algo deu errado!',
+        isSucess: false
+      });
+    }
+  };
+
+  const updateUserAddress = async (data: Address) => {
+    try {
+      const decodedToken = jwt.decode(cookies['user.Token']);
+
+      const id = decodedToken ? decodedToken.sub : null;
+      const response = await api.patch(`address/user/${id}`, data);
+      Toast({
+        message: 'Atualizado com sucesso!',
+        isSucess: true
+      });
+      getUser();
+    } catch (error) {
+      Toast({
+        message: 'Algo deu errado!',
+        isSucess: false
+      });
+    }
+  };
+
+  const deleteUser = async () => {
+    try {
+      const decodedToken = jwt.decode(cookies['user.Token']);
+
+      const id = decodedToken ? decodedToken.sub : null;
+      const response = await api.delete(`users/${id}`);
+      Toast({
+        message: 'Deletado com sucesso!',
+        isSucess: true
+      });
+
+      router.push('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getAd = async (id: string) => {
+    try {
+      const response = await api.get(`/advertisements/${id}`);
+      console.log(response.data);
+      setAdData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateAdv = async (data?: NewAdData, id?: string) => {
+    try {
+      const response = await api.patch(`advertisements/${id}`, data);
+      Toast({
+        message: 'Atualizado com sucesso!',
+        isSucess: true
+      });
+      getUserAd();
+    } catch (error) {
+      Toast({
+        message: 'Algo deu errado!',
+        isSucess: false
+      });
+    }
+  };
+
+  const deleteAd = async (id: string) => {
+    try {
+      const response = await api.delete(`advertisements/${id}`);
+      Toast({
+        message: 'Deletado com sucesso!',
+        isSucess: true
+      });
+      getUserAd();
     } catch (error) {
       console.log(error);
     }
@@ -140,7 +251,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     getUser();
-    getAdPerId();
+    getUserAd();
   }, []);
 
   return (
@@ -160,7 +271,16 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
         setMode,
         getUser,
         adv,
-        setAdv
+        setAdv,
+        updateUser,
+        updateUserAddress,
+        deleteUser,
+        adData,
+        setAdData,
+        getAd,
+        updateAdv,
+        deleteAd,
+        getUserAd
       }}
     >
       {children}

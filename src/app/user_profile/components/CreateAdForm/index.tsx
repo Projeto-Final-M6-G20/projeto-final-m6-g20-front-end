@@ -53,7 +53,8 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
     selectedBrand,
     selectedModel,
     setSelectedModel,
-    createCarAd
+    createCarAd,
+    mode
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -170,8 +171,8 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
                 className="w-full h-12 bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4"
                 placeholder="30.000"
                 required
-                id={'milleage'}
-                {...register('milleage')}
+                id={'mileage'}
+                {...register('mileage')}
                 value={km}
                 onChange={(e) => setKm(e.target.value)}
               />
@@ -233,6 +234,7 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </div>
+<<<<<<< HEAD
             {images.map((image, index) =>
               index === 0 ? (
                 <div className="mb-2 w-full" key={index + 1}>
@@ -272,6 +274,40 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
                 </div>
               )
             )}
+=======
+
+            <div className="mb-2 w-full">
+              <label className="block  text-sm mb-2" htmlFor={'cover_image'}>
+                Imagem de Capa
+              </label>
+              <input
+                className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-12"
+                required
+                id={'cover_image'}
+                placeholder="https://image.com"
+                {...register('url_image')}
+                value={coverImage}
+                onChange={(e) => setCoverImage(e.target.value)}
+              />
+            </div>
+
+            {images.map((image, index) => (
+              <div className="mb-2 w-full" key={index + 1}>
+                <label className="block  text-sm mb-2" htmlFor={'url_image'}>
+                  {`${index + 1}° Imagem da galeria`}
+                </label>
+                <input
+                  className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-12"
+                  required
+                  id={'url_image'}
+                  placeholder="https://image.com"
+                  {...register('url_image')}
+                  value={image}
+                  onChange={(event) => changeImage(event, index)}
+                />
+              </div>
+            ))}
+>>>>>>> 4817ea9388051b2a209b9872908f1e760e403607
           </form>
           <div className="px-[20px] py-[12px] rounded-md text-brand-1 bg-brand-4 w-max text-sm font-semibold mb-[42px] disabled:text-brand-4">
             <button onClick={AddInputImage} disabled={images.length >= 6}>

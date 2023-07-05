@@ -1,5 +1,9 @@
 import { z } from 'zod';
 
+const urlSchema = z.object({
+  url: z.string()
+});
+
 export const NewAdSchema = z.object({
   id: z.string(),
   brand: z.string({ required_error: 'Campo obrigatário' }),
@@ -7,10 +11,10 @@ export const NewAdSchema = z.object({
   title: z.string(),
   year: z.string().optional(),
   fuel_type: z.string().optional(),
-  milleage: z.string({ required_error: 'Campo obrigatário' }),
+  mileage: z.string({ required_error: 'Campo obrigatário' }),
   color: z.string({ required_error: 'Campo obrigatário' }),
   price: z.string({ required_error: 'Campo obrigatário' }),
-  fipe_price: z.number().optional(),
+  fipe_price: z.string().optional(),
   description: z.string({ required_error: 'Campo obrigatário' }),
   is_available: z.boolean(),
   is_good_price: z.boolean().optional(),
