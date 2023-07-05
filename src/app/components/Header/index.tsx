@@ -6,7 +6,7 @@ import DropDown from 'app/user_profile/components/UserDisplay/components/dropdow
 
 import MenuMobile from '../MenuMobile';
 import { parseCookies } from 'nookies';
-import { useEffect } from 'react';
+import dynamic from 'next/dynamic';
 
 const HeaderComponent = () => {
   const pathname = usePathname();
@@ -70,4 +70,6 @@ const HeaderComponent = () => {
   );
 };
 
-export default HeaderComponent;
+export default dynamic(() => Promise.resolve(HeaderComponent), { ssr: false });
+
+export { HeaderComponent };
