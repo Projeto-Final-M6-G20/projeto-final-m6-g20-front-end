@@ -53,7 +53,7 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
   return (
     <main className="flex min-h-screen min-w-full items-start justify-center backgroundImage bg-cover bg-no-repeat">
       <Container>
-        <section className="flex flex-col items-center lg:flex-row lg:items-start justify-between w-full  ">
+        <section className="flex flex-col items-center lg:flex-row lg:items-start justify-between w-full p-14 ">
           <section className="flex flex-col w-[90%] lg:w-[63%] justify-center gap-6 ">
             <div className="bg-white h-[380px] flex justify-center ">
               <img
@@ -85,7 +85,7 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
               <p className="mb-3 text-gray-500">{car.description}</p>
             </div>
 
-            <div className="flex flex-col w-[600px] justify-items-start p-8">
+            <div className="flex flex-col w-[600px] justify-items-start p-8 bg-white">
               <h2 className="text-lg font-semibold">Comentários</h2>
               <div className="flex flex-col w-full">
                 <CommentCard />

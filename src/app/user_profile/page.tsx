@@ -15,11 +15,7 @@ const UserProfile = () => {
 
   let initials = '';
   if (!user) {
-    return (
-      <>
-        <p>Carregando...</p>
-      </>
-    );
+    return <></>;
   }
   const names = user.fullname.split(' ');
 

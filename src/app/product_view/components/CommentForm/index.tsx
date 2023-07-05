@@ -39,9 +39,9 @@ const CommentForm = () => {
   };
 
   return (
-    <div className="my-32">
+    <div className="my-32 mb-0 w-[100%]">
       <form onSubmit={handleSubmit(onSub)}>
-        <div className="mb-2 w-full flex flex-col gap-2">
+        <div className="mb-2 w-full flex flex-col gap-2 bg-white">
           <div>
             <div className="w-full h-full flex gap-3  items-center max-lg:h-0">
               <div className="w-8 h-8 bg-pink-400  rounded-full ">
