@@ -29,7 +29,6 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
   const [price, setPrice] = useState('');
   const [km, setKm] = useState('');
   const [description, setDescription] = useState('');
-  const [coverImage, setCoverImage] = useState('');
   const [images, setImages] = useState<string[]>(['', '']);
 
   const changeImage = (
@@ -38,6 +37,7 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
   ) => {
     images[index] = event.target.value;
     setImages([...images]);
+    console.log(images);
   };
 
   const AddInputImage = () => {
@@ -58,7 +58,7 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
 
   useEffect(() => {
     getCarBrands();
-  });
+  }, []);
 
   useEffect(() => {
     getCarModels();
@@ -233,38 +233,45 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </div>
-
-            <div className="mb-2 w-full">
-              <label className="block  text-sm mb-2" htmlFor={'cover_image'}>
-                Imagem de Capa
-              </label>
-              <input
-                className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-12"
-                required
-                id={'cover_image'}
-                placeholder="https://image.com"
-                {...register('cover_image')}
-                value={coverImage}
-                onChange={(e) => setCoverImage(e.target.value)}
-              />
-            </div>
-
-            {images.map((image, index) => (
-              <div className="mb-2 w-full" key={index + 1}>
-                <label className="block  text-sm mb-2" htmlFor={'cover_image'}>
-                  {`${index + 1}° Imagem da galeria`}
-                </label>
-                <input
-                  className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-12"
-                  required
-                  id={'cover_image'}
-                  placeholder="https://image.com"
-                  {...register('cover_image')}
-                  value={image}
-                  onChange={(event) => changeImage(event, index)}
-                />
-              </div>
-            ))}
+            {images.map((image, index) =>
+              index === 0 ? (
+                <div className="mb-2 w-full" key={index + 1}>
+                  <label
+                    className="block  text-sm mb-2"
+                    htmlFor={'cover_image'}
+                  >
+                    Imagem de Capa
+                  </label>
+                  <input
+                    className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-12"
+                    required
+                    id={'cover_image'}
+                    placeholder="https://image.com"
+                    {...register(`urls.${index}`)}
+                    value={images[index]}
+                    onChange={(event) => changeImage(event, index)}
+                  />
+                </div>
+              ) : (
+                <div className="mb-2 w-full" key={index + 1}>
+                  <label
+                    className="block  text-sm mb-2"
+                    htmlFor={`${index}° image`}
+                  >
+                    {`${index}° Imagem da galeria`}
+                  </label>
+                  <input
+                    className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-12"
+                    required
+                    id={`${index}° image`}
+                    placeholder="https://image.com"
+                    {...register(`urls.${index}`)}
+                    value={image}
+                    onChange={(event) => changeImage(event, index)}
+                  />
+                </div>
+              )
+            )}
           </form>
           <div className="px-[20px] py-[12px] rounded-md text-brand-1 bg-brand-4 w-max text-sm font-semibold mb-[42px] disabled:text-brand-4">
             <button onClick={AddInputImage} disabled={images.length >= 6}>
