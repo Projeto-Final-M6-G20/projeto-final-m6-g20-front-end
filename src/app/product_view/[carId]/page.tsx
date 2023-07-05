@@ -1,8 +1,9 @@
 'use client';
+import { usePathname, useRouter } from 'next/navigation';
 import { useContext, useEffect } from 'react';
 
-import { usePathname, useRouter } from 'next/navigation';
-
+import CommentForm from '../components/CommentForm';
+import CommentCard from '../components/CommentsCard';
 import Container from 'app/components/Container/container';
 
 import { Spinner } from '@chakra-ui/react';
@@ -10,8 +11,6 @@ import {
   AdvertisementsContext,
   useAdvertisements
 } from 'context/AdvertisementsContext';
-import CommentCard from '../components/CommentsCard';
-import CommentForm from '../components/CommentForm';
 
 const AdDetailView = ({ params }: { params: { carId: string } }) => {
   const { getAdvertisementById, car } = useAdvertisements();

@@ -10,6 +10,7 @@ import Card from './components/Card';
 import Container from './components/Container/container';
 import CarFilter from './components/Filter';
 import DrawerFilter from './components/FilterMobile';
+import Loading from './components/Loading';
 
 import { useDisclosure } from '@chakra-ui/react';
 import { useAdvertisements } from 'context/AdvertisementsContext';
@@ -36,7 +37,7 @@ export default function Home() {
   }, [concatenatedValues]);
 
   if (!advertisements) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
   const handleNextPage = (currentPage: number) => {
     if (!advertisements?.pagination.nextPageLink) return null;
