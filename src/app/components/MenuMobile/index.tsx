@@ -15,10 +15,12 @@ const MenuMobile = () => {
       {({ isOpen }) => (
         <>
           <MenuButton
+            style={{ display: 'flex', justifyContent: 'center' }}
             isActive={isOpen}
             as={Button}
-            leftIcon={isOpen ? <VscClose /> : <GiHamburgerMenu />}
-          ></MenuButton>
+          >
+            {isOpen ? <VscClose /> : <GiHamburgerMenu />}
+          </MenuButton>
           <MenuList
             style={{
               background: 'white',

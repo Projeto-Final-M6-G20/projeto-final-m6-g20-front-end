@@ -1,25 +1,26 @@
 'use client';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import DropDown from 'app/user_profile/components/UserDisplay/components/dropdownUser';
 
 import MenuMobile from '../MenuMobile';
+
 import { parseCookies } from 'nookies';
-import dynamic from 'next/dynamic';
 
 const HeaderComponent = () => {
   const pathname = usePathname();
   const cookies = parseCookies();
 
   return (
-    <div className="flex flex-col justify-center border-2 border-b-gray-300 items-center  max-sm:w-screen max-[1024px]:w-full max-[1560px]:w-full max-[2560px]:w-full  max-[1560px]:w-1/2">
+    <div className="flex flex-col justify-center border-2 border-b-gray-300 items-center  max-sm:w-screen max-[1024px]:w-full max-[1560px]:w-full max-[2560px]:w-full ">
       <header className="w-full h-16 p-9  items-center  flex justify-between max-lg:p-5 max-[1560px]:w-full max-[2560px]:w-[60%] max-[3440px]:w-[50%]">
         <Link
           href={'/'}
           className="heading-1-700  bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text text p-3  "
         >
-          Motors <span className="text-lg font-bold">shop</span>
+          Motors <span className="text-lg font-bold max-sm:text-xs">shop</span>
         </Link>
 
         {pathname === '/user_profile' ||
@@ -62,7 +63,7 @@ const HeaderComponent = () => {
           </div>
         )}
 
-        <div className="flex items-center p-3  sm:hidden">
+        <div className="flex items-center p-3 sm:hidden">
           <MenuMobile />
         </div>
       </header>

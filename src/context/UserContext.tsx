@@ -111,7 +111,6 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
           `/cars?brand=${selectedBrand}`
         );
         setModels(response.data);
-        // console.log(response.data);
       } catch (error) {
         // console.log(error);
       }
@@ -147,7 +146,6 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     try {
       const response = await api.post('/advertisements/', data);
 
-      console.log(response);
       getUserAd();
     } catch (error) {
       console.log(error);
@@ -160,7 +158,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
 
       const id = decodedToken ? decodedToken.sub : null;
       const response = await api.patch(`users/${id}`, data);
-      console.log(response.data);
+
       Toast({
         message: 'Atualizado com sucesso!',
         isSucess: true
@@ -213,7 +211,6 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
   const getAd = async (id: string) => {
     try {
       const response = await api.get(`/advertisements/${id}`);
-      console.log(response.data);
       setAdData(response.data);
     } catch (error) {
       console.log(error);
