@@ -5,13 +5,23 @@ import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import CreateAdForm from './components/CreateAdForm';
 import UserDisplay from './components/UserDisplay';
 import Container from 'app/components/Container/container';
-import EditAdModal from './components/EditAdForm/editModalAd';
 
 import { useDisclosure } from '@chakra-ui/react';
 import { UserContext } from 'context/UserContext';
 
 const UserProfile = () => {
   const { user, getUser, getUserAd } = useContext(UserContext);
+
+  useEffect(() => {
+    getUserAd();
+    getUser();
+  }, []);
+
+  const {
+    isOpen: isCreateOpen,
+    onOpen: onCreateOpen,
+    onClose: onCreateClose
+  } = useDisclosure();
 
   let initials = '';
   if (!user) {
@@ -29,20 +39,10 @@ const UserProfile = () => {
     initials += lastName.charAt(0).toUpperCase();
   }
 
-  const {
-    isOpen: isCreateOpen,
-    onOpen: onCreateOpen,
-    onClose: onCreateClose
-  } = useDisclosure();
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const capitalizeFirstLetter = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
-  useEffect(() => {
-    getUserAd();
-    getUser();
-  }, []);
   return (
     <main className="flex min-h-screen w-full flex-col items-center justify-center py-20 backgroundImage bg-contain">
       <Container>
