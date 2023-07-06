@@ -20,6 +20,7 @@ export default function Home() {
   const { advertisements, setAdvertisements, getAdvertisements } =
     useAdvertisements();
   const { getUser } = useContext(UserContext);
+  
   const [concatenatedValues, setConcatenatedValues] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
 

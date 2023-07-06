@@ -45,6 +45,7 @@ const UserDisplay = () => {
                   <div className="flex  flex-col gap-4 ">
                     <div className="w-full h-32 flex  justify-center items-center bg-[#E9ECEF]">
                       <img
+                      key={item.images[0].id}
                         className="w-5/6   h-28  object-cover "
                         src={item.images[0].url}
                         alt=""

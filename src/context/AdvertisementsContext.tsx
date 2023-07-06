@@ -105,6 +105,7 @@ interface AdvertisementsValues {
   updateComment: (data: iComment, id: string, adsId: string) => Promise<void>;
   deleteComment: (id: string, adsId: string) => Promise<void>;
   updateImage: (id: string, data: image) => Promise<void>;
+  createImage: (id: string, data: image) => Promise<void>
 }
 
 export const AdvertisementsContext = createContext<AdvertisementsValues>(
@@ -161,11 +162,22 @@ export const AdvertisementsProvider = ({
   const updateImage = async (id: string, data: image) => {
     try {
       const response = await api.patch(`/images/${id}`, data);
+      console.log(response.data.id,response.data.url)
       getUserAd();
     } catch (error) {
       console.log(error);
     }
   };
+
+  const createImage = async (id:string, data:image) => {
+    try {
+      const response = await api.post(`/images/advertisement/${id}`,data)
+      console.log(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 
   const updateComment = async (data: iComment, id: string, adsId: string) => {
     try {
@@ -223,7 +235,8 @@ export const AdvertisementsProvider = ({
         getAllAvailableSellerAds,
         updateComment,
         deleteComment,
-        updateImage
+        updateImage,
+        createImage
       }}
     >
       {children}

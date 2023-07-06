@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import jwt from 'jsonwebtoken';
-import { createContext, useContext, useState } from 'react';
+import { Dispatch, SetStateAction, createContext, useContext, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Toast from 'app/components/Toast';
@@ -48,7 +48,8 @@ interface AuthValue {
   isModal: boolean;
   sendEmail: (sendEmailResetPasswordData: SendEmailResetPasswordData) => void;
   resetPassword: (resetPasswordData: ResetPasswordData, token: string) => void;
-  user: iUser | undefined;
+  newUser: iUser | undefined;
+  setNewUser: Dispatch<SetStateAction<iUser | undefined>>
 }
 
 export const AuthContext = createContext<AuthValue>({} as AuthValue);
@@ -56,7 +57,7 @@ export const AuthContext = createContext<AuthValue>({} as AuthValue);
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const router = useRouter();
   const [isModal, setIsModal] = useState(true);
-  const [user, setUser] = useState<iUser>();
+  const [newUser, setNewUser] = useState<iUser>();
   const is_advertiser = () => {
     const radios: any = document.getElementById('is_advertiser');
 
@@ -92,7 +93,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
               Authorization: `Bearer ${token}`
             }
           });
-          setUser(response.data);
+          setNewUser(response.data);
         } catch (error) {
           // console.log(error);
         }
@@ -158,7 +159,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         isModal,
         sendEmail,
         resetPassword,
-        user
+        newUser,
+        setNewUser
       }}
     >
       {children}
