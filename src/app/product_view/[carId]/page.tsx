@@ -1,22 +1,25 @@
 'use client';
+import { usePathname, useRouter } from 'next/navigation';
 import { useContext, useEffect } from 'react';
 
-import { usePathname, useRouter } from 'next/navigation';
-
+import CommentForm from '../components/CommentForm';
+import CommentCard from '../components/CommentsCard';
 import Container from 'app/components/Container/container';
+import CustomModal from 'app/components/Modal';
 
+import { useDisclosure } from '@chakra-ui/react';
 import { Spinner } from '@chakra-ui/react';
 import {
   AdvertisementsContext,
   useAdvertisements
 } from 'context/AdvertisementsContext';
-import CommentCard from '../components/CommentsCard';
-import CommentForm from '../components/CommentForm';
 
 const AdDetailView = ({ params }: { params: { carId: string } }) => {
   const { getAdvertisementById, car } = useAdvertisements();
 
   const { getComment } = useContext(AdvertisementsContext);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const router = useRouter();
 
@@ -60,6 +63,7 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
                 className=" w-3/6 object-contain "
                 src={car.images[0].url}
                 alt=""
+                onClick={() => onOpen()}
               />
             </div>
             <div className="grid justify-items-start gap-6  bg-white p-8">
@@ -99,11 +103,16 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
             <div className="flex flex-col justify-items-center gap-4 bg-white p-8 h-64">
               <h2 className="text-lg font-semibold">Fotos</h2>
               <div className="flex flex-wrap gap-2 gap-y-6">
-                <img className=" w-16 object-contain " src="" alt="" />
-                <img className=" w-16 object-contain " src="" alt="" />
-                <img className=" w-16 object-contain " src="" alt="" />
-                <img className=" w-16 object-contain " src="" alt="" />
-                <img className=" w-16 object-contain " src="" alt="" />
+                {car.images.map(()=>{
+                  return (
+                    <img
+                    className="w-16 object-contain "
+                    src={car.images[0].url}
+                    alt=""
+                  />
+                  )
+                })}
+
               </div>
             </div>
 
@@ -128,6 +137,23 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
           </section>
         </section>
       </Container>
+      <CustomModal
+        MaxWidthBody="90%"
+        MaxWidthHeader="90%"
+        widthBody="600px"
+        widthHeader="600px"
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <div className="w-full flex flex-col justify-between items-center gap-3">
+          <div className='w-full flex items-start'>
+          <h2 className="text-lg font-semibold">{car.title}</h2>
+          </div>
+          <figure>
+            <img className="object-cover " src={car.images[0].url} alt="" />
+          </figure>
+        </div>
+      </CustomModal>
     </main>
   );
 };
