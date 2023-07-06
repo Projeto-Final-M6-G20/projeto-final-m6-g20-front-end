@@ -41,10 +41,7 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
   };
 
   if (!adData) {
-    return (
-      <>
-      </>
-    );
+    return <></>;
   }
 
   const onSubFunction = (updata: any) => {

@@ -1,5 +1,5 @@
 'use client';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useContext, useEffect } from 'react';
 
 import CommentForm from '../components/CommentForm';
@@ -25,11 +25,6 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
   const router = useRouter();
 
   const cookies = parseCookies();
-
-  const pathname = usePathname();
-  const id = pathname.split('/')[2];
-
-  
 
   const capitalizeFirstLetter = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -98,11 +93,14 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
               <div className="flex flex-col w-full">
                 <CommentCard />
               </div>
-              
-              {
-                cookies['user.Token']?(<><CommentForm /></>):(<></>)
-              }
-              
+
+              {cookies['user.Token'] ? (
+                <>
+                  <CommentForm />
+                </>
+              ) : (
+                <></>
+              )}
             </div>
           </section>
 
