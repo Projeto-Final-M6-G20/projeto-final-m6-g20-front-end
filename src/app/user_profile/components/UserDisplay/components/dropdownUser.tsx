@@ -17,10 +17,12 @@ import ModalAd from './modalAd';
 import { destroyCookie, parseCookies } from 'nookies';
 import { useRouter } from 'next/navigation';
 import Toast from 'app/components/Toast';
+import { AuthContext } from 'context/AuthContext';
 
 const DropDown = () => {
   const router = useRouter();
-  const { user, setMode, mode } = useContext(UserContext);
+  const { setMode, mode } = useContext(UserContext);
+  const { user } = useContext(AuthContext);
   const { onOpen, onClose, isOpen } = useDisclosure();
   const onOpenFunction = () => {
     setMode('profile');

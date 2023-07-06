@@ -9,6 +9,8 @@ import ModalDelete from '../UserDisplay/components/modalDelete';
 import { Tooltip, useDisclosure } from '@chakra-ui/react';
 import api from 'service/api';
 import { add } from 'date-fns';
+import { AdvertisementsContext } from 'context/AdvertisementsContext';
+import { EditAdData } from './validator';
 
 interface ModalChildren {
   isOpen: boolean;
@@ -16,11 +18,12 @@ interface ModalChildren {
 }
 
 const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
-  const { register, handleSubmit, setValue } = useForm<NewAdData>({
+  const { register, handleSubmit, setValue } = useForm<EditAdData>({
     // resolver: zodResolver(NewAdSchema)
   });
   const { mode, adData, setMode, setAdData, updateAdv } =
     useContext(UserContext);
+  const { updateImage } = useContext(AdvertisementsContext);
   const [images, setImages] = useState<string[]>(['', '']);
 
   const changeImage = (
@@ -44,20 +47,19 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
   }
 
   const onSubFunction = (updata: any) => {
-    const newImage = updata.url_image;
-    const updatedImage = [{ url: newImage }];
+    const newImage = updata.url;
+    const updatedImage = { url: newImage };
     const newData = {
       ...updata,
       price: Number(updata.price),
       year: Number(updata.year),
-      fipe_price: Number(updata.fipe_price),
-      images: updatedImage
+      fipe_price: Number(updata.fipe_price)
     };
-    console.log(newData);
+    updateImage(adData.images[0].id, updatedImage);
     updateAdv(newData, adData?.id);
     onClose();
   };
-
+  setValue('title', adData.title);
   setValue('year', adData.year);
   setValue('fipe_price', adData.fipe_price);
   setValue('fuel_type', adData.fuel_type);
@@ -67,6 +69,7 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
   setValue('mileage', adData.mileage);
   setValue('price', adData.price);
   setValue('description', adData.description);
+  setValue('url', adData.images[0].url);
 
   return (
     <>
@@ -99,6 +102,16 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
                   {...register('brand')}
                 />
               </Tooltip>
+
+              <Input
+                type="text"
+                label="Nome"
+                id="title"
+                style={{
+                  width: '100%'
+                }}
+                {...register('title')}
+              />
 
               <Input
                 type="text"
@@ -232,9 +245,9 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
               <Input
                 type="text"
                 label="Imagem de capa"
-                id="url_image"
+                id="url"
                 placeholder="https://image.com"
-                {...register('url_image')}
+                {...register('url')}
                 style={{
                   width: '100%'
                 }}

@@ -29,7 +29,7 @@ const Card = ({ advertisements }: CardProps) => {
   };
   return (
     <div className="w-full h-full max-lg:h-80">
-      <ul className="flex h-full flex-wrap gap-10 max-lg:flex-col max-lg:overflow-x-auto">
+      <ul className="flex  h-full flex-wrap gap-10 max-sm:px-10 max-lg:flex-col max-lg:overflow-x-auto">
         {advertisements.data.map((item: iAdvertisement) => (
           <li
             key={item.id}
@@ -45,7 +45,7 @@ const Card = ({ advertisements }: CardProps) => {
                 />
               </div>
 
-              <p className="font-bold">{item.model}</p>
+              <p className="font-bold">{item.title}</p>
               <p className="text-sm text-gray-600">{item.description}</p>
             </div>
 

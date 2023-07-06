@@ -1,12 +1,13 @@
+import { usePathname } from 'next/navigation';
+import { useContext } from 'react';
+import { useForm } from 'react-hook-form';
+
 import {
   AdvertisementsContext,
   iComment,
   useAdvertisements
 } from 'context/AdvertisementsContext';
 import { UserContext } from 'context/UserContext';
-import { usePathname } from 'next/navigation';
-import { useContext } from 'react';
-import { useForm } from 'react-hook-form';
 
 const CommentForm = () => {
   const { register, handleSubmit, reset } = useForm<iComment>();
@@ -39,7 +40,7 @@ const CommentForm = () => {
   };
 
   return (
-    <div className="my-20 mb-0 w-[60%]">
+    <div className="flex flex-col w-full">
       <form onSubmit={handleSubmit(onSub)}>
         <div className="mb-2 w-full flex flex-col gap-2 bg-white">
           <div className="h-5">

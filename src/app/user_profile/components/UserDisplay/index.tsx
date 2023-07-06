@@ -58,7 +58,7 @@ const UserDisplay = () => {
                     )}
 
                     <p className="font-bold">
-                      {capitalizeFirstLetter(item.model)}
+                      {capitalizeFirstLetter(item.title)}
                     </p>
                     <p className="text-sm text-gray-600">{item.description}</p>
                   </div>

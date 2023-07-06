@@ -184,7 +184,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
 
       const id = decodedToken ? decodedToken.sub : null;
       const response = await api.patch(`users/${id}`, data);
-      console.log(response.data);
+
       Toast({
         message: 'Atualizado com sucesso!',
         isSucess: true
@@ -237,7 +237,6 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
   const getAd = async (id: string) => {
     try {
       const response = await api.get(`/advertisements/${id}`);
-      console.log(response.data);
       setAdData(response.data);
     } catch (error) {
       console.log(error);
