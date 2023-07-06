@@ -2,7 +2,7 @@ import '../styles/global.css';
 import { Inter } from 'next/font/google';
 
 import FooterComponent from './components/Footer';
-import HeaderComponent from './components/Header';
+import { HeaderComponent } from './components/Header';
 
 import { AdvertisementsProvider } from 'context/AdvertisementsContext';
 import { AuthProvider } from 'context/AuthContext';

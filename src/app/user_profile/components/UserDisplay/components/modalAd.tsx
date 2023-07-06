@@ -1,12 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Input from 'app/components/Input';
 import CustomModal from 'app/components/Modal';
 
-import ModalDelete from './modalDelete';
-
-import { Button, useDisclosure } from '@chakra-ui/react';
 import { Address, UserContext } from 'context/UserContext';
 
 interface ModalChildren {
@@ -14,7 +11,7 @@ interface ModalChildren {
   onClose: () => void;
   onOpen: () => void;
 }
-const ModalAd = ({ isOpen, onClose, onOpen }: ModalChildren) => {
+const ModalAd = ({ isOpen, onClose }: ModalChildren) => {
   const { user, mode, updateUserAddress } = useContext(UserContext);
   const { register, handleSubmit } = useForm<Address>();
 

@@ -1,16 +1,15 @@
 'use client';
 
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import ListAds from './components/ListAd';
 
 import { useAdvertisements } from 'context/AdvertisementsContext';
-import { UserContext } from 'context/UserContext';
 
 const PageAdAdvertiser = () => {
   const { advertisements, setAdvertisements, getAdvertisements } =
     useAdvertisements();
-  const [concatenatedValues, setConcatenatedValues] = useState('');
+  const [concatenatedValues] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {

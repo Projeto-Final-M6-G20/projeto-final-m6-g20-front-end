@@ -12,7 +12,7 @@ interface ModalChildren {
   onClose: () => void;
   onOpen: () => void;
 }
-const ModalProfile = ({ isOpen, onClose, onOpen }: ModalChildren) => {
+const ModalProfile = ({ isOpen, onClose }: ModalChildren) => {
   const { user, mode, setMode, updateUser } = useContext(UserContext);
   const { register, handleSubmit } = useForm<UserData>();
 

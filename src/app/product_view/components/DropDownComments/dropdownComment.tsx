@@ -1,25 +1,18 @@
+import { useContext } from 'react';
+import { AiOutlineEllipsis } from 'react-icons/ai';
+
+import ModalDelete from 'app/user_profile/components/UserDisplay/components/modalDelete';
+
+import EditComment from '../EditCommentForm';
+
 import {
   Button,
   Menu,
   MenuButton,
-  MenuItem,
   MenuList,
-  position,
   useDisclosure
 } from '@chakra-ui/react';
 import { UserContext } from 'context/UserContext';
-import { useContext } from 'react';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import { VscClose } from 'react-icons/vsc';
-
-import { destroyCookie, parseCookies } from 'nookies';
-import { useRouter } from 'next/navigation';
-import Toast from 'app/components/Toast';
-import ModalProfile from 'app/user_profile/components/UserDisplay/components/modalProfile';
-import ModalDelete from 'app/user_profile/components/UserDisplay/components/modalDelete';
-import ModalAd from 'app/user_profile/components/UserDisplay/components/modalAd';
-import { AiOutlineEllipsis } from 'react-icons/ai';
-import EditComment from '../EditCommentForm';
 
 interface dropDownProps {
   commentId: string;
@@ -27,8 +20,7 @@ interface dropDownProps {
 }
 
 const DropDownComment = ({ commentId, adsId }: dropDownProps) => {
-  const router = useRouter();
-  const { user, setMode, mode } = useContext(UserContext);
+  const { user, setMode } = useContext(UserContext);
   const { onOpen, onClose, isOpen } = useDisclosure();
   const onOpenFunction = () => {
     setMode('editComment');
@@ -39,8 +31,6 @@ const DropDownComment = ({ commentId, adsId }: dropDownProps) => {
     setMode('deleteComment');
     onOpen();
   };
-
-  const handleLogout = () => {};
 
   if (!user) {
     return <></>;
@@ -56,11 +46,9 @@ const DropDownComment = ({ commentId, adsId }: dropDownProps) => {
 
   if (names && names?.length > 1) {
     const lastName = names[names.length - 1];
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     initials += lastName.charAt(0).toUpperCase();
   }
-  const capitalizeFirstLetter = (str: string) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  };
 
   return (
     <>

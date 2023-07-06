@@ -1,16 +1,18 @@
-import { zodResolver } from '@hookform/resolvers/zod';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+
+import ModalDelete from '../UserDisplay/components/modalDelete';
 import Input from 'app/components/Input';
 import CustomModal from 'app/components/Modal';
-import { useContext, useEffect, useState } from 'react';
-import { NewAdData, NewAdSchema } from '../CreateAdForm/validator';
-import { UserContext } from 'context/UserContext';
-import ModalDelete from '../UserDisplay/components/modalDelete';
-import { Tooltip, useDisclosure } from '@chakra-ui/react';
-import api from 'service/api';
-import { add } from 'date-fns';
-import { AdvertisementsContext } from 'context/AdvertisementsContext';
+
 import { EditAdData } from './validator';
+
+import { Tooltip } from '@chakra-ui/react';
+import { AdvertisementsContext } from 'context/AdvertisementsContext';
+import { UserContext } from 'context/UserContext';
 
 interface ModalChildren {
   isOpen: boolean;
@@ -23,7 +25,7 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
   });
   const { mode, adData, setMode, setAdData, updateAdv } =
     useContext(UserContext);
-  const { updateImage,createImage } = useContext(AdvertisementsContext);
+  const { updateImage } = useContext(AdvertisementsContext);
   const [images, setImages] = useState<string[]>(['', '']);
 
   const changeImage = (
@@ -46,31 +48,29 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
   }
 
   const onSubFunction = (updata: any) => {
-    
-    const { urls, ...newData } = updata
-    
-    updata.urls.map((image:string,i:any)=>{
-      if(image.length === 0){
-        return console.log({vazio:image})
+    const { urls, ...newData } = updata;
+
+    updata.urls.map((image: string, i: any) => {
+      if (image.length === 0) {
+        return console.log({ vazio: image });
       }
-     if(image.length > 0 && i !== 0){
-        adData.images.forEach((item,index)=>{  
-          if(index !== 0 && index === i){
+      if (image.length > 0 && i !== 0) {
+        adData.images.forEach((item, index) => {
+          if (index !== 0 && index === i) {
             const updatedImage = { url: image };
-            updateImage(adData.images[index].id,updatedImage)
+            updateImage(adData.images[index].id, updatedImage);
             // console.log(adData.images[index])
           }
-        })
+        });
       }
-      if(i === 0 && image.length > 0){
+      if (i === 0 && image.length > 0) {
         const updatedImage = { url: image };
         updateImage(adData.images[0].id, updatedImage);
       }
-      
-    })
+    });
 
-    console.log(adData.images)
-    
+    console.log(adData.images);
+
     updateAdv(newData, adData?.id);
     onClose();
   };
@@ -258,42 +258,42 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
               </div>
 
               {images.map((image, index) =>
-              index === 0 ? (
-                <div className="mb-2 w-full" key={index + 1}>
-                  <label
-                    className="block  text-sm mb-2"
-                    htmlFor={'cover_image'}
-                  >
-                    Imagem de Capa
-                  </label>
-                  <input
-                    className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-12"
-                    id={'cover_image'}
-                    placeholder="https://image.com"
-                    {...register(`urls.${index}`)}
-                    value={images[index]}
-                    onChange={(event) => changeImage(event, index)}
-                  />
-                </div>
-              ) : (
-                <div className="mb-2 w-full" key={index + 1}>
-                  <label
-                    className="block  text-sm mb-2"
-                    htmlFor={`${index}° image`}
-                  >
-                    {`${index}° Imagem da galeria`}
-                  </label>
-                  <input
-                    className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-12"
-                    id={`${index}° image`}
-                    placeholder="https://image.com"
-                    {...register(`urls.${index}`)}
-                    value={image}
-                    onChange={(event) => changeImage(event, index)}
-                  />
-                </div>
-              )
-            )}
+                index === 0 ? (
+                  <div className="mb-2 w-full" key={index + 1}>
+                    <label
+                      className="block  text-sm mb-2"
+                      htmlFor={'cover_image'}
+                    >
+                      Imagem de Capa
+                    </label>
+                    <input
+                      className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-12"
+                      id={'cover_image'}
+                      placeholder="https://image.com"
+                      {...register(`urls.${index}`)}
+                      value={images[index]}
+                      onChange={(event) => changeImage(event, index)}
+                    />
+                  </div>
+                ) : (
+                  <div className="mb-2 w-full" key={index + 1}>
+                    <label
+                      className="block  text-sm mb-2"
+                      htmlFor={`${index}° image`}
+                    >
+                      {`${index}° Imagem da galeria`}
+                    </label>
+                    <input
+                      className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-12"
+                      id={`${index}° image`}
+                      placeholder="https://image.com"
+                      {...register(`urls.${index}`)}
+                      value={image}
+                      onChange={(event) => changeImage(event, index)}
+                    />
+                  </div>
+                )
+              )}
 
               <div className="px-[20px] py-[12px] rounded-md text-brand-1 bg-brand-4 w-max text-sm font-semibold mb-[42px] disabled:text-brand-4">
                 <button

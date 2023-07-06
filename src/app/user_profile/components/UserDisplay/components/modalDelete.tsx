@@ -1,17 +1,10 @@
-import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  Button,
-  useDisclosure
-} from '@chakra-ui/react';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import React, { useContext } from 'react';
+
 import CustomModal from 'app/components/Modal';
+
 import { AdvertisementsContext } from 'context/AdvertisementsContext';
 import { UserContext } from 'context/UserContext';
-import React, { useContext, useRef, useState } from 'react';
 
 interface ModalChildren {
   isOpen: boolean;

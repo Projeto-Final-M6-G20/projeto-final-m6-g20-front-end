@@ -110,16 +110,16 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
             <div className="flex flex-col justify-items-center gap-4 bg-white p-8 h-64">
               <h2 className="text-lg font-semibold">Fotos</h2>
               <div className="flex flex-wrap gap-2 gap-y-6">
-                {car.images.map(()=>{
+                {car.images.map(() => {
                   return (
                     <img
-                    className="w-16 object-contain "
-                    src={car.images[0].url}
-                    alt=""
-                  />
-                  )
+                      className="w-16 object-contain "
+                      src={car.images[0].url}
+                      alt=""
+                      key={car.id}
+                    />
+                  );
                 })}
-
               </div>
             </div>
 
@@ -153,8 +153,8 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
         onClose={onClose}
       >
         <div className="w-full flex flex-col justify-between items-center gap-3">
-          <div className='w-full flex items-start'>
-          <h2 className="text-lg font-semibold">{car.title}</h2>
+          <div className="w-full flex items-start">
+            <h2 className="text-lg font-semibold">{car.title}</h2>
           </div>
           <figure>
             <img className="object-cover " src={car.images[0].url} alt="" />
