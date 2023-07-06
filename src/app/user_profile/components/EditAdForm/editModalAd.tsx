@@ -41,7 +41,6 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
   if (!adData) {
     return (
       <>
-        <p>Carregando</p>
       </>
     );
   }
