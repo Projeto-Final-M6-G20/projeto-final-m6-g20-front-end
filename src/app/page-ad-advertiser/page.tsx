@@ -23,8 +23,6 @@ const PageAdAdvertiser = () => {
     fetchData();
   }, [concatenatedValues]);
 
-  console.log(advertisements?.data[0].User);
-
   const getInitials = (name: string | undefined) => {
     if (name) {
       const initials = name

@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect } from 'react';
 
@@ -75,12 +76,13 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
 
                 <span className="font-bold">R$ {car.price}</span>
               </div>
-              <button
+              <Link
+                href={'./'}
                 type="button"
                 className="text-white bg-brand-1 hover:bg-brand-2 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5"
               >
                 Comprar
-              </button>
+              </Link>
             </div>
 
             <div className="grid justify-items-start gap-6  bg-white p-8">

@@ -38,7 +38,11 @@ const UserDisplay = () => {
                       <img
                         key={item.images[0].id}
                         className="w-5/6   h-28  object-cover "
-                        src={item.images ? item.images[0].url : ''}
+                        src={
+                          item.images[0]?.url
+                            ? item.images[0].url
+                            : 'https://www.ispsaude.com.br/images/image-404.png'
+                        }
                         alt=""
                       />
                     </div>
