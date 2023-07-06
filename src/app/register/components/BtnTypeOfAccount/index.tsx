@@ -1,11 +1,3 @@
-import { forwardRef, InputHTMLAttributes } from 'react';
-import { FieldError } from 'react-hook-form';
-
-interface iInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  error?: FieldError;
-  label: string;
-}
-
 const BtnTypeOfAccount = () => {
   return (
     <div className="flex gap-3">

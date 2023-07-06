@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { TfiFaceSad } from 'react-icons/tfi';
 
@@ -8,12 +8,7 @@ import { useDisclosure } from '@chakra-ui/react';
 import { UserContext } from 'context/UserContext';
 
 const UserDisplay = () => {
-  const [active, setActive] = useState(false);
-  const {
-    isOpen: isCreateOpen,
-    onOpen: onCreateOpen,
-    onClose: onCreateClose
-  } = useDisclosure();
+  const { onOpen: onCreateOpen } = useDisclosure();
 
   const { setMode, adv, user, getAd } = useContext(UserContext);
   const { onOpen, onClose, isOpen } = useDisclosure();
@@ -41,7 +36,7 @@ const UserDisplay = () => {
                   <div className="flex  flex-col gap-4 ">
                     <div className="w-full h-32 flex  justify-center items-center bg-[#E9ECEF]">
                       <img
-                      key={item.images[0].id}
+                        key={item.images[0].id}
                         className="w-5/6   h-28  object-cover "
                         src={item.images ? item.images[0].url : ''}
                         alt=""

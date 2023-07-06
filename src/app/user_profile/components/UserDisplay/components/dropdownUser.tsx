@@ -1,28 +1,27 @@
+import { useRouter } from 'next/navigation';
+import { useContext } from 'react';
+
+import Toast from 'app/components/Toast';
+
+import ModalAd from './modalAd';
+import ModalDelete from './modalDelete';
+import ModalProfile from './modalProfile';
+
 import {
   Button,
   Menu,
   MenuButton,
-  MenuItem,
   MenuList,
-  position,
   useDisclosure
 } from '@chakra-ui/react';
-import { UserContext } from 'context/UserContext';
-import { useContext } from 'react';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import { VscClose } from 'react-icons/vsc';
-import ModalProfile from './modalProfile';
-import ModalDelete from './modalDelete';
-import ModalAd from './modalAd';
-import { destroyCookie, parseCookies } from 'nookies';
-import { useRouter } from 'next/navigation';
-import Toast from 'app/components/Toast';
 import { AuthContext } from 'context/AuthContext';
+import { UserContext } from 'context/UserContext';
+import { destroyCookie } from 'nookies';
 
 const DropDown = () => {
   const router = useRouter();
-  const { user,setMode, mode } = useContext(UserContext);
-  const { newUser,setNewUser } = useContext(AuthContext);
+  const { user, setMode } = useContext(UserContext);
+  const { newUser, setNewUser } = useContext(AuthContext);
   const { onOpen, onClose, isOpen } = useDisclosure();
   const onOpenFunction = () => {
     setMode('profile');
@@ -39,7 +38,7 @@ const DropDown = () => {
   };
 
   if (!newUser) {
-    setNewUser(user)
+    setNewUser(user);
     return <></>;
   }
 
@@ -67,7 +66,7 @@ const DropDown = () => {
             <>
               <MenuButton isActive={isOpen} as={Button}>
                 <div className="w-full h-full flex gap-3  items-center max-lg:h-0">
-                  <div className="w-8 h-8 bg-pink-400  rounded-full bg-gray-900">
+                  <div className="w-8 h-8 bg-pink-400  rounded-full ">
                     <p className="w-full h-full flex justify-center items-center  text-white">
                       {initials}
                     </p>

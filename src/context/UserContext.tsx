@@ -11,12 +11,12 @@ import {
 import Toast from 'app/components/Toast';
 import { UserData } from 'app/register/components/FormRegister/validator';
 import { NewAdData } from 'app/user_profile/components/CreateAdForm/validator';
+import { EditAdData } from 'app/user_profile/components/EditAdForm/validator';
 
 import jwt from 'jsonwebtoken';
 import { parseCookies } from 'nookies';
 import api from 'service/api';
 import instanceKenzieCars from 'service/kenzie_cars';
-import { EditAdData } from 'app/user_profile/components/EditAdForm/validator';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -48,14 +48,6 @@ interface iUser {
   birth_date: string;
   is_advertiser: boolean;
   Address: Address;
-}
-
-interface iAd extends NewAdData {
-  id: string;
-  is_available: boolean;
-  images: [{ 
-    id: string
-    url: string }];
 }
 
 interface iAdReq {
@@ -186,7 +178,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
       const decodedToken = jwt.decode(cookies['user.Token']);
 
       const id = decodedToken ? decodedToken.sub : null;
-      const response = await api.patch(`users/${id}`, data);
+      await api.patch(`users/${id}`, data);
 
       Toast({
         message: 'Atualizado com sucesso!',
@@ -206,7 +198,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
       const decodedToken = jwt.decode(cookies['user.Token']);
 
       const id = decodedToken ? decodedToken.sub : null;
-      const response = await api.patch(`address/user/${id}`, data);
+      await api.patch(`address/user/${id}`, data);
       Toast({
         message: 'Atualizado com sucesso!',
         isSucess: true
@@ -225,7 +217,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
       const decodedToken = jwt.decode(cookies['user.Token']);
 
       const id = decodedToken ? decodedToken.sub : null;
-      const response = await api.delete(`users/${id}`);
+      await api.delete(`users/${id}`);
       Toast({
         message: 'Deletado com sucesso!',
         isSucess: true
@@ -248,7 +240,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
 
   const updateAdv = async (data?: NewAdData, id?: string) => {
     try {
-      const response = await api.patch(`advertisements/${id}`, data);
+      await api.patch(`advertisements/${id}`, data);
       Toast({
         message: 'Atualizado com sucesso!',
         isSucess: true
@@ -264,7 +256,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
 
   const deleteAd = async (id: string) => {
     try {
-      const response = await api.delete(`advertisements/${id}`);
+      await api.delete(`advertisements/${id}`);
       Toast({
         message: 'Deletado com sucesso!',
         isSucess: true

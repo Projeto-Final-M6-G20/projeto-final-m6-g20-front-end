@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000',
-  timeout: 5000
+  baseURL: 'https://g20-motors-shop.onrender.com',
+  timeout: 6000
 });
 export default api;

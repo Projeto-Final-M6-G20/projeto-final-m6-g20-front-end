@@ -112,7 +112,7 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
                 Titulo
               </label>
               <input
-                className="w-full h-12 bg-white rounded-md border-2 focus:border-brand-1 pl-4 focus:outline-none pl-4"
+                className="w-full h-12 bg-white rounded-md border-2 focus:border-brand-1 pl-4 focus:outline-none"
                 id={'title'}
                 placeholder="Digite o titulo"
                 {...register('title')}

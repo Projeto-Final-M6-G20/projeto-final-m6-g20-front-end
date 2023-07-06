@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import {
@@ -5,15 +6,14 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
-  useEffect,
   useState
 } from 'react';
 
-import { usePathname } from 'next/navigation';
+import Toast from 'app/components/Toast';
+
+import { UserContext } from './UserContext';
 
 import api from 'service/api';
-import Toast from 'app/components/Toast';
-import { UserContext } from './UserContext';
 export interface iAdvertisement {
   id: string;
   title: string;
@@ -105,7 +105,7 @@ interface AdvertisementsValues {
   updateComment: (data: iComment, id: string, adsId: string) => Promise<void>;
   deleteComment: (id: string, adsId: string) => Promise<void>;
   updateImage: (id: string, data: image) => Promise<void>;
-  createImage: (id: string, data: image) => Promise<void>
+  createImage: (id: string, data: image) => Promise<void>;
 }
 
 export const AdvertisementsContext = createContext<AdvertisementsValues>(
@@ -162,26 +162,24 @@ export const AdvertisementsProvider = ({
   const updateImage = async (id: string, data: image) => {
     try {
       const response = await api.patch(`/images/${id}`, data);
-      console.log(response.data.id,response.data.url)
+      console.log(response.data.id, response.data.url);
       getUserAd();
     } catch (error) {
       console.log(error);
     }
   };
 
-  const createImage = async (id:string, data:image) => {
+  const createImage = async (id: string, data: image) => {
     try {
-      const response = await api.post(`/images/advertisement/${id}`,data)
-      console.log(response.data)
+      await api.post(`/images/advertisement/${id}`, data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-
-  }
+  };
 
   const updateComment = async (data: iComment, id: string, adsId: string) => {
     try {
-      const response = await api.patch(`/comments/${id}`, data);
+      await api.patch(`/comments/${id}`, data);
       getComment(adsId);
     } catch (error) {
       console.log(error);
@@ -190,7 +188,7 @@ export const AdvertisementsProvider = ({
 
   const deleteComment = async (id: string, adsId: string) => {
     try {
-      const response = await api.delete(`comments/${id}`);
+      await api.delete(`comments/${id}`);
       Toast({
         message: 'Deletado com sucesso!',
         isSucess: true

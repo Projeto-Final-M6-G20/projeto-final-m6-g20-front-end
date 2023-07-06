@@ -1,14 +1,11 @@
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+
 import Input from 'app/components/Input';
 import CustomModal from 'app/components/Modal';
-import { useContext, useEffect, useState } from 'react';
-import { UserContext } from 'context/UserContext';
-import { Tooltip, useDisclosure } from '@chakra-ui/react';
-import api from 'service/api';
-import { add } from 'date-fns';
-import ModalDelete from 'app/user_profile/components/UserDisplay/components/modalDelete';
+
 import { AdvertisementsContext, iComment } from 'context/AdvertisementsContext';
+import { UserContext } from 'context/UserContext';
 
 interface ModalChildren {
   isOpen: boolean;
@@ -18,7 +15,7 @@ interface ModalChildren {
 }
 
 const EditComment = ({ isOpen, onClose, commentId, adsId }: ModalChildren) => {
-  const { register, handleSubmit, setValue } = useForm<iComment>({
+  const { register, handleSubmit } = useForm<iComment>({
     // resolver: zodResolver(NewAdSchema)
   });
   const { mode } = useContext(UserContext);

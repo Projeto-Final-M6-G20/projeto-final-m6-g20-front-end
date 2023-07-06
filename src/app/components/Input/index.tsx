@@ -8,8 +8,9 @@ interface iInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
 }
 
+// eslint-disable-next-line react/display-name
 const Input = forwardRef<HTMLInputElement, iInputProps>(
-  ({ type, id, error, label, ...rest }, ref) => {
+  ({ type, id, label, ...rest }, ref) => {
     return (
       <>
         <div className="mb-2 w-full">

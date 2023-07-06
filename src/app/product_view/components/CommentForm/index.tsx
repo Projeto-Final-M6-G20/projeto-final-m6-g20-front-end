@@ -14,6 +14,7 @@ const CommentForm = () => {
   const { createComment } = useContext(AdvertisementsContext);
   const { car } = useAdvertisements();
   const { user } = useContext(UserContext);
+  const pathname = usePathname();
   if (!car || !user) {
     return <></>;
   }
@@ -30,7 +31,6 @@ const CommentForm = () => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
-  const pathname = usePathname();
   const id = pathname.split('/')[2];
 
   const onSub = (data: iComment) => {

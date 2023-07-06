@@ -1,23 +1,22 @@
+import { useContext } from 'react';
+import { BiMessageError } from 'react-icons/bi';
+
+import 'moment/locale/pt-br';
+
+import DropDownComment from '../DropDownComments/dropdownComment';
+
 import {
   AdvertisementsContext,
   useAdvertisements
 } from 'context/AdvertisementsContext';
-import { BiMessageError } from 'react-icons/bi';
-import { AiOutlineEllipsis } from 'react-icons/ai';
-import { useContext } from 'react';
-import 'moment/locale/pt-br';
-import moment from 'moment';
 import { UserContext } from 'context/UserContext';
-import DropDown from 'app/user_profile/components/UserDisplay/components/dropdownUser';
-import DropDownComment from '../DropDownComments/dropdownComment';
-import { useDisclosure } from '@chakra-ui/react';
-import EditComment from '../EditCommentForm';
+import moment from 'moment';
 
 const CommentCard = () => {
   const { comment } = useContext(AdvertisementsContext);
   const { car } = useAdvertisements();
-  const { user, setMode } = useContext(UserContext);
-  const { onOpen, onClose, isOpen } = useDisclosure();
+  const { user } = useContext(UserContext);
+
   if (!car || !user) {
     return <></>;
   }

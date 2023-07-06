@@ -36,14 +36,11 @@ const ListAds = ({ advertisements }: CardProps) => {
               </div>
 
               <p className="font-bold">{item.title}</p>
-              <p className="text-sm text-gray-600">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem...
-              </p>
+              <p className="text-sm text-gray-600">{item.description}</p>
             </div>
 
             <div className="w-full h-full flex gap-3  items-center max-lg:h-0">
-              <div className="w-8 h-8 bg-pink-400 rounded-full bg-gray-900">
+              <div className="w-8 h-8 bg-pink-400 rounded-full ">
                 <p className="w-full h-full flex justify-center items-center  text-white">
                   {getInitials(item.User.fullname)}
                 </p>

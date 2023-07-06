@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { useRouter } from 'next/navigation';
-import jwt from 'jsonwebtoken';
-import { Dispatch, SetStateAction, createContext, useContext, useState } from 'react';
+import { Dispatch, SetStateAction, createContext, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Toast from 'app/components/Toast';
@@ -12,9 +12,9 @@ import {
   SendEmailResetPasswordData
 } from 'app/resetPassword/components/FormResetPassword/validator';
 
+import jwt from 'jsonwebtoken';
 import { setCookie } from 'nookies';
 import api from 'service/api';
-import { UserContext } from './UserContext';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -49,7 +49,7 @@ interface AuthValue {
   sendEmail: (sendEmailResetPasswordData: SendEmailResetPasswordData) => void;
   resetPassword: (resetPasswordData: ResetPasswordData, token: string) => void;
   newUser: iUser | undefined;
-  setNewUser: Dispatch<SetStateAction<iUser | undefined>>
+  setNewUser: Dispatch<SetStateAction<iUser | undefined>>;
 }
 
 export const AuthContext = createContext<AuthValue>({} as AuthValue);
@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       data.is_advertiser = is_advertiser();
 
-      const response = await api.post('/users', data);
+      await api.post('/users', data);
       setIsModal(!isModal);
     } catch (error) {
       setIsModal(false);
