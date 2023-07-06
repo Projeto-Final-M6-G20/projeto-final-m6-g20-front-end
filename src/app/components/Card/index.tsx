@@ -40,7 +40,7 @@ const Card = ({ advertisements }: CardProps) => {
               <div className="w-full flex border-[2px] border-transparent group-hover:border-[2px] group-hover:border-[#4529E6]">
                 <img
                   className="w-full h-28 object-cover  "
-                  src={'asdasd'}
+                  /* src={item.images[0].url} */
                   alt=""
                 />
               </div>
