@@ -61,7 +61,7 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
             <div className="bg-white h-[380px] flex justify-center ">
               <img
                 className=" w-3/6 object-contain "
-                src={car.images[0].url}
+                src={car.images[0]?.url ? car.images[0]?.url : ''}
                 alt=""
                 onClick={() => onOpen()}
               />
