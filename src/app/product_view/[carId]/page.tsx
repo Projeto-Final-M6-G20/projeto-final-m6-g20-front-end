@@ -77,7 +77,7 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
                 <span className="font-bold">R$ {car.price}</span>
               </div>
               <Link
-                href={'./'}
+                href={'https://api.whatsapp.com/send?phone=5549999267818'}
                 type="button"
                 className="text-white bg-brand-1 hover:bg-brand-2 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5"
               >
