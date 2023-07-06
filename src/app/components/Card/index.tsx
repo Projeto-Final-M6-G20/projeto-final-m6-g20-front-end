@@ -27,6 +27,7 @@ const Card = ({ advertisements }: CardProps) => {
   const handleCarId = (carId: string) => {
     router.push(`/product_view/${carId}`);
   };
+
   return (
     <div className="w-full h-full max-lg:h-80">
       <ul className="flex  h-full flex-wrap gap-10 max-sm:px-10 max-lg:flex-col max-lg:overflow-x-auto">
@@ -40,7 +41,11 @@ const Card = ({ advertisements }: CardProps) => {
               <div className="w-full flex border-[2px] border-transparent group-hover:border-[2px] group-hover:border-[#4529E6]">
                 <img
                   className="w-full h-28 object-cover  "
-                  /* src={item.images[0].url} */
+                  src={
+                    item.images[0]?.url
+                      ? item.images[0].url
+                      : 'https://www.ispsaude.com.br/images/image-404.png'
+                  }
                   alt=""
                 />
               </div>
