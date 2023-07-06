@@ -16,6 +16,7 @@ import jwt from 'jsonwebtoken';
 import { parseCookies } from 'nookies';
 import api from 'service/api';
 import instanceKenzieCars from 'service/kenzie_cars';
+import { EditAdData } from 'app/user_profile/components/EditAdForm/validator';
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -52,7 +53,9 @@ interface iUser {
 interface iAd extends NewAdData {
   id: string;
   is_available: boolean;
-  images: [{ url: string }];
+  images: [{ 
+    id: string
+    url: string }];
 }
 
 interface iAdReq {
@@ -83,13 +86,13 @@ interface UserValue {
   mode: string;
   setMode: Dispatch<SetStateAction<string>>;
   getUser: () => Promise<void>;
-  adv: iAd[] | undefined;
-  setAdv: Dispatch<SetStateAction<iAd[]>>;
+  adv: EditAdData[] | undefined;
+  setAdv: Dispatch<SetStateAction<EditAdData[]>>;
   updateUser: (data: UserData) => Promise<void>;
   updateUserAddress: (data: Address) => Promise<void>;
   deleteUser: () => Promise<void>;
-  adData: iAd | undefined;
-  setAdData: Dispatch<SetStateAction<iAd | undefined>>;
+  adData: EditAdData | undefined;
+  setAdData: Dispatch<SetStateAction<EditAdData | undefined>>;
   getAd: (id: string) => Promise<void>;
   updateAdv: (data?: NewAdData, id?: string) => Promise<void>;
   deleteAd: (id: string) => Promise<void>;
@@ -105,8 +108,8 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
   const [selectedModel, setSelectedModel] = useState<string>('');
   const [user, setUser] = useState<iUser>();
   const [mode, setMode] = useState('');
-  const [adv, setAdv] = useState<iAd[]>([]);
-  const [adData, setAdData] = useState<iAd>();
+  const [adv, setAdv] = useState<EditAdData[]>([]);
+  const [adData, setAdData] = useState<EditAdData>();
   const router = useRouter();
 
   const cookies = parseCookies();

@@ -70,9 +70,10 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
       
     })
 
+    console.log(adData.images)
     
-    // updateAdv(newData, adData?.id);
-    // onClose();
+    updateAdv(newData, adData?.id);
+    onClose();
   };
   setValue('title', adData.title);
   setValue('year', adData.year);
@@ -84,7 +85,7 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
   setValue('mileage', adData.mileage);
   setValue('price', adData.price);
   setValue('description', adData.description);
-  setValue('url', adData.images[0].url);
+  // setValue('url', adData.images[0].url);
 
   return (
     <>
