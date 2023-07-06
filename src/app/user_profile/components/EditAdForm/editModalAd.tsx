@@ -23,7 +23,7 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
   });
   const { mode, adData, setMode, setAdData, updateAdv } =
     useContext(UserContext);
-  const { updateImage } = useContext(AdvertisementsContext);
+  const { updateImage,createImage } = useContext(AdvertisementsContext);
   const [images, setImages] = useState<string[]>(['', '']);
 
   const changeImage = (
@@ -47,17 +47,32 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
   }
 
   const onSubFunction = (updata: any) => {
-    const newImage = updata.url;
-    const updatedImage = { url: newImage };
-    const newData = {
-      ...updata,
-      price: Number(updata.price),
-      year: Number(updata.year),
-      fipe_price: Number(updata.fipe_price)
-    };
-    updateImage(adData.images[0].id, updatedImage);
-    updateAdv(newData, adData?.id);
-    onClose();
+    
+    const { urls, ...newData } = updata
+    
+    updata.urls.map((image:string,i:any)=>{
+      if(image.length === 0){
+        return console.log({vazio:image})
+      }
+     if(image.length > 0 && i !== 0){
+        adData.images.forEach((item,index)=>{  
+          if(index !== 0 && index === i){
+            const updatedImage = { url: image };
+            updateImage(adData.images[index].id,updatedImage)
+            // console.log(adData.images[index])
+          }
+        })
+      }
+      if(i === 0 && image.length > 0){
+        const updatedImage = { url: image };
+        updateImage(adData.images[0].id, updatedImage);
+      }
+      
+    })
+
+    
+    // updateAdv(newData, adData?.id);
+    // onClose();
   };
   setValue('title', adData.title);
   setValue('year', adData.year);
@@ -242,36 +257,43 @@ const EditAdModal = ({ isOpen, onClose }: ModalChildren) => {
                 </div>
               </div>
 
-              <Input
-                type="text"
-                label="Imagem de capa"
-                id="url"
-                placeholder="https://image.com"
-                {...register('url')}
-                style={{
-                  width: '100%'
-                }}
-              />
-
-              {images.map((image, index) => (
+              {images.map((image, index) =>
+              index === 0 ? (
                 <div className="mb-2 w-full" key={index + 1}>
                   <label
                     className="block  text-sm mb-2"
                     htmlFor={'cover_image'}
                   >
-                    {`${index + 1}° Imagem da galeria`}
+                    Imagem de Capa
                   </label>
                   <input
                     className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-12"
-                    required={false}
-                    id={'url_image'}
+                    id={'cover_image'}
                     placeholder="https://image.com"
-                    {...register('images')}
-                    // value={image}
-                    // onChange={(event) => changeImage(event, index)}
+                    {...register(`urls.${index}`)}
+                    value={images[index]}
+                    onChange={(event) => changeImage(event, index)}
                   />
                 </div>
-              ))}
+              ) : (
+                <div className="mb-2 w-full" key={index + 1}>
+                  <label
+                    className="block  text-sm mb-2"
+                    htmlFor={`${index}° image`}
+                  >
+                    {`${index}° Imagem da galeria`}
+                  </label>
+                  <input
+                    className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-12"
+                    id={`${index}° image`}
+                    placeholder="https://image.com"
+                    {...register(`urls.${index}`)}
+                    value={image}
+                    onChange={(event) => changeImage(event, index)}
+                  />
+                </div>
+              )
+            )}
 
               <div className="px-[20px] py-[12px] rounded-md text-brand-1 bg-brand-4 w-max text-sm font-semibold mb-[42px] disabled:text-brand-4">
                 <button

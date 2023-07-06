@@ -23,6 +23,7 @@ export const EditAdSchema = z.object({
   images: z.array(urlSchema),
   url: z.string(),
   url_image: z.string(),
+  urls: z.string().array().optional(),
   images_1: z.string().optional(),
   images_2: z.string().optional(),
   images_3: z.string().optional(),

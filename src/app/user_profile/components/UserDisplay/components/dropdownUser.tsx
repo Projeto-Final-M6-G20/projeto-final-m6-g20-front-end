@@ -21,8 +21,8 @@ import { AuthContext } from 'context/AuthContext';
 
 const DropDown = () => {
   const router = useRouter();
-  const { setMode, mode } = useContext(UserContext);
-  const { user } = useContext(AuthContext);
+  const { user,setMode, mode } = useContext(UserContext);
+  const { newUser,setNewUser } = useContext(AuthContext);
   const { onOpen, onClose, isOpen } = useDisclosure();
   const onOpenFunction = () => {
     setMode('profile');
@@ -38,12 +38,13 @@ const DropDown = () => {
     return router.push('/login');
   };
 
-  if (!user) {
+  if (!newUser) {
+    setNewUser(user)
     return <></>;
   }
 
   let initials = '';
-  const names = user.fullname.split(' ');
+  const names = newUser.fullname.split(' ');
 
   if (names && names.length > 0) {
     const firstName = names[0];
@@ -73,7 +74,7 @@ const DropDown = () => {
                   </div>
 
                   <span className="text-gray-700 font-semibold">
-                    {capitalizeFirstLetter(user.fullname)}
+                    {capitalizeFirstLetter(newUser.fullname)}
                   </span>
                 </div>
               </MenuButton>
@@ -94,7 +95,7 @@ const DropDown = () => {
                 }}
               >
                 <div className="flex flex-col gap-2">
-                  {user?.is_advertiser ? (
+                  {newUser?.is_advertiser ? (
                     <>
                       <button
                         onClick={() => onOpenFunction()}
