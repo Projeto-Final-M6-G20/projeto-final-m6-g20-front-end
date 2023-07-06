@@ -1,11 +1,11 @@
-import { useDisclosure } from '@chakra-ui/react';
-import { TfiFaceSad } from 'react-icons/tfi';
-import { AiOutlineWarning } from 'react-icons/ai';
 import React, { useContext, useState } from 'react';
-import { UserContext } from 'context/UserContext';
-import CreateAdForm from '../CreateAdForm';
+import { AiOutlineWarning } from 'react-icons/ai';
+import { TfiFaceSad } from 'react-icons/tfi';
+
 import EditAdModal from '../EditAdForm/editModalAd';
-import { useAdvertisements } from 'context/AdvertisementsContext';
+
+import { useDisclosure } from '@chakra-ui/react';
+import { UserContext } from 'context/UserContext';
 
 const UserDisplay = () => {
   const [active, setActive] = useState(false);
@@ -15,17 +15,13 @@ const UserDisplay = () => {
     onClose: onCreateClose
   } = useDisclosure();
 
-  const { car } = useAdvertisements();
-
-  const { setMode, mode, adv, user, getAd, getUserAd } =
-    useContext(UserContext);
+  const { setMode, adv, user, getAd } = useContext(UserContext);
   const { onOpen, onClose, isOpen } = useDisclosure();
   const onOpenFunction = (id: string) => {
     getAd(id);
     setMode('editAd');
     onOpen();
   };
-  // getUserAd();
 
   const capitalizeFirstLetter = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -46,7 +42,7 @@ const UserDisplay = () => {
                     <div className="w-full h-32 flex  justify-center items-center bg-[#E9ECEF]">
                       <img
                         className="w-5/6   h-28  object-cover "
-                        src={item.images[0].url}
+                        src={item.images ? item.images[0].url : ''}
                         alt=""
                       />
                     </div>

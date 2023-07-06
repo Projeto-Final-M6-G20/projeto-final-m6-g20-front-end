@@ -19,15 +19,16 @@ interface ModalChildren {
 }
 
 const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
-  const { register, handleSubmit } = useForm<NewAdData>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors }
+  } = useForm<NewAdData>({
     resolver: zodResolver(NewAdSchema)
   });
 
-  const [year, setYear] = useState('');
-  const [fuel, setFuel] = useState('');
-  const [fipe, setFipe] = useState('');
   const [price, setPrice] = useState('');
-  const [km, setKm] = useState('');
   const [description, setDescription] = useState('');
   const [images, setImages] = useState<string[]>(['', '']);
 
@@ -37,11 +38,19 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
   ) => {
     images[index] = event.target.value;
     setImages([...images]);
-    console.log(images);
   };
 
   const AddInputImage = () => {
     setImages([...images, '']);
+  };
+
+  const submitCarAd = async (data: NewAdData) => {
+    console.log(data);
+    await createCarAd({
+      ...data,
+      price: parseInt(data.price)
+    });
+    onClose();
   };
 
   const {
@@ -53,8 +62,7 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
     selectedBrand,
     selectedModel,
     setSelectedModel,
-    createCarAd,
-    mode
+    createCarAd
   } = useContext(UserContext);
 
   useEffect(() => {
@@ -63,21 +71,26 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
 
   useEffect(() => {
     getCarModels();
-  }, [selectedBrand, getCarModels]);
+  }, [selectedBrand]);
 
   useEffect(() => {
-    const modelInfo = models.filter((element) => element.name == selectedModel);
-    setFuel(
-      modelInfo[0]?.fuel == 1
-        ? 'Flex'
-        : modelInfo[0]?.fuel == 2
-        ? 'Híbrido'
-        : modelInfo[0]?.fuel == 3
-        ? 'Elétrico'
-        : ''
-    );
-    setFipe(modelInfo[0]?.value);
-    setYear(modelInfo[0]?.year);
+    if (selectedModel) {
+      const modelInfo = models.filter(
+        (element) => element.name == selectedModel
+      );
+      setValue(
+        'fuel_type',
+        modelInfo[0]?.fuel == 1
+          ? 'Flex'
+          : modelInfo[0]?.fuel == 2
+          ? 'Híbrido'
+          : modelInfo[0]?.fuel == 3
+          ? 'Elétrico'
+          : ''
+      );
+      setValue('fipe_price', parseInt(modelInfo[0]?.value));
+      setValue('year', parseInt(modelInfo[0]?.year));
+    }
   }, [selectedModel]);
 
   return (
@@ -91,16 +104,27 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
         <ModalBody className="bg-white w-full max-w-xl rounded-b-md px-6 mb-3">
           <p className="text-sm mb-6">Infomações do veículo</p>
           <form
-            onSubmit={handleSubmit(createCarAd)}
+            onSubmit={handleSubmit(submitCarAd)}
             className="flex flex-row flex-wrap w-full justify-between overflow-scroll"
           >
+            <div className="mb-2 w-full">
+              <label className="block  text-sm mb-2" htmlFor={'title'}>
+                Titulo
+              </label>
+              <input
+                className="w-full h-12 bg-white rounded-md border-2 focus:border-brand-1 pl-4 focus:outline-none pl-4"
+                id={'title'}
+                placeholder="Digite o titulo"
+                {...register('title')}
+              ></input>
+            </div>
+
             <div className="mb-2 w-full">
               <label className="block  text-sm mb-2" htmlFor={'brand'}>
                 Marca
               </label>
               <select
                 className="w-full h-12 bg-white rounded-md border-2 focus:border-brand-1 pl-4"
-                required
                 id={'brand'}
                 placeholder="selecione a marca"
                 {...register('brand')}
@@ -122,7 +146,6 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
               </label>
               <select
                 className="w-full h-12 bg-white rounded-md border-2 focus:border-brand-1 pl-4"
-                required
                 id={'model'}
                 {...register('model')}
                 onChange={(event) => {
@@ -141,25 +164,26 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
               <label className="block  text-sm mb-2" htmlFor={'year'}>
                 Ano
               </label>
+              {errors?.year?.message && <p>{errors.year.message}</p>}
               <input
                 className="w-full h-12 bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4"
-                required
                 id={'year'}
+                placeholder="2022"
                 {...register('year')}
-                value={year}
+                disabled={true}
               />
             </div>
 
             <div className="mb-2 w-[48%]">
-              <label className="block  text-sm mb-2" htmlFor={'fuel'}>
+              <label className="block  text-sm mb-2" htmlFor={'fuel_type'}>
                 Combustivel
               </label>
               <input
                 className="w-full h-12 bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4"
-                required
-                id={'fuel'}
+                id={'fuel_type'}
+                placeholder="Flex"
                 {...register('fuel_type')}
-                value={fuel}
+                disabled={true}
               />
             </div>
 
@@ -167,14 +191,13 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
               <label className="block  text-sm mb-2" htmlFor={'milleage'}>
                 Quilometragem
               </label>
+              {errors?.mileage?.message && <p>{errors.mileage.message}</p>}
               <input
                 className="w-full h-12 bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4"
                 placeholder="30.000"
-                required
                 id={'mileage'}
                 {...register('mileage')}
-                value={km}
-                onChange={(e) => setKm(e.target.value)}
+                type="number"
               />
             </div>
 
@@ -182,9 +205,9 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
               <label className="block  text-sm mb-2" htmlFor={'color'}>
                 Cor
               </label>
+
               <input
                 className="w-full h-12 bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4"
-                required
                 id={'color'}
                 placeholder="Digite a cor"
                 {...register('color')}
@@ -192,16 +215,15 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
             </div>
 
             <div className="mb-2 w-[48%]">
-              <label className="block  text-sm mb-2" htmlFor={'fipe'}>
+              <label className="block  text-sm mb-2" htmlFor={'fipe_price'}>
                 Preço tabela FIPE
               </label>
               <input
                 className="w-full h-12 bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4"
-                required
-                id={'fipe'}
+                id={'fipe_price'}
                 placeholder="R$ 48.000,00"
                 {...register('fipe_price')}
-                value={fipe}
+                disabled={true}
               />
             </div>
 
@@ -211,7 +233,6 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
               </label>
               <input
                 className="w-full h-12 bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4"
-                required
                 id={'price'}
                 placeholder="R$ 50.000,00"
                 {...register('price')}
@@ -226,7 +247,6 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
               </label>
               <input
                 className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-[80px]"
-                required
                 id={'description'}
                 placeholder="Descreva detalhes do carro aqui..."
                 {...register('description')}
@@ -234,7 +254,6 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </div>
-<<<<<<< HEAD
             {images.map((image, index) =>
               index === 0 ? (
                 <div className="mb-2 w-full" key={index + 1}>
@@ -246,7 +265,6 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
                   </label>
                   <input
                     className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-12"
-                    required
                     id={'cover_image'}
                     placeholder="https://image.com"
                     {...register(`urls.${index}`)}
@@ -264,7 +282,6 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
                   </label>
                   <input
                     className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-12"
-                    required
                     id={`${index}° image`}
                     placeholder="https://image.com"
                     {...register(`urls.${index}`)}
@@ -274,60 +291,26 @@ const CreateAdForm = ({ isOpen, onClose }: ModalChildren) => {
                 </div>
               )
             )}
-=======
-
-            <div className="mb-2 w-full">
-              <label className="block  text-sm mb-2" htmlFor={'cover_image'}>
-                Imagem de Capa
-              </label>
-              <input
-                className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-12"
-                required
-                id={'cover_image'}
-                placeholder="https://image.com"
-                {...register('url_image')}
-                value={coverImage}
-                onChange={(e) => setCoverImage(e.target.value)}
-              />
+            <div className="px-[20px] py-[12px] rounded-md text-brand-1 bg-brand-4 w-max text-sm font-semibold mb-[42px] disabled:text-brand-4">
+              <button onClick={AddInputImage} disabled={images.length >= 6}>
+                Adicionar campo para imagem da galeria
+              </button>
             </div>
-
-            {images.map((image, index) => (
-              <div className="mb-2 w-full" key={index + 1}>
-                <label className="block  text-sm mb-2" htmlFor={'url_image'}>
-                  {`${index + 1}° Imagem da galeria`}
-                </label>
-                <input
-                  className="w-full bg-white rounded-md border-2 focus:border-brand-1 focus:outline-none pl-4 h-12"
-                  required
-                  id={'url_image'}
-                  placeholder="https://image.com"
-                  {...register('url_image')}
-                  value={image}
-                  onChange={(event) => changeImage(event, index)}
-                />
-              </div>
-            ))}
->>>>>>> 4817ea9388051b2a209b9872908f1e760e403607
+            <div className="flex flex-row w-full justify-end gap-[10px] mb-[18px]">
+              <button
+                className="text-base px-[28px] py-[12px] rounded-md text-[#495057] bg-[#DEE2E6] w-max font-semibold"
+                onClick={onClose}
+              >
+                Cancelar
+              </button>
+              <button
+                className="text-base px-[28px] py-[12px] rounded-md text-brand-4 bg-brand-3 w-max font-semibold"
+                type="submit"
+              >
+                Criar anúncio
+              </button>
+            </div>
           </form>
-          <div className="px-[20px] py-[12px] rounded-md text-brand-1 bg-brand-4 w-max text-sm font-semibold mb-[42px] disabled:text-brand-4">
-            <button onClick={AddInputImage} disabled={images.length >= 6}>
-              Adicionar campo para imagem da galeria
-            </button>
-          </div>
-          <div className="flex flex-row w-full justify-end gap-[10px] mb-[18px]">
-            <button
-              className="text-base px-[28px] py-[12px] rounded-md text-[#495057] bg-[#DEE2E6] w-max font-semibold"
-              onClick={onClose}
-            >
-              Cancelar
-            </button>
-            <button
-              className="text-base px-[28px] py-[12px] rounded-md text-brand-4 bg-brand-3 w-max font-semibold"
-              type="submit"
-            >
-              Criar anúncio
-            </button>
-          </div>
         </ModalBody>
       </ModalOverlay>
     </Modal>

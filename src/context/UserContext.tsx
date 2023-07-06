@@ -1,5 +1,5 @@
 'use client';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import {
   Dispatch,
   SetStateAction,
@@ -49,6 +49,26 @@ interface iUser {
   Address: Address;
 }
 
+interface iAd extends NewAdData {
+  id: string;
+  is_available: boolean;
+  images: [{ url: string }];
+}
+
+interface iAdReq {
+  title: string;
+  brand: string;
+  model: string;
+  year: number;
+  fuel_type: string;
+  mileage: string;
+  color: string;
+  price: number;
+  fipe_price: number;
+  description: string;
+  urls?: string[];
+}
+
 interface UserValue {
   getCarBrands: () => Promise<void>;
   getCarModels: () => Promise<void>;
@@ -58,18 +78,18 @@ interface UserValue {
   selectedModel: string;
   brands: string[];
   models: iModel[];
-  createCarAd: (data: NewAdData) => Promise<void>;
+  createCarAd: (data: iAdReq) => Promise<void>;
   user: iUser | undefined;
   mode: string;
   setMode: Dispatch<SetStateAction<string>>;
   getUser: () => Promise<void>;
-  adv: NewAdData[] | undefined;
-  setAdv: Dispatch<SetStateAction<NewAdData[]>>;
+  adv: iAd[] | undefined;
+  setAdv: Dispatch<SetStateAction<iAd[]>>;
   updateUser: (data: UserData) => Promise<void>;
   updateUserAddress: (data: Address) => Promise<void>;
   deleteUser: () => Promise<void>;
-  adData: NewAdData | undefined;
-  setAdData: Dispatch<SetStateAction<NewAdData | undefined>>;
+  adData: iAd | undefined;
+  setAdData: Dispatch<SetStateAction<iAd | undefined>>;
   getAd: (id: string) => Promise<void>;
   updateAdv: (data?: NewAdData, id?: string) => Promise<void>;
   deleteAd: (id: string) => Promise<void>;
@@ -85,8 +105,8 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
   const [selectedModel, setSelectedModel] = useState<string>('');
   const [user, setUser] = useState<iUser>();
   const [mode, setMode] = useState('');
-  const [adv, setAdv] = useState<NewAdData[]>([]);
-  const [adData, setAdData] = useState<NewAdData>();
+  const [adv, setAdv] = useState<iAd[]>([]);
+  const [adData, setAdData] = useState<iAd>();
   const router = useRouter();
 
   const cookies = parseCookies();
@@ -111,7 +131,6 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
           `/cars?brand=${selectedBrand}`
         );
         setModels(response.data);
-        // console.log(response.data);
       } catch (error) {
         // console.log(error);
       }
@@ -143,14 +162,19 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const createCarAd = async (data: NewAdData) => {
+  const createCarAd = async (data: iAdReq) => {
     try {
-      const response = await api.post('/advertisements/', data);
-
-      console.log(response);
+      await api.post('/advertisements/', data);
       getUserAd();
+      Toast({
+        message: 'Anuncio criado com sucesso!',
+        isSucess: true
+      });
     } catch (error) {
-      console.log(error);
+      Toast({
+        message: 'Algo deu errado!',
+        isSucess: false
+      });
     }
   };
 
