@@ -13,6 +13,7 @@ import {
   AdvertisementsContext,
   useAdvertisements
 } from 'context/AdvertisementsContext';
+import { parseCookies } from 'nookies';
 
 const AdDetailView = ({ params }: { params: { carId: string } }) => {
   const { getAdvertisementById, car } = useAdvertisements();
@@ -23,10 +24,12 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
 
   const router = useRouter();
 
+  const cookies = parseCookies();
+
   const pathname = usePathname();
   const id = pathname.split('/')[2];
 
-  getComment(id);
+  
 
   const capitalizeFirstLetter = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -34,6 +37,7 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
 
   useEffect(() => {
     const id = params.carId;
+    getComment(id);
     getAdvertisementById(id);
   }, []);
 
@@ -94,8 +98,11 @@ const AdDetailView = ({ params }: { params: { carId: string } }) => {
               <div className="flex flex-col w-full">
                 <CommentCard />
               </div>
-
-              <CommentForm />
+              
+              {
+                cookies['user.Token']?(<><CommentForm /></>):(<></>)
+              }
+              
             </div>
           </section>
 
